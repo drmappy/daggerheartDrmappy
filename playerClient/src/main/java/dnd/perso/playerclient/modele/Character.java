@@ -12,7 +12,6 @@ public class Character {
     private Heritage heritage;
     private Modifiers modifiers;
     private Class characterClass;
-    private SubClass subClass;
 
 
     private int stress;

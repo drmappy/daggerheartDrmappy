@@ -1,4 +1,4 @@
-package dnd.perso.playerclient.modele.heritage;
+package dnd.perso.playerclient.modele;
 
 public class Feature {
     private String name;
