@@ -2,7 +2,7 @@ package dnd.perso.playerclient.modele;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import lombok.*;
 
 @Entity
@@ -11,12 +11,10 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Armor {
+public class Community {
     @Id
     private String name;
-    private int minorToMajor;
-    private int majorToSevere;
-    private int baseArmorScore;
-    @OneToOne
-    private Feature feature1;
+    private String description;
+    @ManyToOne
+    private Feature feature;
 }

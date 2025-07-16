@@ -1,23 +1,23 @@
 package dnd.perso.playerclient.modele;
 
+import dnd.perso.playerclient.modele.enums.DamageType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.*;
 
-import java.util.List;
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Inventory {
+public class Damage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private List<String> items;
-    private List<Weapon> weapons;
-    private List<Armor> armors;
+    private int dieSize;
+    private int baseDamage;
+    private DamageType damageType;
 }

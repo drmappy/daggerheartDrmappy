@@ -1,7 +1,10 @@
 package dnd.perso.playerclient.modele;
 
+
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -9,14 +12,13 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Equipment {
+public class Heritage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @OneToOne
-    private Weapon primary;
+    private Ancestry ancestry;
     @OneToOne
-    private Weapon secondary;
-    @OneToOne
-    private Armor activeArmor;
+    private Community community;
+    private List<String> languages;
 }

@@ -1,6 +1,6 @@
 package dnd.perso.playerclient.modele.enums;
 
-public enum CharacterTrait {
+public enum CharacterSpellTrait {
     AGILITY,
     STRENGTH,
     FINESSE,

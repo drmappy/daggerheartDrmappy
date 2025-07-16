@@ -1,27 +1,39 @@
 package dnd.perso.playerclient.modele;
 
-import dnd.perso.playerclient.modele.heritage.Heritage;
-import dnd.perso.playerclient.modele.heritage.Modifiers;
+import jakarta.persistence.*;
+import lombok.*;
 
-import java.util.HashMap;
+import java.util.List;
 
+@Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class Character {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     private String name;
     private String pronouns;
-
+    @OneToOne
     private Heritage heritage;
+    @OneToOne
     private Modifiers modifiers;
-    private Class characterClass;
+    @OneToOne
+    private DaggerheartClass characterClass;
 
 
     private int stress;
-    private int hope;
+    @OneToOne
     private CharacterTraits traits;
-
+    @OneToOne
     private Equipment equipment;
-
-    private HashMap<String, Integer> experience;
+    private List<Experience> experiences;
+    @OneToOne
     private Gold gold;
+    @OneToOne
     private Inventory inventory;
     private String imageBinaryData;
 }

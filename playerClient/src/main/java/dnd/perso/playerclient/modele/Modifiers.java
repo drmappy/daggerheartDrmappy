@@ -9,14 +9,15 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Equipment {
+public class Modifiers {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    private int evasion;
+    private int armor;
     @OneToOne
-    private Weapon primary;
-    @OneToOne
-    private Weapon secondary;
-    @OneToOne
-    private Armor activeArmor;
+    private DamageThreshold damageThreshold;
+    private int hp;
+    private int stress;
+    private int hope;
 }
