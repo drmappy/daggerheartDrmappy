@@ -3,6 +3,7 @@ package dnd.perso.playerclient.modele;
 import dnd.perso.playerclient.modele.enums.Domain;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.*;
 
@@ -22,7 +23,9 @@ public class DaggerheartClass {
     private int startingEvasion;
     private int startingHitPoints;
     private String classItem;
+    @OneToMany
     private List<Feature> hopeFeatures;
+    @OneToMany
     private List<Feature> classFeatures;
     @OneToOne
     private SubClass subClass;

@@ -20,4 +20,9 @@ public class Damage {
     private int dieSize;
     private int baseDamage;
     private DamageType damageType;
+    public Damage(int dieSize, int baseDamage, DamageType damageType) {
+        this.dieSize = dieSize;
+        this.baseDamage = baseDamage;
+        this.damageType = damageType;
+    }
 }

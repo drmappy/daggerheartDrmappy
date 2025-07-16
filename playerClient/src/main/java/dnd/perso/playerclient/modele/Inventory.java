@@ -1,9 +1,6 @@
 package dnd.perso.playerclient.modele;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
@@ -18,6 +15,8 @@ public class Inventory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private List<String> items;
+    @OneToMany
     private List<Weapon> weapons;
+    @OneToMany
     private List<Armor> armors;
 }

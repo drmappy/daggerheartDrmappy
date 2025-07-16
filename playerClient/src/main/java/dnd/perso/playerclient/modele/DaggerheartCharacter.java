@@ -11,29 +11,30 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Character {
+public class DaggerheartCharacter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
     private String pronouns;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Heritage heritage;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Modifiers modifiers;
     @OneToOne
     private DaggerheartClass characterClass;
 
 
     private int stress;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private CharacterTraits traits;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Equipment equipment;
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Experience> experiences;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Gold gold;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Inventory inventory;
     private String imageBinaryData;
 }

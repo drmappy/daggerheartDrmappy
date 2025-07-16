@@ -19,4 +19,9 @@ public class Gold {
     private int handfuls;
     private int bags;
     private int chest;
+    public Gold(int handfuls, int bags, int chest) {
+        this.handfuls = handfuls;
+        this.bags = bags;
+        this.chest = chest;
+    }
 }

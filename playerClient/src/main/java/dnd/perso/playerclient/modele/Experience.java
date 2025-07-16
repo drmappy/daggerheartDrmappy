@@ -8,7 +8,7 @@ import jakarta.persistence.Id;
 public class Experience {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String name;
+    private long id;
     private String experience;
     private int modifier;
 }
