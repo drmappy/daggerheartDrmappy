@@ -1,9 +1,6 @@
 package dnd.perso.playerclient.modele;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -22,4 +19,6 @@ public class CharacterTraits {
     private int instinct;
     private int presence;
     private int knowledge;
+    @OneToOne
+    private DaggerheartCharacter character;
 }

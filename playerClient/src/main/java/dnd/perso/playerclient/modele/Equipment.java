@@ -19,4 +19,6 @@ public class Equipment {
     private Weapon secondary;
     @OneToOne
     private Armor activeArmor;
+    @OneToOne
+    private DaggerheartCharacter character;
 }

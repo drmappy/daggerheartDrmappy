@@ -20,4 +20,6 @@ public class Modifiers {
     private int hp;
     private int stress;
     private int hope;
+    @OneToOne
+    private DaggerheartCharacter character;
 }

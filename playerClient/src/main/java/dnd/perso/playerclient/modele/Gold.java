@@ -1,9 +1,6 @@
 package dnd.perso.playerclient.modele;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -19,6 +16,8 @@ public class Gold {
     private int handfuls;
     private int bags;
     private int chest;
+    @OneToOne
+    private DaggerheartCharacter character;
     public Gold(int handfuls, int bags, int chest) {
         this.handfuls = handfuls;
         this.bags = bags;

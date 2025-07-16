@@ -21,8 +21,10 @@ public class DaggerheartCharacter {
     private Heritage heritage;
     @OneToOne(cascade = CascadeType.ALL)
     private Modifiers modifiers;
-    @OneToOne
+    @ManyToOne
     private DaggerheartClass characterClass;
+    @ManyToOne
+    private SubClass subClass;
 
 
     private int stress;

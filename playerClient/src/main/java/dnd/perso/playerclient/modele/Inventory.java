@@ -19,4 +19,6 @@ public class Inventory {
     private List<Weapon> weapons;
     @OneToMany
     private List<Armor> armors;
+    @OneToOne
+    private DaggerheartCharacter character;
 }

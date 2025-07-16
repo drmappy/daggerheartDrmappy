@@ -1,9 +1,6 @@
 package dnd.perso.playerclient.modele;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -18,4 +15,6 @@ public class DamageThreshold {
     private long id;
     private int minorToMajor;
     private int majorToSevere;
+    @OneToOne
+    private Modifiers modifiers;
 }

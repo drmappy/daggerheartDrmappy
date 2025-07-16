@@ -1,9 +1,7 @@
 package dnd.perso.playerclient.modele;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
 @Entity
 public class Experience {
     @Id
@@ -11,4 +9,6 @@ public class Experience {
     private long id;
     private String experience;
     private int modifier;
+    @ManyToOne
+    private DaggerheartCharacter character;
 }

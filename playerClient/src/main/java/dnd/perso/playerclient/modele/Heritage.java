@@ -16,9 +16,11 @@ public class Heritage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @OneToOne
+    @ManyToOne
     private Ancestry ancestry;
-    @OneToOne
+    @ManyToOne
     private Community community;
     private List<String> languages;
+    @OneToOne
+    private DaggerheartCharacter character;
 }
