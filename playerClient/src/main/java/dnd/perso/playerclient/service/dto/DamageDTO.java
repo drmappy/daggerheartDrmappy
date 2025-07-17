@@ -21,7 +21,6 @@ public class DamageDTO {
     }
     public Damage toModele(){
         return new Damage(
-                id,
                 dieSize,
                 baseDamage,
                 damageType

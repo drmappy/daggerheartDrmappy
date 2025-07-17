@@ -1,8 +1,6 @@
 package dnd.perso.playerclient.modele;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -15,8 +13,8 @@ public class Ancestry {
     @Id
     private String name;
     private String description;
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Feature feature1;
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Feature feature2;
 }

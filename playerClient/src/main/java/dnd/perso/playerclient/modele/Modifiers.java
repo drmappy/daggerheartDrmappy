@@ -15,13 +15,11 @@ public class Modifiers {
     private long id;
     private int evasion;
     private int armor;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private DamageThreshold damageThreshold;
     private int hp;
     private int stress;
     private int hope;
-    @OneToOne
-    private DaggerheartCharacter character;
     public Modifiers(int evasion, int armor, DamageThreshold damageThreshold, int hp, int stress, int hope) {
         this.evasion = evasion;
         this.armor = armor;

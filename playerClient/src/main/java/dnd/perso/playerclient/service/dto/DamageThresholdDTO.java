@@ -18,7 +18,6 @@ public class DamageThresholdDTO {
     }
     public DamageThreshold toModele(){
         return new DamageThreshold(
-                id,
                 minorToMajor,
                 majorToSevere
         );

@@ -18,7 +18,6 @@ public class ExperienceDTO {
     }
     public Experience toModele() {
         return new Experience(
-                id,
                 experience,
                 modifier
         );

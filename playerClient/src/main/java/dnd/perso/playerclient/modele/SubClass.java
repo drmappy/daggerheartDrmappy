@@ -1,6 +1,7 @@
 package dnd.perso.playerclient.modele;
 
 import dnd.perso.playerclient.modele.enums.CharacterSpellTrait;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -19,10 +20,10 @@ public class SubClass {
     private String description;
     private CharacterSpellTrait spellcastingTrait;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Feature> foundationFeatures;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Feature> specializationFeatures;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Feature> masteryFeatures;
 }

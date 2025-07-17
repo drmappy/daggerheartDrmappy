@@ -21,8 +21,6 @@ public class Heritage {
     @ManyToOne
     private Community community;
     private List<String> languages;
-    @OneToOne
-    private DaggerheartCharacter character;
     public Heritage(Ancestry ancestry, Community community, List<String> languages) {
         this.ancestry = ancestry;
         this.community = community;
