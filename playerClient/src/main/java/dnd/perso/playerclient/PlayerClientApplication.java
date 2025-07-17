@@ -509,6 +509,7 @@ public class PlayerClientApplication {
                     )
             );
             player.saveCharacter(characterDTO);
+            System.out.println(player.getCharacterById(1L));
         };
     }
 }

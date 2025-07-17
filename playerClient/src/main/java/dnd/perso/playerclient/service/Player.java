@@ -6,6 +6,7 @@ import dnd.perso.playerclient.service.dto.DaggerheartCharacterDTO;
 import dnd.perso.playerclient.service.dto.DaggerheartClassDTO;
 import dnd.perso.playerclient.service.dto.SubClassDTO;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class Player {
@@ -31,6 +32,7 @@ public class Player {
     }
 
     // Methods
+    @Transactional
     public DaggerheartClassDTO getClassById(String name) throws DatabaseError {
         try {
             return daggerheartClassRepository.findById(name)
@@ -40,6 +42,7 @@ public class Player {
             throw e;
         }
     }
+    @Transactional
     public SubClassDTO getSubClassById(String name) throws DatabaseError {
         try {
             return subclassRepository.findById(name)
@@ -49,6 +52,7 @@ public class Player {
             throw e;
         }
     }
+    @Transactional
     public void saveCharacter(DaggerheartCharacterDTO characterDTO) throws Exception {
         try {
             daggerheartCharacterRepository.save(characterDTO.toModele(characterDTO));
@@ -56,7 +60,7 @@ public class Player {
             throw e;
         }
     }
-
+    @Transactional
     public DaggerheartCharacterDTO getCharacterById(long id) throws DatabaseError {
         try {
             return daggerheartCharacterRepository.findById(id)

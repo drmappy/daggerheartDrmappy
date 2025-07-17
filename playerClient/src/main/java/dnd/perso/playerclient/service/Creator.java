@@ -4,6 +4,7 @@ import dnd.perso.playerclient.exception.DatabaseError;
 import dnd.perso.playerclient.repository.*;
 import dnd.perso.playerclient.service.dto.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class Creator {
@@ -31,6 +32,7 @@ public class Creator {
     }
 
     // Methods
+    @Transactional
     public void saveClass(DaggerheartClassDTO daggerheartClassDTO) throws DatabaseError {
         try {
             daggerheartClassRepository.save(daggerheartClassDTO.toModele());
@@ -38,6 +40,7 @@ public class Creator {
             throw e;
         }
     }
+    @Transactional
     public void saveAncestry(AncestryDTO ancestryDTO) throws DatabaseError {
         try {
             ancestryRepository.save(ancestryDTO.toModele());
@@ -45,6 +48,7 @@ public class Creator {
             throw e;
         }
     }
+    @Transactional
     public void saveCommunity(CommunityDTO communityDTO) throws DatabaseError {
         try {
             communityRepository.save(communityDTO.toModele());
@@ -52,6 +56,7 @@ public class Creator {
             throw e;
         }
     }
+    @Transactional
     public void saveArmor(ArmorDTO armorDTO) throws DatabaseError {
         try {
             armorRepository.save(armorDTO.toModele());
@@ -59,6 +64,7 @@ public class Creator {
             throw e;
         }
     }
+    @Transactional
     public void saveWeapon(WeaponDTO weaponDTO) throws DatabaseError {
         try {
             weaponRepository.save(weaponDTO.toModele());
@@ -66,6 +72,7 @@ public class Creator {
             throw e;
         }
     }
+    @Transactional
     public void saveFeature(FeatureDTO featureDTO) throws DatabaseError {
         try {
             featureRepository.save(featureDTO.toModele());
