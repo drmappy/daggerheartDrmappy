@@ -22,4 +22,12 @@ public class Modifiers {
     private int hope;
     @OneToOne
     private DaggerheartCharacter character;
+    public Modifiers(int evasion, int armor, DamageThreshold damageThreshold, int hp, int stress, int hope) {
+        this.evasion = evasion;
+        this.armor = armor;
+        this.damageThreshold = damageThreshold;
+        this.hp = hp;
+        this.stress = stress;
+        this.hope = hope;
+    }
 }

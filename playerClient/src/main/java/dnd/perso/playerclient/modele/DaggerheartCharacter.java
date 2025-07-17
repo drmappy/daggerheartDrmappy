@@ -39,4 +39,19 @@ public class DaggerheartCharacter {
     @OneToOne(cascade = CascadeType.ALL)
     private Inventory inventory;
     private String imageBinaryData;
+    public DaggerheartCharacter(String name, String pronouns, Heritage heritage, Modifiers modifiers, DaggerheartClass characterClass, SubClass subClass, int stress, CharacterTraits traits, Equipment equipment, List<Experience> experiences, Gold gold, Inventory inventory, String imageBinaryData) {
+        this.name = name;
+        this.pronouns = pronouns;
+        this.heritage = heritage;
+        this.modifiers = modifiers;
+        this.characterClass = characterClass;
+        this.subClass = subClass;
+        this.stress = stress;
+        this.traits = traits;
+        this.equipment = equipment;
+        this.experiences = experiences;
+        this.gold = gold;
+        this.inventory = inventory;
+        this.imageBinaryData = imageBinaryData;
+    }
 }

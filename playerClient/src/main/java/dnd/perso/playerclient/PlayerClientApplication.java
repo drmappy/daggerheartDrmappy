@@ -24,8 +24,7 @@ public class PlayerClientApplication {
     CommandLineRunner run(){
         return args -> {
             TcpServer.createTcpServer("daggerheartdrmappy");
-            player.saveGold(0,1,1);
-            player.saveWeapon("Longsword", CharacterSpellTrait.STRENGTH, Range.MELEE, 8, 2, DamageType.PHYSICAL, Burden.ONEHANDED);
+
         };
     }
 }

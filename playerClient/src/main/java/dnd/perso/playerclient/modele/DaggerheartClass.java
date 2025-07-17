@@ -28,5 +28,5 @@ public class DaggerheartClass {
     @OneToMany
     private List<Feature> classFeatures;
     @OneToMany
-    private List<SubClass> subClass;
+    private List<SubClass> subClasses;
 }

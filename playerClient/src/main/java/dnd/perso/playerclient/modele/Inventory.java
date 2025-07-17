@@ -19,6 +19,9 @@ public class Inventory {
     private List<Weapon> weapons;
     @OneToMany
     private List<Armor> armors;
-    @OneToOne
-    private DaggerheartCharacter character;
+    public Inventory(List<String> items, List<Weapon> weapons, List<Armor> armors) {
+        this.items = items;
+        this.weapons = weapons;
+        this.armors = armors;
+    }
 }

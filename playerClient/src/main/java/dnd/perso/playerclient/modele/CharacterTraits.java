@@ -19,6 +19,12 @@ public class CharacterTraits {
     private int instinct;
     private int presence;
     private int knowledge;
-    @OneToOne
-    private DaggerheartCharacter character;
+    public CharacterTraits(int agility, int strength, int finesse, int instinct, int presence, int knowledge) {
+        this.agility = agility;
+        this.strength = strength;
+        this.finesse = finesse;
+        this.instinct = instinct;
+        this.presence = presence;
+        this.knowledge = knowledge;
+    }
 }

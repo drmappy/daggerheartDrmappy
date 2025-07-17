@@ -16,8 +16,6 @@ public class Gold {
     private int handfuls;
     private int bags;
     private int chest;
-    @OneToOne
-    private DaggerheartCharacter character;
     public Gold(int handfuls, int bags, int chest) {
         this.handfuls = handfuls;
         this.bags = bags;

@@ -18,5 +18,5 @@ public class Armor {
     private int majorToSevere;
     private int baseArmorScore;
     @OneToOne
-    private Feature feature1;
+    private Feature feature;
 }

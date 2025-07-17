@@ -23,4 +23,9 @@ public class Heritage {
     private List<String> languages;
     @OneToOne
     private DaggerheartCharacter character;
+    public Heritage(Ancestry ancestry, Community community, List<String> languages) {
+        this.ancestry = ancestry;
+        this.community = community;
+        this.languages = languages;
+    }
 }

@@ -15,6 +15,8 @@ public class DamageThreshold {
     private long id;
     private int minorToMajor;
     private int majorToSevere;
-    @OneToOne
-    private Modifiers modifiers;
+    public DamageThreshold(int minorToMajor, int majorToSevere) {
+        this.minorToMajor = minorToMajor;
+        this.majorToSevere = majorToSevere;
+    }
 }
