@@ -25,9 +25,9 @@ public class Player {
         }
     }
 
-    public DaggerheartCharacterDTO getCharacterById() throws DatabaseError {
+    public DaggerheartCharacterDTO getCharacterById(long id) throws DatabaseError {
         try {
-            return daggerheartCharacterRepository.findById(1L)
+            return daggerheartCharacterRepository.findById(id)
                     .map(DaggerheartCharacterDTO::new)
                     .orElseThrow(DatabaseError::new);
         } catch (Exception e) {

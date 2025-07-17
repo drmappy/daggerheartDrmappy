@@ -16,6 +16,15 @@ public class CharacterTraitsDTO {
     private int instinct;
     private int presence;
     private int knowledge;
+
+    public CharacterTraitsDTO(int agility, int strength, int finesse, int instinct, int presence, int knowledge) {
+        this.agility = agility;
+        this.strength = strength;
+        this.finesse = finesse;
+        this.instinct = instinct;
+        this.presence = presence;
+        this.knowledge = knowledge;
+    }
     public CharacterTraits toModele(){
         return new CharacterTraits(
                 agility,

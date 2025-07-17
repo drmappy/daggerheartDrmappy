@@ -13,6 +13,11 @@ public class GoldDTO {
     private int handfuls;
     private int bags;
     private int chest;
+    public GoldDTO(int handfuls, int bags, int chest) {
+        this.handfuls = handfuls;
+        this.bags = bags;
+        this.chest = chest;
+    }
     public Gold toModele(){
         return new Gold(
                 handfuls,

@@ -26,6 +26,22 @@ public class DaggerheartCharacterDTO {
     private InventoryDTO inventory;
     private String imageBinaryData;
 
+    public DaggerheartCharacterDTO(String name, String pronouns, HeritageDTO heritage, ModifiersDTO modifiers, DaggerheartClassDTO characterClass, SubClassDTO subClass, int stress, CharacterTraitsDTO traits, EquipmentDTO equipement, List<ExperienceDTO> experiences, GoldDTO gold, InventoryDTO inventory, String imageBinaryData) {
+        this.name = name;
+        this.pronouns = pronouns;
+        this.heritage = heritage;
+        this.modifiers = modifiers;
+        this.characterClass = characterClass;
+        this.subClass = subClass;
+        this.stress = stress;
+        this.traits = traits;
+        this.equipement = equipement;
+        this.experiences = experiences;
+        this.gold = gold;
+        this.inventory = inventory;
+        this.imageBinaryData = imageBinaryData;
+    }
+
     public DaggerheartCharacter toModele(DaggerheartCharacterDTO daggerheartCharacterDTO) {
         return new DaggerheartCharacter(
                 name,
