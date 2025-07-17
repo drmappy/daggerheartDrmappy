@@ -2,9 +2,7 @@ package dnd.perso.playerclient.service;
 
 import dnd.perso.playerclient.exception.DatabaseError;
 import dnd.perso.playerclient.repository.*;
-import dnd.perso.playerclient.service.dto.DaggerheartCharacterDTO;
-import dnd.perso.playerclient.service.dto.DaggerheartClassDTO;
-import dnd.perso.playerclient.service.dto.SubClassDTO;
+import dnd.perso.playerclient.service.dto.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,18 +15,30 @@ public class Player {
     private final SubclassRepository subclassRepository;
     private final AncestryRepository ancestryRepository;
     private final CommunityRepository communityRepository;
+    private final FeatureRepository featureRepository;
+    private final WeaponRepository weaponRepository;
+    private final ArmorRepository armorRepository;
+    private final ExperienceRepository experienceRepository;
     public Player(
             DaggerheartCharacterRepository daggerheartCharacterRepository,
             DaggerheartClassRepository daggerheartClassRepository,
             SubclassRepository subclassRepository,
             AncestryRepository ancestryRepository,
-            CommunityRepository communityRepository
+            CommunityRepository communityRepository,
+            FeatureRepository featureRepository,
+            WeaponRepository weaponRepository,
+            ArmorRepository armorRepository,
+            ExperienceRepository experienceRepository
     ) {
         this.daggerheartCharacterRepository = daggerheartCharacterRepository;
         this.daggerheartClassRepository = daggerheartClassRepository;
         this.subclassRepository = subclassRepository;
         this.ancestryRepository = ancestryRepository;
         this.communityRepository = communityRepository;
+        this.featureRepository = featureRepository;
+        this.weaponRepository = weaponRepository;
+        this.armorRepository = armorRepository;
+        this.experienceRepository = experienceRepository;
     }
 
     // Methods
@@ -65,6 +75,66 @@ public class Player {
         try {
             return daggerheartCharacterRepository.findById(id)
                     .map(DaggerheartCharacterDTO::new)
+                    .orElseThrow(DatabaseError::new);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+    @Transactional
+    public AncestryDTO getAncestryById(String name) throws DatabaseError {
+        try {
+            return ancestryRepository.findById(name)
+                    .map(AncestryDTO::new)
+                    .orElseThrow(DatabaseError::new);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+    @Transactional
+    public CommunityDTO getCommunityById(String name) throws DatabaseError {
+        try {
+            return communityRepository.findById(name)
+                    .map(CommunityDTO::new)
+                    .orElseThrow(DatabaseError::new);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+    @Transactional
+    public FeatureDTO getFeatureById(String name) throws DatabaseError {
+        try {
+            return featureRepository.findById(name)
+                    .map(FeatureDTO::new)
+                    .orElseThrow(DatabaseError::new);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+    @Transactional
+    public WeaponDTO getWeaponById(String name) throws DatabaseError {
+        try {
+            return weaponRepository.findById(name)
+                    .map(WeaponDTO::new)
+                    .orElseThrow(DatabaseError::new);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+    @Transactional
+    public ArmorDTO getArmorById(String name) throws DatabaseError {
+        try {
+            return armorRepository.findById(name)
+                    .map(ArmorDTO::new)
+                    .orElseThrow(DatabaseError::new);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+    @Transactional
+    public ExperienceDTO getExperienceById(long id) throws DatabaseError {
+        try {
+            return experienceRepository.findById(id)
+                    .map(ExperienceDTO::new)
                     .orElseThrow(DatabaseError::new);
         } catch (Exception e) {
             throw e;

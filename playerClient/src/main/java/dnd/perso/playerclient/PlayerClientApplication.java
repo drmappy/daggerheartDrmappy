@@ -510,6 +510,9 @@ public class PlayerClientApplication {
             );
             player.saveCharacter(characterDTO);
             System.out.println(player.getCharacterById(1L));
+            System.out.println(player.getClassById("Ranger"));
+            System.out.println(player.getSubClassById("Wayfinder"));
+            System.out.println(player.getSubClassById("Beastmaster"));
         };
     }
 }
