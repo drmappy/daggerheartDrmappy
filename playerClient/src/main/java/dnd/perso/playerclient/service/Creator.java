@@ -13,18 +13,21 @@ public class Creator {
     private final CommunityRepository communityRepository;
     private final ArmorRepository armorRepository;
     private final WeaponRepository weaponRepository;
+    private final FeatureRepository featureRepository;
+
     public Creator(
             DaggerheartClassRepository daggerheartClassRepository,
             AncestryRepository ancestryRepository,
             CommunityRepository communityRepository,
             ArmorRepository armorRepository,
-            WeaponRepository weaponRepository
-    ) {
+            WeaponRepository weaponRepository,
+            FeatureRepository featureRepository) {
         this.daggerheartClassRepository = daggerheartClassRepository;
         this.ancestryRepository = ancestryRepository;
         this.communityRepository = communityRepository;
         this.armorRepository = armorRepository;
         this.weaponRepository = weaponRepository;
+        this.featureRepository = featureRepository;
     }
 
     // Methods
@@ -58,7 +61,14 @@ public class Creator {
     }
     public void saveWeapon(WeaponDTO weaponDTO) throws DatabaseError {
         try {
-             weaponRepository.save(weaponDTO.toModele());
+            weaponRepository.save(weaponDTO.toModele());
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+    public void saveFeature(FeatureDTO featureDTO) throws DatabaseError {
+        try {
+            featureRepository.save(featureDTO.toModele());
         } catch (Exception e) {
             throw e;
         }

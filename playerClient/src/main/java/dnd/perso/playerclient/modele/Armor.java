@@ -1,9 +1,6 @@
 package dnd.perso.playerclient.modele;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -18,6 +15,6 @@ public class Armor {
     private int minorToMajor;
     private int majorToSevere;
     private int baseArmorScore;
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Feature feature;
 }

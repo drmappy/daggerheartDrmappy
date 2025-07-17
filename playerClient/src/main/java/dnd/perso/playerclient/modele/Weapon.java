@@ -20,7 +20,7 @@ public class Weapon {
     @OneToOne(cascade = CascadeType.ALL)
     private Damage damage;
     private Burden burden;
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Feature feature;
     public Weapon(String name, CharacterSpellTrait trait, Range range, Damage damage, Burden burden) {
         this.name = name;

@@ -1,10 +1,7 @@
 package dnd.perso.playerclient.modele;
 
 import dnd.perso.playerclient.modele.enums.CharacterSpellTrait;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;

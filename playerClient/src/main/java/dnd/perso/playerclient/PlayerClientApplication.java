@@ -261,13 +261,85 @@ public class PlayerClientApplication {
                                     )
                             )
                     ),
-                    "Image data");
+                    "Image data"
+            );
+            creator.saveFeature(new FeatureDTO(
+                    "half-blind",
+                    "You wear glasses or lenses."
+                    )
+            );
+            creator.saveFeature(new FeatureDTO(
+                    "Male pattern baldness",
+                    "At least hair transplants are very effective nowadays."
+                    )
+            );
+            creator.saveFeature(new FeatureDTO(
+                    "City Dweller",
+                    "You are used to the hustle and bustle of city life add +1 to your evasion."
+            ));
+            creator.saveFeature(new FeatureDTO(
+                    "Survivalist",
+                    "You are skilled in surviving in the wilderness, add +1 to your survival checks."
+            ));
+            creator.saveFeature(new FeatureDTO(
+               "Tracker",
+                    "You can track creatures and find their trails."
+            ));
+            creator.saveFeature(new FeatureDTO(
+                    "Survival",
+                    "You are skilled in surviving in the wilderness, add +1 to your survival checks."
+            ));
+            creator.saveFeature(new FeatureDTO(
+                    "Tracking",
+                    "You can track creatures and find their trails."
+            ));
+            creator.saveFeature(new FeatureDTO(
+                    "Summon Beast",
+                    "Summon a beast companion to aid you in combat."
+            ));
+            creator.saveFeature(new FeatureDTO(
+                    "Summon Beast better",
+                    "Summon a beast companion to aid you in combat, but its better."
+            ));
+            creator.saveFeature(new FeatureDTO(
+                    "Summon Beast best",
+                    "Summon a beast companion to aid you in combat, but its even better."
+            ));
+            creator.saveFeature(new FeatureDTO(
+                    "Pathfinder",
+                    "You can find the best path through difficult terrain."
+            ));
+            creator.saveFeature(new FeatureDTO(
+                    "Pathfinder better",
+                    "You can find the best path through difficult terrain, but its better."
+            ));
+            creator.saveFeature(new FeatureDTO(
+                    "Pathfinder best",
+                    "You can find the best path through difficult terrain, but its even better."
+            ));
+            creator.saveFeature(new FeatureDTO(
+                    "Silent Steps",
+                    "These boots allow you to move silently, add +1 to your stealth."
+            ));
+            creator.saveFeature(new FeatureDTO(
+                    "Quick Strike",
+                    "You can strike quickly with this weapon, add +1 to your finesse when bellow half your hit points rounded up."
+            ));
+            creator.saveFeature(new FeatureDTO(
+                    "Lightweight",
+                    "This armor is lightweight and allows for quick movement, add +1 to your evasion."
+            ));
+            creator.saveFeature(new FeatureDTO(
+                    "Quick Throw",
+                    "You can throw this dagger quickly, add +1 to your finesse when throwing."
+            ));
             creator.saveAncestry(new AncestryDTO(
                     "human",
                     "Human's are the reason for human error.",
                     new FeatureDTO(
                             "half-blind",
-                            "You wear glasses or lenses."),
+                            "You wear glasses or lenses."
+                    ),
                     new FeatureDTO(
                             "Male pattern baldness",
                             "At least hair transplants are very effective nowadays.")
