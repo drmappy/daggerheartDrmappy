@@ -75,7 +75,7 @@ public class PlayerService {
         }
     }
     @Transactional
-    public PlayerDTO getPlayerById(String username, String password) throws DatabaseError {
+    public PlayerDTO getPlayer(String username, String password) throws DatabaseError {
         try {
             return new PlayerDTO((Player) accountRepository.getByUsernameAndPassword(username, password));
         } catch (Exception e) {

@@ -1,6 +1,7 @@
 package dnd.perso.playerclient.modele;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.*;
 
 @Entity
@@ -9,10 +10,8 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Community {
+public class IndependentFeature {
     @Id
     private String name;
     private String description;
-    @OneToOne(cascade = CascadeType.ALL)
-    private DependantFeature independentFeature;
 }

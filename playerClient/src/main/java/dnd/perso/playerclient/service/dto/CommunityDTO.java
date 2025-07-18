@@ -22,6 +22,6 @@ public class CommunityDTO {
     public CommunityDTO(Community community) {
         this.name = community.getName();
         this.description = community.getDescription();
-        this.feature = new FeatureDTO(community.getFeature());
+        this.feature = new FeatureDTO(community.getIndependentFeature());
     }
 }

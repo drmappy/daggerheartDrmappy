@@ -16,5 +16,5 @@ public class Armor {
     private int majorToSevere;
     private int baseArmorScore;
     @ManyToOne
-    private Feature feature;
+    private IndependentFeature independentFeature;
 }

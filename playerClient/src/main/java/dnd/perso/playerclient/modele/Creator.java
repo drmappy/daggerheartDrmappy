@@ -23,19 +23,16 @@ public class Creator extends Account{
     @OneToMany(cascade = CascadeType.ALL)
     private List<DaggerheartClass> daggerheartClasses;
     @OneToMany(cascade = CascadeType.ALL)
-    private List<SubClass> subclasses;
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Feature> features;
+    private List<IndependentFeature> independentFeatures;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Weapon> weapons;
-    public Creator(String username, String password, List<Armor> armors, List<Ancestry> ancestries, List<Community> communities, List<DaggerheartClass> daggerheartClasses, List<SubClass> subclasses, List<Feature> features, List<Weapon> weapons) {
+    public Creator(String username, String password, List<Armor> armors, List<Ancestry> ancestries, List<Community> communities, List<DaggerheartClass> daggerheartClasses, List<IndependentFeature> independentFeatures, List<Weapon> weapons) {
         super(username, password);
         this.armors = armors;
         this.ancestries = ancestries;
         this.communities = communities;
         this.daggerheartClasses = daggerheartClasses;
-        this.subclasses = subclasses;
-        this.features = features;
+        this.independentFeatures = independentFeatures;
         this.weapons = weapons;
     }
 }

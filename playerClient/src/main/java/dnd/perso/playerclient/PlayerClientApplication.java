@@ -262,77 +262,75 @@ public class PlayerClientApplication {
                     ),
                     "Image data"
             );
-            creatorService.saveFeature(new FeatureDTO(
+            FeatureDTO feature1 = new FeatureDTO(
                     "half-blind",
                     "You wear glasses or lenses."
-                    )
             );
-            creatorService.saveFeature(new FeatureDTO(
+            FeatureDTO feature2 = new FeatureDTO(
                     "Male pattern baldness",
                     "At least hair transplants are very effective nowadays."
-                    )
             );
-            creatorService.saveFeature(new FeatureDTO(
+            FeatureDTO feature3 = new FeatureDTO(
                     "City Dweller",
                     "You are used to the hustle and bustle of city life add +1 to your evasion."
-            ));
-            creatorService.saveFeature(new FeatureDTO(
+            );
+            FeatureDTO feature4 = new FeatureDTO(
                     "Survivalist",
                     "You are skilled in surviving in the wilderness, add +1 to your survival checks."
-            ));
-            creatorService.saveFeature(new FeatureDTO(
+            );
+            FeatureDTO feature5 = new FeatureDTO(
                "Tracker",
                     "You can track creatures and find their trails."
-            ));
-            creatorService.saveFeature(new FeatureDTO(
+            );
+            FeatureDTO feature6 = new FeatureDTO(
                     "Survival",
                     "You are skilled in surviving in the wilderness, add +1 to your survival checks."
-            ));
-            creatorService.saveFeature(new FeatureDTO(
+            );
+            FeatureDTO feature7 = new FeatureDTO(
                     "Tracking",
                     "You can track creatures and find their trails."
-            ));
-            creatorService.saveFeature(new FeatureDTO(
+            );
+            FeatureDTO feature8 = new FeatureDTO(
                     "Summon Beast",
                     "Summon a beast companion to aid you in combat."
-            ));
-            creatorService.saveFeature(new FeatureDTO(
+            );
+            FeatureDTO feature9 = new FeatureDTO(
                     "Summon Beast better",
                     "Summon a beast companion to aid you in combat, but its better."
-            ));
-            creatorService.saveFeature(new FeatureDTO(
+            );
+            FeatureDTO feature10 = new FeatureDTO(
                     "Summon Beast best",
                     "Summon a beast companion to aid you in combat, but its even better."
-            ));
-            creatorService.saveFeature(new FeatureDTO(
+            );
+            FeatureDTO feature11 = new FeatureDTO(
                     "Pathfinder",
                     "You can find the best path through difficult terrain."
-            ));
-            creatorService.saveFeature(new FeatureDTO(
+            );
+            FeatureDTO feature12 = new FeatureDTO(
                     "Pathfinder better",
                     "You can find the best path through difficult terrain, but its better."
-            ));
-            creatorService.saveFeature(new FeatureDTO(
+            );
+            FeatureDTO feature13 = new FeatureDTO(
                     "Pathfinder best",
                     "You can find the best path through difficult terrain, but its even better."
-            ));
-            creatorService.saveFeature(new FeatureDTO(
+            );
+            FeatureDTO feature14 = new FeatureDTO(
                     "Silent Steps",
                     "These boots allow you to move silently, add +1 to your stealth."
-            ));
-            creatorService.saveFeature(new FeatureDTO(
+            );
+            FeatureDTO feature15 = new FeatureDTO(
                     "Quick Strike",
                     "You can strike quickly with this weapon, add +1 to your finesse when bellow half your hit points rounded up."
-            ));
-            creatorService.saveFeature(new FeatureDTO(
+            );
+            FeatureDTO feature16 = new FeatureDTO(
                     "Lightweight",
                     "This armor is lightweight and allows for quick movement, add +1 to your evasion."
-            ));
-            creatorService.saveFeature(new FeatureDTO(
+            );
+            FeatureDTO feature17 = new FeatureDTO(
                     "Quick Throw",
                     "You can throw this dagger quickly, add +1 to your finesse when throwing."
-            ));
-            creatorService.saveAncestry(new AncestryDTO(
+            );
+            AncestryDTO ancestry= new AncestryDTO(
                     "human",
                     "Human's are the reason for human error.",
                     new FeatureDTO(
@@ -341,18 +339,18 @@ public class PlayerClientApplication {
                     ),
                     new FeatureDTO(
                             "Male pattern baldness",
-                            "At least hair transplants are very effective nowadays.")
+                            "At least hair transplants are very effective nowadays."
                     )
             );
-            creatorService.saveCommunity(new CommunityDTO(
+            CommunityDTO communityDTO = new CommunityDTO(
                     "The City",
                     "A place where people live together in a community.",
                     new FeatureDTO(
                             "City Dweller",
-                            "You are used to the hustle and bustle of city life add +1 to your evasion.")
+                            "You are used to the hustle and bustle of city life add +1 to your evasion."
                     )
             );
-            creatorService.saveClass(
+            DaggerheartClassDTO daggerheartClassDTO =
                     new DaggerheartClassDTO(
                             "Ranger",
                             "A master of the wilderness, skilled in tracking and survival.",
@@ -431,9 +429,8 @@ public class PlayerClientApplication {
                                             )
                                     )
                             )
-                    )
             );
-            creatorService.saveArmor(
+            ArmorDTO armorDTO =
                     new ArmorDTO(
                             "Leather Boots",
                             2,
@@ -443,9 +440,9 @@ public class PlayerClientApplication {
                                     "Silent Steps",
                                     "These boots allow you to move silently, add +1 to your stealth."
                             )
-                    )
             );
-            creatorService.saveArmor(new ArmorDTO(
+            ArmorDTO armorDTO2 =
+            new ArmorDTO(
                     "Leather Armor",
                     6,
                     13,
@@ -454,9 +451,8 @@ public class PlayerClientApplication {
                             "Lightweight",
                             "This armor is lightweight and allows for quick movement, add +1 to your evasion."
                     )
-                    )
             );
-            creatorService.saveWeapon(
+            WeaponDTO weaponDTO1 =
                     new WeaponDTO(
                             "Short Sword",
                             CharacterSpellTrait.AGILITY,
@@ -471,10 +467,9 @@ public class PlayerClientApplication {
                                     "Quick Strike",
                                     "You can strike quickly with this weapon, add +1 to your finesse when bellow half your hit points rounded up."
                             )
-                    )
             );
-            creatorService.saveWeapon(
-                    new WeaponDTO(
+            WeaponDTO weaponDTO2 =
+            new WeaponDTO(
                             "Short Sword number 2",
                             CharacterSpellTrait.AGILITY,
                             Range.MELEE,
@@ -488,9 +483,8 @@ public class PlayerClientApplication {
                                     "Quick Strike",
                                     "You can strike quickly with this weapon, add +1 to your finesse when bellow half your hit points rounded up."
                             )
-                    )
             );
-            creatorService.saveWeapon(
+            WeaponDTO weaponDTO3 =
                     new WeaponDTO(
                             "Dagger",
                             CharacterSpellTrait.AGILITY,
@@ -505,14 +499,15 @@ public class PlayerClientApplication {
                                     "Quick Throw",
                                     "You can throw this dagger quickly, add +1 to your finesse when throwing."
                             )
-                    )
             );
-            creatorService.saveCreator(new CreatorDTO("Maxi", "password"));
+            creatorService.saveCreator(new CreatorDTO("Maxi", "password", List.of(), List.of(), List.of(), List.of(), List.of(feature1, feature2, feature3, feature4, feature5, feature6, feature7, feature8, feature9, feature10, feature11, feature12, feature13, feature14, feature15, feature16, feature17), List.of()));
+            creatorService.saveCreator(new CreatorDTO("Maxi", "password", List.of(armorDTO, armorDTO2), List.of(ancestry), List.of(communityDTO), List.of(daggerheartClassDTO), List.of(feature1, feature2, feature3, feature4, feature5, feature6, feature7, feature8, feature9, feature10, feature11, feature12, feature13, feature14, feature15, feature16, feature17), List.of(weaponDTO1, weaponDTO2, weaponDTO3)));
             System.out.println(creatorService.getCreator("Maxi", "password"));
             playerService.savePlayer(new PlayerDTO("Maximus", "password"));
-            System.out.println(playerService.getPlayerById("Maximus", "password"));
+            System.out.println(playerService.getPlayer("Maximus", "password"));
+            //listof characters cannot fully save due to weapons not being saved because of the way creator is saved.
             playerService.savePlayer(new PlayerDTO("Massi", "password", List.of(characterDTO)));
-            System.out.println(playerService.getPlayerById("Massi", "password"));
+            System.out.println(playerService.getPlayer("Massi", "password"));
 
             System.out.println(playerService.getCharacterById(1L));
             System.out.println(playerService.getClassById("Ranger"));

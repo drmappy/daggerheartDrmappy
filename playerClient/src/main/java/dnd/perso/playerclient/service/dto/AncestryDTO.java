@@ -24,7 +24,7 @@ public class AncestryDTO {
     public AncestryDTO(Ancestry ancestry) {
         this.name = ancestry.getName();
         this.description = ancestry.getDescription();
-        this.feature1 = new FeatureDTO(ancestry.getFeature1());
-        this.feature2 = new FeatureDTO(ancestry.getFeature2());
+        this.feature1 = new FeatureDTO(ancestry.getIndependentFeature1());
+        this.feature2 = new FeatureDTO(ancestry.getIndependentFeature2());
     }
 }

@@ -10,7 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Feature {
+public class DependantFeature {
     @Id
     private String name;
     private String description;

@@ -1,6 +1,5 @@
 package dnd.perso.playerclient.service.dto;
 
-import dnd.perso.playerclient.modele.Account;
 import dnd.perso.playerclient.modele.Creator;
 import lombok.*;
 
@@ -22,13 +21,12 @@ public class CreatorDTO extends AccountDTO {
     public CreatorDTO(String username, String password) {
         super(username, password);
     }
-    public CreatorDTO(String username, String password, List<ArmorDTO> armors, List<AncestryDTO> ancestries, List<CommunityDTO> communities, List<DaggerheartClassDTO> daggerheartClasses, List<SubClassDTO> subclasses, List<FeatureDTO> features, List<WeaponDTO> weapons) {
+    public CreatorDTO(String username, String password, List<ArmorDTO> armors, List<AncestryDTO> ancestries, List<CommunityDTO> communities, List<DaggerheartClassDTO> daggerheartClasses, List<FeatureDTO> features, List<WeaponDTO> weapons) {
         super(username, password);
         this.armors = armors;
         this.ancestries = ancestries;
         this.communities = communities;
         this.daggerheartClasses = daggerheartClasses;
-        this.subclasses = subclasses;
         this.features = features;
         this.weapons = weapons;
     }
@@ -38,8 +36,7 @@ public class CreatorDTO extends AccountDTO {
         this.ancestries = creator.getAncestries().stream().map(AncestryDTO::new).toList();
         this.communities = creator.getCommunities().stream().map(CommunityDTO::new).toList();
         this.daggerheartClasses = creator.getDaggerheartClasses().stream().map(DaggerheartClassDTO::new).toList();
-        this.subclasses = creator.getSubclasses().stream().map(SubClassDTO::new).toList();
-        this.features = creator.getFeatures().stream().map(FeatureDTO::new).toList();
+        this.features = creator.getIndependentFeatures().stream().map(FeatureDTO::new).toList();
         this.weapons = creator.getWeapons().stream().map(WeaponDTO::new).toList();
     }
     public Creator toModele(){
@@ -50,7 +47,6 @@ public class CreatorDTO extends AccountDTO {
                 this. ancestries != null ? this.ancestries.stream().map(AncestryDTO::toModele).toList() : List.of(),
                 this.communities != null ? this.communities.stream().map(CommunityDTO::toModele).toList() : List.of(),
                 this.daggerheartClasses != null ? this.daggerheartClasses.stream().map(DaggerheartClassDTO::toModele).toList() : List.of(),
-                this.subclasses != null ? this.subclasses.stream().map(SubClassDTO::toModele).toList() : List.of(),
                 this.features != null ? this.features.stream().map(FeatureDTO::toModele).toList() : List.of(),
                 this.weapons != null ? this.weapons.stream().map(WeaponDTO::toModele).toList() : List.of()
         );

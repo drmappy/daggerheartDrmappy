@@ -1,7 +1,6 @@
 package dnd.perso.playerclient.service.dto;
 
 import dnd.perso.playerclient.modele.Armor;
-import jakarta.persistence.Entity;
 import lombok.*;
 
 @Getter
@@ -29,6 +28,6 @@ public class ArmorDTO {
         this.minorToMajor = armor.getMinorToMajor();
         this.majorToSevere = armor.getMajorToSevere();
         this.baseArmorScore = armor.getBaseArmorScore();
-        this.feature = armor.getFeature() != null ? new FeatureDTO(armor.getFeature()) : null;
+        this.feature = armor.getIndependentFeature() != null ? new FeatureDTO(armor.getIndependentFeature()) : null;
     }
 }

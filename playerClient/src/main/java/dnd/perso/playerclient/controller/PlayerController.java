@@ -13,24 +13,8 @@ public class PlayerController {
     public PlayerController(PlayerService playerService) {
         this.playerService = playerService;
     }
-    @GetMapping("Class/{name}")
-    public ResponseEntity<DaggerheartClassDTO> getDaggerHeartClass(@PathVariable String name) {
-        try{
-            return ResponseEntity.ok().body(playerService.getClassById(name));
-        }catch (Exception e){
-            return ResponseEntity.notFound().build();
-        }
-    }
-    @GetMapping("SubClass/{name}")
-    public ResponseEntity<SubClassDTO> getSubClass(@PathVariable String name) {
-        try{
-            return ResponseEntity.ok().body(playerService.getSubClassById(name));
-        }catch (Exception e){
-            return ResponseEntity.notFound().build();
-        }
-    }
-    @PostMapping("/characterCreation")
-    public ResponseEntity<Void> createCharacter(@RequestBody PlayerDTO playerDTO) {
+    @PostMapping("/save")
+    public ResponseEntity<Void> player(@RequestBody PlayerDTO playerDTO) {
         try {
             playerService.savePlayer(playerDTO);
             return ResponseEntity.ok().build();
@@ -38,7 +22,41 @@ public class PlayerController {
             return ResponseEntity.badRequest().build();
         }
     }
-    @GetMapping("characterVue")
+    @GetMapping("get")
+    public ResponseEntity<PlayerDTO> getPlayer(@RequestBody PlayerDTO playerDTO) {
+        try {
+            PlayerDTO player = playerService.getPlayer(playerDTO.getUsername(), playerDTO.getPassword());
+            return ResponseEntity.ok(player);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @GetMapping("/class/{name}")
+    public ResponseEntity<DaggerheartClassDTO> getDaggerHeartClass(@PathVariable String name) {
+        try{
+            return ResponseEntity.ok().body(playerService.getClassById(name));
+        }catch (Exception e){
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @GetMapping("/subclass/{name}")
+    public ResponseEntity<SubClassDTO> getSubClass(@PathVariable String name) {
+        try{
+            return ResponseEntity.ok().body(playerService.getSubClassById(name));
+        }catch (Exception e){
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @GetMapping("/profile")
+    public ResponseEntity<PlayerDTO> getPlayerProfile(@RequestBody PlayerDTO playerDTO) {
+        try {
+            PlayerDTO player = playerService.getPlayer(playerDTO.getUsername(), playerDTO.getPassword());
+            return ResponseEntity.ok(player);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @GetMapping("/characterVue")
     public ResponseEntity<DaggerheartCharacterDTO> getCharacterVue(@RequestBody Long id) {
         try {
             DaggerheartCharacterDTO character = playerService.getCharacterById(id);
@@ -83,7 +101,7 @@ public class PlayerController {
             return ResponseEntity.notFound().build();
         }
     }
-    @GetMapping("armor")
+    @GetMapping("/armor")
     public ResponseEntity<ArmorDTO> getArmor(@RequestBody String name) {
         try {
             ArmorDTO armor = playerService.getArmorById(name);
@@ -92,7 +110,7 @@ public class PlayerController {
             return ResponseEntity.notFound().build();
         }
     }
-    @GetMapping("experience")
+    @GetMapping("/experience")
     public ResponseEntity<ExperienceDTO> getExperience(@RequestBody Long id) {
         try {
             ExperienceDTO experience = playerService.getExperienceById(id);
