@@ -14,5 +14,5 @@ public class Community {
     private String name;
     private String description;
     @OneToOne(cascade = CascadeType.ALL)
-    private DependantFeature independentFeature;
+    private Feature feature;
 }

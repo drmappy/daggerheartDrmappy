@@ -33,8 +33,8 @@ public class SubClassDTO {
         this.name = subClass.getName();
         this.description = subClass.getDescription();
         this.spellCastingTrait = subClass.getSpellcastingTrait();
-        this.foundationFeatures = subClass.getFoundationIndependentFeatures().stream().map(FeatureDTO::new).toList();
-        this.specializationFeatures = subClass.getSpecializationIndependentFeatures().stream().map(FeatureDTO::new).toList();
-        this.masteryFeatures = subClass.getMasteryIndependentFeatures().stream().map(FeatureDTO::new).toList();
+        this.foundationFeatures = subClass.getFoundationFeatures().stream().map(FeatureDTO::new).toList();
+        this.specializationFeatures = subClass.getSpecializationFeatures().stream().map(FeatureDTO::new).toList();
+        this.masteryFeatures = subClass.getMasteryFeatures().stream().map(FeatureDTO::new).toList();
     }
 }

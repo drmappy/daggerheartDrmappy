@@ -21,7 +21,7 @@ public class Weapon {
     private Damage damage;
     private Burden burden;
     @ManyToOne
-    private IndependentFeature independentFeature;
+    private Feature feature;
     public Weapon(String name, CharacterSpellTrait trait, Range range, Damage damage, Burden burden) {
         this.name = name;
         this.trait = trait;

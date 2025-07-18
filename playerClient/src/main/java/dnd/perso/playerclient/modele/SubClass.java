@@ -18,9 +18,9 @@ public class SubClass {
     private CharacterSpellTrait spellcastingTrait;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private List<DependantFeature> foundationIndependentFeatures;
+    private List<Feature> foundationFeatures;
     @OneToMany(cascade = CascadeType.ALL)
-    private List<DependantFeature> specializationIndependentFeatures;
+    private List<Feature> specializationFeatures;
     @OneToMany(cascade = CascadeType.ALL)
-    private List<DependantFeature> masteryIndependentFeatures;
+    private List<Feature> masteryFeatures;
 }

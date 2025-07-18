@@ -42,6 +42,6 @@ public class WeaponDTO {
         this.range = weapon.getRange();
         this.damage = new DamageDTO(weapon.getDamage());
         this.burden = weapon.getBurden();
-        this.feature = weapon.getIndependentFeature() != null ? new FeatureDTO(weapon.getIndependentFeature()) : null;
+        this.feature = weapon.getFeature() != null ? new FeatureDTO(weapon.getFeature()) : null;
     }
 }

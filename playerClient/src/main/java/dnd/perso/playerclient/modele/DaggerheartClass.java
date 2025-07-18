@@ -21,9 +21,9 @@ public class DaggerheartClass {
     private int startingHitPoints;
     private String classItem;
     @OneToMany(cascade = CascadeType.ALL)
-    private List<DependantFeature> hopeIndependentFeatures;
+    private List<Feature> hopeFeatures;
     @OneToMany(cascade = CascadeType.ALL)
-    private List<DependantFeature> classIndependentFeatures;
+    private List<Feature> classFeatures;
     @OneToMany(cascade = CascadeType.ALL)
     private List<SubClass> subClasses;
 }

@@ -10,28 +10,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class CreatorService {
     // Constructor
-    private final DaggerheartClassRepository daggerheartClassRepository;
-    private final AncestryRepository ancestryRepository;
-    private final CommunityRepository communityRepository;
-    private final ArmorRepository armorRepository;
-    private final WeaponRepository weaponRepository;
     private final FeatureRepository featureRepository;
     private final AccountRepository accountRepository;
 
     public CreatorService(
-            DaggerheartClassRepository daggerheartClassRepository,
-            AncestryRepository ancestryRepository,
-            CommunityRepository communityRepository,
-            ArmorRepository armorRepository,
-            WeaponRepository weaponRepository,
             FeatureRepository featureRepository,
             AccountRepository accountRepository
     ) {
-        this.daggerheartClassRepository = daggerheartClassRepository;
-        this.ancestryRepository = ancestryRepository;
-        this.communityRepository = communityRepository;
-        this.armorRepository = armorRepository;
-        this.weaponRepository = weaponRepository;
         this.featureRepository = featureRepository;
         this.accountRepository = accountRepository;
     }
@@ -43,6 +28,14 @@ public class CreatorService {
             accountRepository.save(creatorDTO.toModele());
         } catch (Exception e) {
             throw e;
+        }
+    }
+    @Transactional
+    public void saveWeaponOrArmorFeature(FeatureDTO featureDTO) throws DatabaseError {
+        try {
+            featureRepository.save(featureDTO.toModele());
+        } catch (Exception e) {
+            throw new DatabaseError();
         }
     }
     @Transactional

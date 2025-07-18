@@ -28,6 +28,6 @@ public class ArmorDTO {
         this.minorToMajor = armor.getMinorToMajor();
         this.majorToSevere = armor.getMajorToSevere();
         this.baseArmorScore = armor.getBaseArmorScore();
-        this.feature = armor.getIndependentFeature() != null ? new FeatureDTO(armor.getIndependentFeature()) : null;
+        this.feature = armor.getFeature() != null ? new FeatureDTO(armor.getFeature()) : null;
     }
 }

@@ -14,7 +14,7 @@ public class Ancestry {
     private String name;
     private String description;
     @OneToOne(cascade = CascadeType.ALL)
-    private DependantFeature independentFeature1;
+    private Feature feature1;
     @OneToOne(cascade = CascadeType.ALL)
-    private DependantFeature independentFeature2;
+    private Feature feature2;
 }

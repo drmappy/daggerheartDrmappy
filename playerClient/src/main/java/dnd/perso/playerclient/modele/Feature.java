@@ -1,5 +1,6 @@
 package dnd.perso.playerclient.modele;
 
+import dnd.perso.playerclient.modele.enums.FeatureType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.*;
@@ -10,8 +11,9 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class DependantFeature {
+public class Feature {
     @Id
     private String name;
     private String description;
+    private FeatureType type;
 }

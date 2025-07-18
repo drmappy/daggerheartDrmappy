@@ -41,8 +41,8 @@ public class DaggerheartClassDTO {
         this.startingEvasion = daggerheartClass.getStartingEvasion();
         this.startingHitPoints = daggerheartClass.getStartingHitPoints();
         this.classItem = daggerheartClass.getClassItem();
-        this.hopeFeatures = daggerheartClass.getHopeIndependentFeatures().stream().map(FeatureDTO::new).toList();
-        this.classFeatures = daggerheartClass.getClassIndependentFeatures().stream().map(FeatureDTO::new).toList();
+        this.hopeFeatures = daggerheartClass.getHopeFeatures().stream().map(FeatureDTO::new).toList();
+        this.classFeatures = daggerheartClass.getClassFeatures().stream().map(FeatureDTO::new).toList();
         this.subClasses = daggerheartClass.getSubClasses().stream().map(SubClassDTO::new).toList();
     }
 }

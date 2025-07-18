@@ -1,6 +1,7 @@
 package dnd.perso.playerclient.service.dto;
 
-import dnd.perso.playerclient.modele.IndependentFeature;
+import dnd.perso.playerclient.modele.Feature;
+import dnd.perso.playerclient.modele.enums.FeatureType;
 import lombok.*;
 
 @Getter
@@ -11,15 +12,18 @@ import lombok.*;
 public class FeatureDTO {
     private String name;
     private String description;
+    private FeatureType type;
 
-    public IndependentFeature toModele() {
-        return new IndependentFeature(
+    public Feature toModele() {
+        return new Feature(
                 name,
-                description
+                description,
+                type
         );
     }
-    public FeatureDTO(IndependentFeature independentFeature) {
-        this.name = independentFeature.getName();
-        this.description = independentFeature.getDescription();
+    public FeatureDTO(Feature feature) {
+        this.name = feature.getName();
+        this.description = feature.getDescription();
+        this.type = feature.getType();
     }
 }
