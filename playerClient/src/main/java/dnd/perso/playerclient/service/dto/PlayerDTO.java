@@ -11,21 +11,22 @@ import java.util.List;
 @ToString
 public class PlayerDTO extends AccountDTO{
     private List<DaggerheartCharacterDTO> characters;
-    public PlayerDTO(String username, String password) {
-        super(username, password);
+    public PlayerDTO(Long id, String username, String password) {
+        super(id, username, password);
     }
-    public PlayerDTO(String username, String password, List<DaggerheartCharacterDTO> characters) {
-        super(username, password);
+    public PlayerDTO(Long id, String username, String password, List<DaggerheartCharacterDTO> characters) {
+        super(id, username, password);
         this.characters = characters;
     }
     public PlayerDTO(Player player) {
-        super(player.getUsername(), player.getPassword());
+        super(player.getId(), player.getUsername(), player.getPassword());
         this.characters = player.getCharacters().stream()
                 .map(DaggerheartCharacterDTO::new)
                 .toList();
     }
     public Player toModele(){
         return new Player(
+                this.getId(),
                 this.getUsername(),
                 this.getPassword(),
                 this.characters != null ? this.characters.stream()

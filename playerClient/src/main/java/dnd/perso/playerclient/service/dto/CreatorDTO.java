@@ -17,11 +17,11 @@ public class CreatorDTO extends AccountDTO {
     private List<DaggerheartClassDTO> daggerheartClasses;
     private List<SubClassDTO> subclasses;
     private List<WeaponDTO> weapons;
-    public CreatorDTO(String username, String password) {
-        super(username, password);
+    public CreatorDTO(Long id, String username, String password) {
+        super(id, username, password);
     }
-    public CreatorDTO(String username, String password, List<ArmorDTO> armors, List<AncestryDTO> ancestries, List<CommunityDTO> communities, List<DaggerheartClassDTO> daggerheartClasses, List<WeaponDTO> weapons) {
-        super(username, password);
+    public CreatorDTO(Long id, String username, String password, List<ArmorDTO> armors, List<AncestryDTO> ancestries, List<CommunityDTO> communities, List<DaggerheartClassDTO> daggerheartClasses, List<WeaponDTO> weapons) {
+        super(id, username, password);
         this.armors = armors;
         this.ancestries = ancestries;
         this.communities = communities;
@@ -29,7 +29,7 @@ public class CreatorDTO extends AccountDTO {
         this.weapons = weapons;
     }
     public CreatorDTO(Creator creator) {
-        super(creator.getUsername(), creator.getPassword());
+        super(creator.getId(), creator.getUsername(), creator.getPassword());
         this.armors = creator.getArmors().stream().map(ArmorDTO::new).toList();
         this.ancestries = creator.getAncestries().stream().map(AncestryDTO::new).toList();
         this.communities = creator.getCommunities().stream().map(CommunityDTO::new).toList();
@@ -38,6 +38,7 @@ public class CreatorDTO extends AccountDTO {
     }
     public Creator toModele(){
         return new Creator(
+                this.getId(),
                 this.getUsername(),
                 this.getPassword(),
                 this.armors != null ? this.armors.stream().map(ArmorDTO::toModele).toList() : List.of(),

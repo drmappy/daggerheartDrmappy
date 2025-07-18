@@ -16,8 +16,8 @@ import java.util.List;
 public class Player extends Account{
     @OneToMany(cascade = CascadeType.ALL)
     private List<DaggerheartCharacter> characters;
-    public Player(String username, String password, List<DaggerheartCharacter> characters) {
-        super(username, password);
+    public Player(Long id, String username, String password, List<DaggerheartCharacter> characters) {
+        super(id, username, password);
         this.characters = characters;
     }
 }

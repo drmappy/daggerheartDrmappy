@@ -31,8 +31,10 @@ public class CreatorService {
         }
     }
     @Transactional
-    public void saveWeaponOrArmorFeature(FeatureDTO featureDTO) throws DatabaseError {
+    public void saveWeaponOrArmorFeature(FeatureDTO featureDTO, CreatorDTO creatorDTO) throws DatabaseError {
         try {
+            accountRepository.getByUsernameAndPassword(creatorDTO.getUsername(), creatorDTO.getPassword());
+            featureDTO.setCreatedBy(creatorDTO.getId());
             featureRepository.save(featureDTO.toModele());
         } catch (Exception e) {
             throw new DatabaseError();

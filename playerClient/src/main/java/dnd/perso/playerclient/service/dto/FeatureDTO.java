@@ -13,12 +13,14 @@ public class FeatureDTO {
     private String name;
     private String description;
     private FeatureType type;
+    private Long createdBy;
 
     public Feature toModele() {
         return new Feature(
                 name,
                 description,
-                type
+                type,
+                createdBy
         );
     }
     public FeatureDTO(Feature feature) {

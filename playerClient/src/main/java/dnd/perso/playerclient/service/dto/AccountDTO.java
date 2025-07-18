@@ -9,6 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public abstract class AccountDTO {
+    private Long id;
     private String username;
     private String password;
 
