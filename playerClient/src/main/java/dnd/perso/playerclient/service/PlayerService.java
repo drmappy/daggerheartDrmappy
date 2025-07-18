@@ -1,13 +1,14 @@
 package dnd.perso.playerclient.service;
 
 import dnd.perso.playerclient.exception.DatabaseError;
+import dnd.perso.playerclient.modele.Player;
 import dnd.perso.playerclient.repository.*;
 import dnd.perso.playerclient.service.dto.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class Player {
+public class PlayerService {
 
     // Constructor
     private final DaggerheartCharacterRepository daggerheartCharacterRepository;
@@ -19,7 +20,8 @@ public class Player {
     private final WeaponRepository weaponRepository;
     private final ArmorRepository armorRepository;
     private final ExperienceRepository experienceRepository;
-    public Player(
+    private final AccountRepository accountRepository;
+    public PlayerService(
             DaggerheartCharacterRepository daggerheartCharacterRepository,
             DaggerheartClassRepository daggerheartClassRepository,
             SubclassRepository subclassRepository,
@@ -28,7 +30,8 @@ public class Player {
             FeatureRepository featureRepository,
             WeaponRepository weaponRepository,
             ArmorRepository armorRepository,
-            ExperienceRepository experienceRepository
+            ExperienceRepository experienceRepository,
+            AccountRepository accountRepository
     ) {
         this.daggerheartCharacterRepository = daggerheartCharacterRepository;
         this.daggerheartClassRepository = daggerheartClassRepository;
@@ -39,6 +42,7 @@ public class Player {
         this.weaponRepository = weaponRepository;
         this.armorRepository = armorRepository;
         this.experienceRepository = experienceRepository;
+        this.accountRepository = accountRepository;
     }
 
     // Methods
@@ -63,9 +67,17 @@ public class Player {
         }
     }
     @Transactional
-    public void saveCharacter(DaggerheartCharacterDTO characterDTO) throws Exception {
+    public void savePlayer(PlayerDTO playerDTO) throws Exception {
         try {
-            daggerheartCharacterRepository.save(characterDTO.toModele(characterDTO));
+            accountRepository.save(playerDTO.toModele());
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+    @Transactional
+    public PlayerDTO getPlayerById(String username, String password) throws DatabaseError {
+        try {
+            return new PlayerDTO((Player) accountRepository.getByUsernameAndPassword(username, password));
         } catch (Exception e) {
             throw e;
         }

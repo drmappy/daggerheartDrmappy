@@ -1,6 +1,6 @@
 package dnd.perso.playerclient.controller;
 
-import dnd.perso.playerclient.service.Player;
+import dnd.perso.playerclient.service.PlayerService;
 import dnd.perso.playerclient.service.dto.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/player")
 @CrossOrigin(origins = "http://localhost:5173")
 public class PlayerController {
-    private final Player playerService;
-    public PlayerController(Player playerService) {
+    private final PlayerService playerService;
+    public PlayerController(PlayerService playerService) {
         this.playerService = playerService;
     }
-    @GetMapping("/{name}")
+    @GetMapping("Class/{name}")
     public ResponseEntity<DaggerheartClassDTO> getDaggerHeartClass(@PathVariable String name) {
         try{
             return ResponseEntity.ok().body(playerService.getClassById(name));
@@ -21,7 +21,7 @@ public class PlayerController {
             return ResponseEntity.notFound().build();
         }
     }
-    @GetMapping("/{name}")
+    @GetMapping("SubClass/{name}")
     public ResponseEntity<SubClassDTO> getSubClass(@PathVariable String name) {
         try{
             return ResponseEntity.ok().body(playerService.getSubClassById(name));
@@ -30,9 +30,9 @@ public class PlayerController {
         }
     }
     @PostMapping("/characterCreation")
-    public ResponseEntity<Void> createCharacter(@RequestBody DaggerheartCharacterDTO daggerheartCharacterDTO) {
+    public ResponseEntity<Void> createCharacter(@RequestBody PlayerDTO playerDTO) {
         try {
-            playerService.saveCharacter(daggerheartCharacterDTO);
+            playerService.savePlayer(playerDTO);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
