@@ -2,6 +2,7 @@ package dnd.perso.playerclient.controller;
 
 import dnd.perso.playerclient.service.CreatorService;
 import dnd.perso.playerclient.service.dto.CreatorDTO;
+import dnd.perso.playerclient.service.dto.FeatureDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +29,15 @@ public class CreatorController {
             CreatorDTO creatorDTO0 = creatorService.getCreator(creatorDTO.getUsername(), creatorDTO.getPassword());
             return ResponseEntity.ok(creatorDTO0);
         } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    @PostMapping("/save")
+    public ResponseEntity<Void> saveCreator(@RequestBody FeatureDTO featureDTO, @RequestBody CreatorDTO creatorDTO) {
+        try{
+            creatorService.saveWeaponOrArmorFeature(featureDTO, creatorDTO);
+            return ResponseEntity.ok().build();
+        }catch (Exception e){
             return ResponseEntity.badRequest().build();
         }
     }
