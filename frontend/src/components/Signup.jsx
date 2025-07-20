@@ -24,13 +24,6 @@ function Signup(){
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
-
-            const data = await response.json();
-            if (data && data.id) {
-                console.log('Signup successful:', data);
-            } else {
-                setError('Signup failed. Please try again.');
-            }
         } catch (err) {
             setError(`Erreur lors de l'inscription: ${err.message}`);
         } finally {

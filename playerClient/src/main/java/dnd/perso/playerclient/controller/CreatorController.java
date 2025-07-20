@@ -32,7 +32,7 @@ public class CreatorController {
             return ResponseEntity.badRequest().build();
         }
     }
-    @PostMapping("/save")
+    @PostMapping("/saveFeature")
     public ResponseEntity<Void> saveCreator(@RequestBody FeatureDTO featureDTO, @RequestBody CreatorDTO creatorDTO) {
         try{
             creatorService.saveWeaponOrArmorFeature(featureDTO, creatorDTO);
