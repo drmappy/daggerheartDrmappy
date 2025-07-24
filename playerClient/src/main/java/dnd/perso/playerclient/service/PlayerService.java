@@ -152,4 +152,75 @@ public class PlayerService {
             throw e;
         }
     }
+
+    public AncestryDTO[] getAllAncestries() throws DatabaseError {
+        try {
+            return ancestryRepository.findAll().stream()
+                    .map(AncestryDTO::new)
+                    .toArray(AncestryDTO[]::new);
+        } catch (Exception e) {
+            throw new DatabaseError();
+        }
+    }
+
+    public DaggerheartClassDTO[] getAllClasses() throws DatabaseError {
+        try {
+            return daggerheartClassRepository.findAll().stream()
+                    .map(DaggerheartClassDTO::new)
+                    .toArray(DaggerheartClassDTO[]::new);
+        } catch (Exception e) {
+            throw new DatabaseError();
+        }
+    }
+
+    public SubClassDTO[] getAllSubClasses() throws DatabaseError {
+        try {
+            return subclassRepository.findAll().stream()
+                    .map(SubClassDTO::new)
+                    .toArray(SubClassDTO[]::new);
+        } catch (Exception e) {
+            throw new DatabaseError();
+        }
+    }
+
+    public CommunityDTO[] getAllCommunities() throws DatabaseError {
+        try {
+            return communityRepository.findAll().stream()
+                    .map(CommunityDTO::new)
+                    .toArray(CommunityDTO[]::new);
+        } catch (Exception e) {
+            throw new DatabaseError();
+        }
+    }
+
+    public WeaponDTO[] getAllWeapons() throws DatabaseError {
+        try {
+            return weaponRepository.findAll().stream()
+                    .map(WeaponDTO::new)
+                    .toArray(WeaponDTO[]::new);
+        } catch (Exception e) {
+            throw new DatabaseError();
+        }
+    }
+
+    public ArmorDTO[] getAllArmors() throws DatabaseError {
+        try {
+            return armorRepository.findAll().stream()
+                    .map(ArmorDTO::new)
+                    .toArray(ArmorDTO[]::new);
+        } catch (Exception e) {
+            throw new DatabaseError();
+        }
+    }
+
+    public SubClassDTO[] getSubClassesByClass(String className) throws DatabaseError {
+        try {
+            return daggerheartClassRepository.findByName(className).stream()
+                    .flatMap(daggerheartClass -> daggerheartClass.getSubClasses().stream())
+                    .map(SubClassDTO::new)
+                    .toArray(SubClassDTO[]::new);
+        } catch (Exception e) {
+            throw new DatabaseError();
+        }
+    }
 }

@@ -120,4 +120,67 @@ public class PlayerController {
             return ResponseEntity.notFound().build();
         }
     }
+    @GetMapping("/allAncestries")
+    public ResponseEntity<AncestryDTO[]> getAllAncestries() {
+        try {
+            AncestryDTO[] ancestries = playerService.getAllAncestries();
+            return ResponseEntity.ok(ancestries);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @GetMapping("/allClasses")
+    public ResponseEntity<DaggerheartClassDTO[]> getAllClasses() {
+        try {
+            DaggerheartClassDTO[] classes = playerService.getAllClasses();
+            return ResponseEntity.ok(classes);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @GetMapping("/allSubClasses")
+    public ResponseEntity<SubClassDTO[]> getAllSubClasses() {
+        try {
+            SubClassDTO[] subClasses = playerService.getAllSubClasses();
+            return ResponseEntity.ok(subClasses);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @GetMapping("/allCommunities")
+    public ResponseEntity<CommunityDTO[]> getAllCommunities() {
+        try {
+            CommunityDTO[] communities = playerService.getAllCommunities();
+            return ResponseEntity.ok(communities);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @GetMapping("/allWeapons")
+    public ResponseEntity<WeaponDTO[]> getAllWeapons() {
+        try {
+            WeaponDTO[] weapons = playerService.getAllWeapons();
+            return ResponseEntity.ok(weapons);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @GetMapping("/allArmors")
+    public ResponseEntity<ArmorDTO[]> getAllArmors() {
+        try {
+            ArmorDTO[] armors = playerService.getAllArmors();
+            return ResponseEntity.ok(armors);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @GetMapping("/{className}/subClasses")
+    public ResponseEntity<SubClassDTO[]> getSubClassesByClass(@PathVariable String className) {
+        try {
+            SubClassDTO[] subClasses = playerService.getSubClassesByClass(className);
+            return ResponseEntity.ok(subClasses);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
