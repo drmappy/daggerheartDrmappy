@@ -27,6 +27,7 @@ public class CreatorController {
     public ResponseEntity<CreatorDTO> getProfile(@RequestBody CreatorDTO creatorDTO) {
         try {
             CreatorDTO sentCreator = creatorService.getCreator(creatorDTO.getUsername(), creatorDTO.getPassword());
+            System.out.println("Creator retrieved: " + sentCreator);
             return ResponseEntity.ok(sentCreator);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();

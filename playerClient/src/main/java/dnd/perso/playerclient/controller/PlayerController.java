@@ -26,6 +26,7 @@ public class PlayerController {
     public ResponseEntity<PlayerDTO> getPlayer(@RequestBody PlayerDTO playerDTO) {
         try {
             PlayerDTO player = playerService.getPlayer(playerDTO.getUsername(), playerDTO.getPassword());
+            System.out.println("Player retrieved: " + player);
             return ResponseEntity.ok(player);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();

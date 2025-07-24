@@ -19,6 +19,7 @@ import CreateClass from "./components/CreateClass.jsx";
 import CreateSubclass from "./components/CreateSubclass.jsx";
 import CreateWeaponOrArmorFeature from "./components/CreateWeaponOrArmorFeature.jsx";
 import CreateCharacter from "./components/CreateCharacter.jsx";
+import Character from "./components/Character.jsx";
 function App() {
     const router = createBrowserRouter(
         createRoutesFromElements(
@@ -39,6 +40,7 @@ function App() {
                 <Route path="player" element={<PlayerLayout/>}>
                     <Route index element={<Profile/>}/>
                     <Route path="createCharacter" element={<CreateCharacter/>}/>
+                    <Route path="character" element={<Character/>}/>
                 </Route>
             </Route>
         )
