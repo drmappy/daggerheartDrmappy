@@ -32,13 +32,22 @@ function Character() {
             <p>Languages: {character.heritage.languages.join(', ')}</p>
             <p>Class: {character.characterClass.name}</p>
             <p>SubClass: {character.subClass.name}</p>
+            <p>Traits</p>
+            <ul>
+                <li>agility: {character.traits.agility}</li>
+                <li>strength: {character.traits.strength}</li>
+                <li>instinct: {character.traits.instinct}</li>
+                <li>knowledge: {character.traits.knowledge}</li>
+                <li>presence: {character.traits.presence}</li>
+                <li>strength: {character.traits.strength}</li>
+            </ul>
             <p>HP: {character.modifiers.hp + character.characterClass.startingHitPoints}</p>
             <p>Stress: {character.stress}</p>
             <p>Hope: {character.modifiers.hope}</p>
             <p>Evasion: {character.modifiers.evasion + character.characterClass.startingEvasion}</p>
-            <p>Armor: {character.modifiers.armor}</p>
+            <p>Armor: {character.modifiers.armor + character.equipement.activeArmor.baseArmorScore}</p>
             <p>
-                Damage Threshold: Minor to Major: {character.modifiers.damageThreshold.minorToMajor}, Major to Severe: {character.modifiers.damageThreshold.majorToSevere}
+                Damage Threshold: Minor to Major: {character.modifiers.damageThreshold.minorToMajor + character.equipement.activeArmor.minorToMajor}, Major to Severe: {character.modifiers.damageThreshold.majorToSevere + character.equipement.activeArmor.majorToSevere}
             </p>
             <h2>Class Features</h2>
             <ul>
@@ -60,16 +69,19 @@ function Character() {
             <ul>
                 {character.subClass.foundationFeatures.map((feature, index) => (
                     <li key={index}>
+                        foundation feature:<br/>
                         <strong>{feature.name}:</strong> {feature.description}
                     </li>
                 ))}
                 {character.subClass.specializationFeatures.map((feature, index) => (
                     <li key={index}>
+                        specialization feature:<br/>
                         <strong>{feature.name}:</strong> {feature.description}
                     </li>
                 ))}
                 {character.subClass.masteryFeatures.map((feature, index) => (
                     <li key={index}>
+                        mastery feature:<br/>
                         <strong>{feature.name}:</strong> {feature.description}
                     </li>
                 ))}
@@ -92,195 +104,62 @@ function Character() {
                     </li>
                 )}
             </ul>
+            <h2>Equipment</h2>
+            <h3>Primary Weapon</h3>
+            <p>
+                <strong>{character.equipement.primary.name}</strong> - Trait: {character.equipement.primary.trait}, Range: {character.equipement.primary.range}, Damage: {character.equipement.primary.damage.baseDamage}d{character.equipement.primary.damage.dieSize} ({character.equipement.primary.damage.damageType})
+            </p>
+            <p>{character.equipement.primary.feature.name}: {character.equipement.primary.feature.description}</p>
+            <h3>Secondary Weapon</h3>
+            <p>
+                <strong>{character.equipement.secondary.name}</strong> - Trait: {character.equipement.secondary.trait}, Range: {character.equipement.secondary.range}, Damage: {character.equipement.secondary.damage.baseDamage}d{character.equipement.secondary.damage.dieSize} ({character.equipement.secondary.damage.damageType})
+            </p>
+            <p>{character.equipement.secondary.feature.name}: {character.equipement.secondary.feature.description}</p>
+            <h3>Active Armor</h3>
+            <p>
+                <strong>{character.equipement.activeArmor.name}</strong> - Base Armor Score: {character.equipement.activeArmor.baseArmorScore}, Minor to Major: {character.equipement.activeArmor.minorToMajor}, Major to Severe: {character.equipement.activeArmor.majorToSevere}
+            </p>
+            <p>{character.equipement.activeArmor.feature.name}: {character.equipement.activeArmor.feature.description}</p>
+
+            <h2>Inventory</h2>
+            <h3>Items</h3>
+            <ul>
+                {character.inventory.items.map((item, index) => (
+                    <li key={index}>{item}</li>
+                ))}
+            </ul>
+            <h3>Weapons</h3>
+            <ul>
+                {character.inventory.weapons.map((weapon, index) => (
+                    <li key={index}>
+                        <strong>{weapon.name}</strong> - Trait: {weapon.trait}, Range: {weapon.range}, Damage: {weapon.damage.baseDamage}d{weapon.damage.dieSize} ({weapon.damage.damageType})
+                        <p>{weapon.feature.name}: {weapon.feature.description}</p>
+                    </li>
+                ))}
+            </ul>
+            <h3>Armors</h3>
+            <ul>
+                {character.inventory.armors.map((armor, index) => (
+                    <li key={index}>
+                        <strong>{armor.name}</strong> - Base Armor Score: {armor.baseArmorScore}, Minor to Major: {armor.minorToMajor}, Major to Severe: {armor.majorToSevere}
+                        <p>{armor.feature.name}: {armor.feature.description}</p>
+                    </li>
+                ))}
+            </ul>
+            <h2>Gold</h2>
+            <ul>
+                <li>Handfuls: {character.gold.handfuls}</li>
+                <li>Bags: {character.gold.bags}</li>
+                <li>Chest: {character.gold.chest}</li>
+            </ul>
+            <h2>Experiences</h2>
+            <ul>{character.experiences.map((exp, index) => (
+            <li key={index}>
+                    <strong>{exp.experience}</strong> +{exp.modifier}
+                </li>
+            ))}
+            </ul>
         </div>
     );
 }
-
 export default Character;
-// {
-//     "id": 1,
-//     "name": "Massi",
-//     "pronouns": "He/Him",
-//     "heritage": {
-//     "id": 1,
-//         "ancestry": {
-//         "name": "human",
-//             "description": "Human's are the reason for human error.",
-//             "feature1": {
-//             "name": "half-blind",
-//                 "description": "You wear glasses or lenses.",
-//                 "type": "ANCESTRY",
-//                 "createdBy": null
-//         },
-//         "feature2": {
-//             "name": "Male pattern baldness",
-//                 "description": "At least hair transplants are very effective nowadays.",
-//                 "type": "ANCESTRY",
-//                 "createdBy": null
-//         }
-//     },
-//     "community": {
-//         "name": "The City",
-//             "description": "A place where people live together in a community.",
-//             "feature": {
-//             "name": "City Dweller",
-//                 "description": "You are used to the hustle and bustle of city life add +1 to your evasion.",
-//                 "type": "COMMUNITY",
-//                 "createdBy": null
-//         }
-//     },
-//     "languages": [
-//         "english",
-//         "french",
-//         "polish"
-//     ]
-// },
-//     "modifiers": {
-//     "id": 1,
-//         "evasion": 1,
-//         "armor": 0,
-//         "damageThreshold": {
-//         "id": 1,
-//             "minorToMajor": 0,
-//             "majorToSevere": 0
-//     },
-//     "hp": 0,
-//         "stress": 0,
-//         "hope": 0
-// },
-//     "characterClass": {
-//     "name": "Ranger",
-//         "description": "A master of the wilderness, skilled in tracking and survival.",
-//         "domains": [
-//         "BONE",
-//         "SAGE"
-//     ],
-//         "startingEvasion": 10,
-//         "startingHitPoints": 6,
-//         "classItem": "A compass or a map that helps you navigate through the wilderness.",
-//         "hopeFeatures": [
-//         {
-//             "name": "Survivalist",
-//             "description": "You are skilled in surviving in the wilderness, add +1 to your survival checks.",
-//             "type": "HOPE",
-//             "createdBy": null
-//         },
-//         {
-//             "name": "Tracker",
-//             "description": "You can track creatures and find their trails.",
-//             "type": "HOPE",
-//             "createdBy": null
-//         }
-//     ],
-//         "classFeatures": [
-//         {
-//             "name": "Survival",
-//             "description": "You are skilled in surviving in the wilderness, add +1 to your survival checks.",
-//             "type": "CLASS",
-//             "createdBy": null
-//         },
-//         {
-//             "name": "Tracking",
-//             "description": "You can track creatures and find their trails.",
-//             "type": "CLASS",
-//             "createdBy": null
-//         }
-//     ],
-//         "subClasses": [
-//         {
-//             "name": "Beastmaster",
-//             "description": "A ranger who has a deep bond with a beast companion.",
-//             "spellCastingTrait": "AGILITY",
-//             "foundationFeatures": [
-//                 {
-//                     "name": "Summon Beast",
-//                     "description": "Summon a beast companion to aid you in combat.",
-//                     "type": "FOUNDATION",
-//                     "createdBy": null
-//                 }
-//             ],
-//             "specializationFeatures": [
-//                 {
-//                     "name": "Summon Beast better",
-//                     "description": "Summon a beast companion to aid you in combat, but its better.",
-//                     "type": "SPECIALIZATION",
-//                     "createdBy": null
-//                 }
-//             ],
-//             "masteryFeatures": [
-//                 {
-//                     "name": "Summon Beast best",
-//                     "description": "Summon a beast companion to aid you in combat, but its even better.",
-//                     "type": "MASTERY",
-//                     "createdBy": null
-//                 }
-//             ]
-//         },
-//         {
-//             "name": "Wayfinder",
-//             "description": "A ranger who is skilled in navigation and exploration.",
-//             "spellCastingTrait": "AGILITY",
-//             "foundationFeatures": [
-//                 {
-//                     "name": "Pathfinder",
-//                     "description": "You can find the best path through difficult terrain.",
-//                     "type": "FOUNDATION",
-//                     "createdBy": null
-//                 }
-//             ],
-//             "specializationFeatures": [
-//                 {
-//                     "name": "Pathfinder better",
-//                     "description": "You can find the best path through difficult terrain, but its better.",
-//                     "type": "SPECIALIZATION",
-//                     "createdBy": null
-//                 }
-//             ],
-//             "masteryFeatures": [
-//                 {
-//                     "name": "Pathfinder best",
-//                     "description": "You can find the best path through difficult terrain, but its even better.",
-//                     "type": "MASTERY",
-//                     "createdBy": null
-//                 }
-//             ]
-//         }
-//     ]
-// },
-//     "subClass": {
-//     "name": "Wayfinder",
-//         "description": "A ranger who is skilled in navigation and exploration.",
-//         "spellCastingTrait": "AGILITY",
-//         "foundationFeatures": [
-//         {
-//             "name": "Pathfinder",
-//             "description": "You can find the best path through difficult terrain.",
-//             "type": "FOUNDATION",
-//             "createdBy": null
-//         }
-//     ],
-//         "specializationFeatures": [
-//         {
-//             "name": "Pathfinder better",
-//             "description": "You can find the best path through difficult terrain, but its better.",
-//             "type": "SPECIALIZATION",
-//             "createdBy": null
-//         }
-//     ],
-//         "masteryFeatures": [
-//         {
-//             "name": "Pathfinder best",
-//             "description": "You can find the best path through difficult terrain, but its even better.",
-//             "type": "MASTERY",
-//             "createdBy": null
-//         }
-//     ]
-// },
-//     "stress": 0,
-//     "traits": null,
-//     "equipement": null,
-//     "experiences": null,
-//     "gold": null,
-//     "inventory": null,
-//     "imageBinaryData": null
-// }

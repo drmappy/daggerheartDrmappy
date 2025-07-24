@@ -7,7 +7,7 @@ function PlayerNavigation(){
                 <ul>
                     <li>
                         <NavLink
-                            to="/createCharacter"
+                            to="/player/createCharacter"
                             end
                         >
                             Create Character
