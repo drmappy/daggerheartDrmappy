@@ -1,3 +1,6 @@
+import PlayerNavigation from "./PlayerNavigation.jsx";
+import { Outlet } from 'react-router';
+
 function PlayerLayout(){
     return(
       <>

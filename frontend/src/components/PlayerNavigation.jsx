@@ -1,3 +1,5 @@
+import { NavLink } from 'react-router';
+
 function PlayerNavigation(){
     return (
         <header>
@@ -5,10 +7,18 @@ function PlayerNavigation(){
                 <ul>
                     <li>
                         <NavLink
-                            to="/"
+                            to="/createCharacter"
                             end
                         >
-                            Accueil
+                            Create Character
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink
+                            to="/player"
+                            end
+                        >
+                            Profile
                         </NavLink>
                     </li>
                 </ul>

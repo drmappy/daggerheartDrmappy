@@ -1,4 +1,5 @@
 import {useState} from "react";
+import { useNavigate } from 'react-router';
 
 function Signup(){
     const [loading, setLoading] = useState(false);
@@ -6,6 +7,7 @@ function Signup(){
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [accountType, setAccountType] = useState('creator');
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -20,10 +22,16 @@ function Signup(){
                 },
                 body: JSON.stringify({username, password}),
             });
-
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
+            const saveData = {
+                username: username,
+                password: password,
+                accountType: accountType
+            }
+            localStorage.setItem('Account', JSON.stringify(saveData));
+            navigate(`/${accountType}`);
         } catch (err) {
             setError(`Erreur lors de l'inscription: ${err.message}`);
         } finally {
@@ -76,7 +84,7 @@ function Signup(){
                             <label htmlFor="player">PLAYER</label>
                         </div>
                         <button type="submit" disabled={loading}>
-                            {loading ? 'Recherche en cours...' : 'Rechercher'}
+                            {loading ? 'Signup en cours...' : 'Signup'}
                         </button>
                         {error && <div>{error}</div>}
                     </div>

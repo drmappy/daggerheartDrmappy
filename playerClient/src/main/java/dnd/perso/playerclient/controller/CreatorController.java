@@ -23,11 +23,11 @@ public class CreatorController {
             return ResponseEntity.badRequest().build();
         }
     }
-    @GetMapping("/get")
+    @PostMapping("/get")
     public ResponseEntity<CreatorDTO> getProfile(@RequestBody CreatorDTO creatorDTO) {
         try {
-            CreatorDTO creatorDTO0 = creatorService.getCreator(creatorDTO.getUsername(), creatorDTO.getPassword());
-            return ResponseEntity.ok(creatorDTO0);
+            CreatorDTO sentCreator = creatorService.getCreator(creatorDTO.getUsername(), creatorDTO.getPassword());
+            return ResponseEntity.ok(sentCreator);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }

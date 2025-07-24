@@ -22,7 +22,7 @@ public class PlayerController {
             return ResponseEntity.badRequest().build();
         }
     }
-    @GetMapping("get")
+    @PostMapping("get")
     public ResponseEntity<PlayerDTO> getPlayer(@RequestBody PlayerDTO playerDTO) {
         try {
             PlayerDTO player = playerService.getPlayer(playerDTO.getUsername(), playerDTO.getPassword());
