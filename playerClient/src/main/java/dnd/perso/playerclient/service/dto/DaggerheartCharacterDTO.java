@@ -67,5 +67,14 @@ public class DaggerheartCharacterDTO {
         this.modifiers = new ModifiersDTO(daggerheartCharacter.getModifiers());
         this.characterClass = new DaggerheartClassDTO(daggerheartCharacter.getCharacterClass());
         this.subClass = new SubClassDTO(daggerheartCharacter.getSubClass());
+        this.stress = daggerheartCharacter.getStress();
+        this.traits = new CharacterTraitsDTO(daggerheartCharacter.getTraits());
+        this.equipement = new EquipmentDTO(daggerheartCharacter.getEquipment());
+        this.experiences = daggerheartCharacter.getExperiences().stream()
+                .map(ExperienceDTO::new)
+                .toList();
+        this.gold = new GoldDTO(daggerheartCharacter.getGold());
+        this.inventory = new InventoryDTO(daggerheartCharacter.getInventory());
+        this.imageBinaryData = daggerheartCharacter.getImageBinaryData();
     }
 }

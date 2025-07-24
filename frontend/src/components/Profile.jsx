@@ -35,6 +35,7 @@ function Profile() {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
             const data = await response.json();
+            localStorage.setItem("Account", JSON.stringify(data));
             setUser(data);
             setError(null);
         } catch (err) {
@@ -56,7 +57,7 @@ function Profile() {
                 <div>
                     <h1>{user.username}</h1>
                     <p>{user.accountType}</p>
-                    {Array.isArray(user.characters) && user.characters.length > 0 ? (
+                    {user.accountType && user.accountType.toLowerCase() === 'player' && Array.isArray(user.characters) && user.characters.length > 0 ? (
                         <div>
                             <h2>Mes personnages</h2>
                             <ul>

@@ -10,6 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 public class PlayerDTO extends AccountDTO{
+    final String accountType = "player";
     private List<DaggerheartCharacterDTO> characters;
     public PlayerDTO(Long id, String username, String password) {
         super(id, username, password);

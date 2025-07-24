@@ -11,6 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 public class CreatorDTO extends AccountDTO {
+    final String accountType = "creator";
     private List<ArmorDTO> armors;
     private List<AncestryDTO> ancestries;
     private List<CommunityDTO> communities;
