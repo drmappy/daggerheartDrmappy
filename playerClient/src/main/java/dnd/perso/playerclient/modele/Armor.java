@@ -17,4 +17,11 @@ public class Armor {
     private int baseArmorScore;
     @ManyToOne
     private Feature feature;
+    public Armor(String name, int minorToMajor, int majorToSevere, int baseArmorScore) {
+        this.name = name;
+        this.minorToMajor = minorToMajor;
+        this.majorToSevere = majorToSevere;
+        this.baseArmorScore = baseArmorScore;
+
+    }
 }

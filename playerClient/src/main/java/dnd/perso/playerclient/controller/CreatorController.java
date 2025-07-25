@@ -15,6 +15,7 @@ public class CreatorController {
     }
     @PostMapping("/save")
     public ResponseEntity<Void> signup(@RequestBody CreatorDTO creatorDTO) {
+        System.out.println("Received creatorDTO: " + creatorDTO);
         try{
             creatorService.saveCreator(creatorDTO);
             return ResponseEntity.ok().build();

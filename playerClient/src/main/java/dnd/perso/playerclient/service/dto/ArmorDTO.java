@@ -14,6 +14,12 @@ public class ArmorDTO {
     private int majorToSevere;
     private int baseArmorScore;
     private FeatureDTO feature;
+    public ArmorDTO(String name, int minorToMajor, int majorToSevere, int baseArmorScore) {
+        this.name = name;
+        this.minorToMajor = minorToMajor;
+        this.majorToSevere = majorToSevere;
+        this.baseArmorScore = baseArmorScore;
+    }
     public Armor toModele(){
         return new Armor(
                 name,

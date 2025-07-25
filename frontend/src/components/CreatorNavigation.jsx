@@ -66,7 +66,7 @@ function CreatorNavigation(){
                             to="/creator/createFeatureItems"
                             end
                         >
-                            Create a Feature for Weapon or Armor
+                            Create a Feature
                         </NavLink>
                     </li>
                 </ul>
