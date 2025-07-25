@@ -24,12 +24,15 @@ public class Creator extends Account{
     private List<DaggerheartClass> daggerheartClasses;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Weapon> weapons;
-    public Creator(Long id, String username, String password, List<Armor> armors, List<Ancestry> ancestries, List<Community> communities, List<DaggerheartClass> daggerheartClasses, List<Weapon> weapons) {
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Feature> features;
+    public Creator(Long id, String username, String password, List<Armor> armors, List<Ancestry> ancestries, List<Community> communities, List<DaggerheartClass> daggerheartClasses, List<Weapon> weapons, List<Feature> features) {
         super(id, username, password);
         this.armors = armors;
         this.ancestries = ancestries;
         this.communities = communities;
         this.daggerheartClasses = daggerheartClasses;
         this.weapons = weapons;
+        this.features = features;
     }
 }

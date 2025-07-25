@@ -10,14 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class CreatorService {
     // Constructor
-    private final FeatureRepository featureRepository;
     private final AccountRepository accountRepository;
 
     public CreatorService(
-            FeatureRepository featureRepository,
             AccountRepository accountRepository
     ) {
-        this.featureRepository = featureRepository;
         this.accountRepository = accountRepository;
     }
 
@@ -28,16 +25,6 @@ public class CreatorService {
             accountRepository.save(creatorDTO.toModele());
         } catch (Exception e) {
             throw e;
-        }
-    }
-    @Transactional
-    public void saveWeaponOrArmorFeature(FeatureDTO featureDTO, CreatorDTO creatorDTO) throws DatabaseError {
-        try {
-            accountRepository.getByUsernameAndPassword(creatorDTO.getUsername(), creatorDTO.getPassword());
-            featureDTO.setCreatedBy(creatorDTO.getId());
-            featureRepository.save(featureDTO.toModele());
-        } catch (Exception e) {
-            throw new DatabaseError();
         }
     }
     @Transactional

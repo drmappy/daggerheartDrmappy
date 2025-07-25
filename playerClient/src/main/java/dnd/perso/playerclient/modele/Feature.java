@@ -16,5 +16,4 @@ public class Feature {
     private String name;
     private String description;
     private FeatureType type;
-    private long createdBy;
 }

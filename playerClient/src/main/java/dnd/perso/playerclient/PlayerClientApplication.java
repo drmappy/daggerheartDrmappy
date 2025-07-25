@@ -27,7 +27,7 @@ public class PlayerClientApplication {
     CommandLineRunner run(){
         return args -> {
             TcpServer.createTcpServer("daggerheartdrmappy");
-            creatorService.saveCreator(new CreatorDTO(null, "Maxi", "password", List.of(), List.of(), List.of(), List.of(), List.of()));
+            creatorService.saveCreator(new CreatorDTO(null, "Maxi", "password", List.of(), List.of(), List.of(), List.of(), List.of(), List.of()));
             DaggerheartCharacterDTO characterDTO = new DaggerheartCharacterDTO("Massi",
                     "He/Him",
                     new HeritageDTO(
@@ -37,14 +37,12 @@ public class PlayerClientApplication {
                                     new FeatureDTO(
                                             "half-blind",
                                             "You wear glasses or lenses.",
-                                            FeatureType.ANCESTRY,
-                                            1L
+                                            FeatureType.ANCESTRY
                                             ),
                                     new FeatureDTO(
                                             "Male pattern baldness",
                                             "At least hair transplants are very effective nowadays.",
-                                            FeatureType.ANCESTRY,
-                                            1L
+                                            FeatureType.ANCESTRY
                                             )
                             ),
                             new CommunityDTO(
@@ -53,8 +51,7 @@ public class PlayerClientApplication {
                                     new FeatureDTO(
                                             "City Dweller",
                                             "You are used to the hustle and bustle of city life add +1 to your evasion.",
-                                            FeatureType.COMMUNITY,
-                                            1L
+                                            FeatureType.COMMUNITY
                                             )
                             ),
                             List.of("english", "french", "polish")
@@ -84,28 +81,24 @@ public class PlayerClientApplication {
                                     new FeatureDTO(
                                             "Survivalist",
                                             "You are skilled in surviving in the wilderness, add +1 to your survival checks.",
-                                            FeatureType.HOPE,
-                                            1L
+                                            FeatureType.HOPE
                                     ),
                                     new FeatureDTO(
                                             "Tracker",
                                             "You can track creatures and find their trails.",
-                                            FeatureType.HOPE,
-                                            1L
+                                            FeatureType.HOPE
                                     )
                             ),
                             List.of(
                                     new FeatureDTO(
                                             "Survival",
                                             "You are skilled in surviving in the wilderness, add +1 to your survival checks.",
-                                            FeatureType.CLASS,
-                                            1L
+                                            FeatureType.CLASS
                                     ),
                                     new FeatureDTO(
                                             "Tracking",
                                             "You can track creatures and find their trails.",
-                                            FeatureType.CLASS,
-                                            1L
+                                            FeatureType.CLASS
                                     )
                             ),
                             List.of(
@@ -117,24 +110,21 @@ public class PlayerClientApplication {
                                                     new FeatureDTO(
                                                             "Summon Beast",
                                                             "Summon a beast companion to aid you in combat.",
-                                                            FeatureType.FOUNDATION,
-                                                            1L
+                                                            FeatureType.FOUNDATION
                                                     )
                                             ),
                                             List.of(
                                                     new FeatureDTO(
                                                             "Summon Beast",
                                                             "Summon a beast companion to aid you in combat, but its better.",
-                                                            FeatureType.SPECIALIZATION,
-                                                            1L
+                                                            FeatureType.SPECIALIZATION
                                                     )
                                             ),
                                             List.of(
                                                     new FeatureDTO(
                                                             "Summon Beast",
                                                             "Summon a beast companion to aid you in combat, but its even better.",
-                                                            FeatureType.MASTERY,
-                                                            1L
+                                                            FeatureType.MASTERY
                                                     )
                                             )
                                     ),
@@ -146,24 +136,21 @@ public class PlayerClientApplication {
                                                     new FeatureDTO(
                                                             "Pathfinder",
                                                             "You can find the best path through difficult terrain.",
-                                                            FeatureType.FOUNDATION,
-                                                            1L
+                                                            FeatureType.FOUNDATION
                                                     )
                                             ),
                                             List.of(
                                                     new FeatureDTO(
                                                             "Pathfinder",
                                                             "You can find the best path through difficult terrain, but its better.",
-                                                            FeatureType.SPECIALIZATION,
-                                                            1L
+                                                            FeatureType.SPECIALIZATION
                                                     )
                                             ),
                                             List.of(
                                                     new FeatureDTO(
                                                             "Pathfinder",
                                                             "You can find the best path through difficult terrain, but its even better.",
-                                                            FeatureType.MASTERY,
-                                                            1L
+                                                            FeatureType.MASTERY
                                                     )
                                             )
                                     )
@@ -177,24 +164,21 @@ public class PlayerClientApplication {
                                     new FeatureDTO(
                                             "Pathfinder",
                                             "You can find the best path through difficult terrain.",
-                                            FeatureType.FOUNDATION,
-                                            1L
+                                            FeatureType.FOUNDATION
                                     )
                             ),
                             List.of(
                                     new FeatureDTO(
                                             "Pathfinder",
                                             "You can find the best path through difficult terrain, but its better.",
-                                            FeatureType.SPECIALIZATION,
-                                            1L
+                                            FeatureType.SPECIALIZATION
                                     )
                             ),
                             List.of(
                                     new FeatureDTO(
                                             "Pathfinder",
                                             "You can find the best path through difficult terrain, but its even better.",
-                                            FeatureType.MASTERY,
-                                            1L
+                                            FeatureType.MASTERY
                                     )
                             )
                     ),
@@ -221,8 +205,7 @@ public class PlayerClientApplication {
                                     new FeatureDTO(
                                             "Quick Strike",
                                             "You can strike quickly with this weapon, add +1 to your finesse when bellow half your hit points rounded up.",
-                                            FeatureType.WEAPON,
-                                            1L
+                                            FeatureType.WEAPON
                                     )
                             ),
                             new WeaponDTO(
@@ -238,8 +221,7 @@ public class PlayerClientApplication {
                                     new FeatureDTO(
                                             "Quick Strike",
                                             "You can strike quickly with this weapon, add +1 to your finesse when bellow half your hit points rounded up.",
-                                            FeatureType.WEAPON,
-                                            1L
+                                            FeatureType.WEAPON
                                     )
                             ),
                             new ArmorDTO(
@@ -250,8 +232,7 @@ public class PlayerClientApplication {
                                     new FeatureDTO(
                                             "Lightweight",
                                             "This armor is lightweight and allows for quick movement, add +1 to your evasion.",
-                                            FeatureType.ARMOR,
-                                            1L
+                                            FeatureType.ARMOR
                                     )
                             )
                     ),
@@ -286,8 +267,7 @@ public class PlayerClientApplication {
                                             new FeatureDTO(
                                                     "Quick Throw",
                                                     "You can throw this dagger quickly, add +1 to your finesse when throwing.",
-                                                    FeatureType.WEAPON,
-                                                    1L
+                                                    FeatureType.WEAPON
                                             )
                                     )
                             ),
@@ -300,8 +280,7 @@ public class PlayerClientApplication {
                                             new FeatureDTO(
                                                     "Silent Steps",
                                                     "These boots allow you to move silently, add +1 to your stealth.",
-                                                    FeatureType.ARMOR,
-                                                    1L
+                                                    FeatureType.ARMOR
                                             )
                                     )
                             )
@@ -314,14 +293,12 @@ public class PlayerClientApplication {
                     new FeatureDTO(
                             "half-blind",
                             "You wear glasses or lenses.",
-                            FeatureType.ANCESTRY,
-                            1L
+                            FeatureType.ANCESTRY
                     ),
                     new FeatureDTO(
                             "Male pattern baldness",
                             "At least hair transplants are very effective nowadays.",
-                            FeatureType.ANCESTRY,
-                            1L
+                            FeatureType.ANCESTRY
                     )
             );
             CommunityDTO communityDTO = new CommunityDTO(
@@ -330,8 +307,7 @@ public class PlayerClientApplication {
                     new FeatureDTO(
                             "City Dweller",
                             "You are used to the hustle and bustle of city life add +1 to your evasion.",
-                            FeatureType.COMMUNITY,
-                            1L
+                            FeatureType.COMMUNITY
                     )
             );
             DaggerheartClassDTO daggerheartClassDTO =
@@ -349,28 +325,24 @@ public class PlayerClientApplication {
                                     new FeatureDTO(
                                             "Survivalist",
                                             "You are skilled in surviving in the wilderness, add +1 to your survival checks.",
-                                            FeatureType.HOPE,
-                                            1L
+                                            FeatureType.HOPE
                                     ),
                                     new FeatureDTO(
                                             "Tracker",
                                             "You can track creatures and find their trails.",
-                                            FeatureType.HOPE,
-                                            1L
+                                            FeatureType.HOPE
                                     )
                             ),
                             List.of(
                                     new FeatureDTO(
                                             "Survival",
                                             "You are skilled in surviving in the wilderness, add +1 to your survival checks.",
-                                            FeatureType.CLASS,
-                                            1L
+                                            FeatureType.CLASS
                                     ),
                                     new FeatureDTO(
                                             "Tracking",
                                             "You can track creatures and find their trails.",
-                                            FeatureType.CLASS,
-                                            1L
+                                            FeatureType.CLASS
                                     )
                             ),
                             List.of(
@@ -382,24 +354,21 @@ public class PlayerClientApplication {
                                                     new FeatureDTO(
                                                             "Summon Beast",
                                                             "Summon a beast companion to aid you in combat.",
-                                                            FeatureType.FOUNDATION,
-                                                            1L
+                                                            FeatureType.FOUNDATION
                                                     )
                                             ),
                                             List.of(
                                                     new FeatureDTO(
                                                             "Summon Beast better",
                                                             "Summon a beast companion to aid you in combat, but its better.",
-                                                            FeatureType.SPECIALIZATION,
-                                                            1L
+                                                            FeatureType.SPECIALIZATION
                                                     )
                                             ),
                                             List.of(
                                                     new FeatureDTO(
                                                             "Summon Beast best",
                                                             "Summon a beast companion to aid you in combat, but its even better.",
-                                                            FeatureType.MASTERY,
-                                                            1L
+                                                            FeatureType.MASTERY
                                                     )
                                             )
                                     ),
@@ -411,24 +380,21 @@ public class PlayerClientApplication {
                                                     new FeatureDTO(
                                                             "Pathfinder",
                                                             "You can find the best path through difficult terrain.",
-                                                            FeatureType.FOUNDATION,
-                                                            1L
+                                                            FeatureType.FOUNDATION
                                                     )
                                             ),
                                             List.of(
                                                     new FeatureDTO(
                                                             "Pathfinder better",
                                                             "You can find the best path through difficult terrain, but its better.",
-                                                            FeatureType.SPECIALIZATION,
-                                                            1L
+                                                            FeatureType.SPECIALIZATION
                                                     )
                                             ),
                                             List.of(
                                                     new FeatureDTO(
                                                             "Pathfinder best",
                                                             "You can find the best path through difficult terrain, but its even better.",
-                                                            FeatureType.MASTERY,
-                                                            1L
+                                                            FeatureType.MASTERY
                                                     )
                                             )
                                     )
@@ -443,8 +409,7 @@ public class PlayerClientApplication {
                             new FeatureDTO(
                                     "Silent Steps",
                                     "These boots allow you to move silently, add +1 to your stealth.",
-                                    FeatureType.ARMOR,
-                                    1L
+                                    FeatureType.ARMOR
                             )
             );
             ArmorDTO armorDTO2 =
@@ -456,8 +421,7 @@ public class PlayerClientApplication {
                     new FeatureDTO(
                             "Lightweight",
                             "This armor is lightweight and allows for quick movement, add +1 to your evasion.",
-                            FeatureType.ARMOR,
-                            1L
+                            FeatureType.ARMOR
                     )
             );
             WeaponDTO weaponDTO1 =
@@ -474,8 +438,7 @@ public class PlayerClientApplication {
                             new FeatureDTO(
                                     "Quick Strike",
                                     "You can strike quickly with this weapon, add +1 to your finesse when bellow half your hit points rounded up.",
-                                    FeatureType.WEAPON,
-                                    1L
+                                    FeatureType.WEAPON
                             )
             );
             WeaponDTO weaponDTO2 =
@@ -492,8 +455,7 @@ public class PlayerClientApplication {
                             new FeatureDTO(
                                     "Quick Strike",
                                     "You can strike quickly with this weapon, add +1 to your finesse when bellow half your hit points rounded up.",
-                                    FeatureType.WEAPON,
-                                    1L
+                                    FeatureType.WEAPON
                             )
             );
             WeaponDTO weaponDTO3 =
@@ -510,47 +472,55 @@ public class PlayerClientApplication {
                             new FeatureDTO(
                                     "Quick Throw",
                                     "You can throw this dagger quickly, add +1 to your finesse when throwing.",
-                                    FeatureType.WEAPON,
-                                    1L
+                                    FeatureType.WEAPON
                             )
             );
-            creatorService.saveWeaponOrArmorFeature(
-                    new FeatureDTO(
+            //Features
+            FeatureDTO feat7 = new FeatureDTO(
+                    "enigmatic",
+                    "You are an enigma, add +1 to your stealth.",
+                    FeatureType.ANCESTRY
+            );
+            FeatureDTO feat6 = new FeatureDTO(
+                    "City Dweller",
+                    "You are used to the hustle and bustle of city life add +1 to your evasion.",
+                    FeatureType.COMMUNITY
+            );
+
+            FeatureDTO feat5 = new FeatureDTO(
+                    "Male pattern baldness",
+                    "At least hair transplants are very effective nowadays.",
+                    FeatureType.ANCESTRY
+            );
+            FeatureDTO feat4 = new FeatureDTO(
+                    "half-blind",
+                    "You wear glasses or lenses.",
+                    FeatureType.ANCESTRY
+            );
+            FeatureDTO feat3 = new FeatureDTO(
                             "Quick Throw",
                             "You can throw this dagger quickly, add +1 to your finesse when throwing.",
-                            FeatureType.WEAPON,
-                            null
-                    ),
-                    creatorService.getCreator("Maxi", "password")
+                            FeatureType.WEAPON
             );
-            creatorService.saveWeaponOrArmorFeature(
-                    new FeatureDTO(
+            FeatureDTO feat2 = new FeatureDTO(
                             "Quick Strike",
                             "You can strike quickly with this weapon, add +1 to your finesse when bellow half your hit points rounded up.",
-                            FeatureType.WEAPON,
-                            null
-                    ),
-                    creatorService.getCreator("Maxi", "password")
+                            FeatureType.WEAPON
             );
-            creatorService.saveWeaponOrArmorFeature(
-                    new FeatureDTO(
+            FeatureDTO feat1 = new FeatureDTO(
                             "Silent Steps",
                             "These boots allow you to move silently, add +1 to your stealth.",
-                            FeatureType.ARMOR,
-                            null
-                    ),
-                    creatorService.getCreator("Maxi", "password")
+                            FeatureType.ARMOR
             );
-            creatorService.saveWeaponOrArmorFeature(
-                    new FeatureDTO(
+
+            FeatureDTO feat = new FeatureDTO(
                             "Lightweight",
                             "This armor is lightweight and allows for quick movement, add +1 to your evasion.",
-                            FeatureType.ARMOR,
-                            null
-                    ),
-                    creatorService.getCreator("Maxi", "password")
+                            FeatureType.ARMOR
             );
-            creatorService.saveCreator(new CreatorDTO(1L, "Maxi", "password", List.of(armorDTO, armorDTO2), List.of(ancestry), List.of(communityDTO), List.of(daggerheartClassDTO), List.of(weaponDTO1, weaponDTO2, weaponDTO3)));
+            creatorService.saveCreator(new CreatorDTO(1L, "Maxi", "password", List.of(), List.of(), List.of(), List.of(), List.of(), List.of(feat, feat1, feat2, feat3, feat4, feat5, feat6, feat7)));
+            creatorService.saveCreator(new CreatorDTO(1L, "Maxi", "password", List.of(armorDTO, armorDTO2), List.of(ancestry), List.of(communityDTO), List.of(daggerheartClassDTO), List.of(weaponDTO1, weaponDTO2, weaponDTO3), List.of(feat, feat1, feat2, feat3)));
+
             System.out.println(creatorService.getCreator("Maxi", "password"));
             playerService.savePlayer(new PlayerDTO(null, "Maximus", "password"));
             System.out.println(playerService.getPlayer("Maximus", "password"));

@@ -17,7 +17,7 @@ import CreateArmor from "./components/CreateArmor.jsx";
 import CreateWeapon from "./components/CreateWeapon.jsx";
 import CreateClass from "./components/CreateClass.jsx";
 import CreateSubclass from "./components/CreateSubclass.jsx";
-import CreateWeaponOrArmorFeature from "./components/CreateWeaponOrArmorFeature.jsx";
+import CreateFeature from "./components/CreateFeature.jsx";
 import CreateCharacter from "./components/CreateCharacter.jsx";
 import Character from "./components/Character.jsx";
 function App() {
@@ -35,7 +35,7 @@ function App() {
                     <Route path="createWeapon" element={<CreateWeapon/>}/>
                     <Route path="createClass" element={<CreateClass/>}/>
                     <Route path="createSubclass" element={<CreateSubclass/>}/>
-                    <Route path="createFeatureItems" element={<CreateWeaponOrArmorFeature/>}/>
+                    <Route path="createFeatureItems" element={<CreateFeature/>}/>
                 </Route>
                 <Route path="player" element={<PlayerLayout/>}>
                     <Route index element={<Profile/>}/>

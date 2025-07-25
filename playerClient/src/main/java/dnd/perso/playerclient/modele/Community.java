@@ -13,6 +13,6 @@ public class Community {
     @Id
     private String name;
     private String description;
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Feature feature;
 }

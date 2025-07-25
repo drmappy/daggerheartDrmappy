@@ -183,4 +183,13 @@ public class PlayerController {
             return ResponseEntity.notFound().build();
         }
     }
+    @GetMapping("allFeatures")
+    public ResponseEntity<FeatureDTO[]> getAllFeatures() {
+        try {
+            FeatureDTO[] features = playerService.getAllFeatures();
+            return ResponseEntity.ok(features);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

@@ -13,8 +13,8 @@ public class Ancestry {
     @Id
     private String name;
     private String description;
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Feature feature1;
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Feature feature2;
 }

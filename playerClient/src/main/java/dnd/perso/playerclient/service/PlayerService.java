@@ -223,4 +223,14 @@ public class PlayerService {
             throw new DatabaseError();
         }
     }
+
+    public FeatureDTO[] getAllFeatures() throws DatabaseError {
+        try {
+            return featureRepository.findAll().stream()
+                    .map(FeatureDTO::new)
+                    .toArray(FeatureDTO[]::new);
+        } catch (Exception e) {
+            throw new DatabaseError();
+        }
+    }
 }
