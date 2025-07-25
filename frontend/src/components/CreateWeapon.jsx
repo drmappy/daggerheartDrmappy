@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 function CreateWeapon(){
-    const [name, setName] = useState(null);
+    const [name, setName] = useState("");
     const [trait, setTrait] = useState("AGILITY");
     const [range, setRange] = useState("MELEE");
     const [damage, setDamage] = useState({
@@ -35,7 +35,37 @@ function CreateWeapon(){
         fetchFeatures();
     }, []);
     const handle = () => async (e) => {
-
+        e.preventDefault();
+        setLoading(true);
+        setSuccess("");
+        setError("");
+        const account = JSON.parse(localStorage.getItem("Account"));
+        account.weapons.push({
+            name: name,
+            trait: trait,
+            range: range,
+            damage: damage,
+            burden: burden,
+            feature: feature
+        });
+        try {
+            const response = await fetch("http://localhost:8080/creator/save", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(account),
+            });
+            if (!response.ok) {
+                throw new Error("Failed to create weapon");
+            }
+            setSuccess(`Weapon "${name}" created successfully!`);
+            localStorage.setItem("Account", JSON.stringify(account));
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
     }
     return (
         <div>
@@ -106,16 +136,22 @@ function CreateWeapon(){
                 </select>
                 <label>Feature</label>
                 <select
-                    value={feature}
-                    onChange={(e) => setFeature(e.target.value)}
-                    required
+                    value={feature?.name || ""}
+                    onChange={(e) => {
+                        const selectedFeature = features.find(f => f.name === e.target.value);
+                        setFeature(selectedFeature || null);
+                    }}
                 >
                     <option value="">Select a feature</option>
-                    {features.map((f) => (
-                        <option key={f.id} value={f.id}>{f.name}</option>
+                    {features.map((feature) => (
+                        <option key={feature?.name} value={feature?.name}>
+                            {feature.name}
+                        </option>
                     ))}
                 </select>
-                <button type="submit">Create Weapon</button>
+                <button type="submit" disabled={loading}>
+                    {loading ? "Creating..." : "Create Weapon"}
+                </button>
             </form>
         </div>
     );
