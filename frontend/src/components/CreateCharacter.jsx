@@ -7,7 +7,7 @@ function CreateCharacter(){
         heritage: {
             ancestry: {},
             community: {},
-            languages: []
+            languages: ["",]
         },
         Modifiers: {
             evasion: 0,
@@ -30,7 +30,7 @@ function CreateCharacter(){
             knowledge: 0,
             presence: 0
         },
-        equipement: {
+        equipment: {
             primary:{},
             secondary: {},
             activeArmor: {},
@@ -169,10 +169,21 @@ function CreateCharacter(){
         }
     }
 
-    const handleChange = (e) => {
+    function setIn(obj, path, value) {
+        const keys = path.split('.');
+        let temp = obj;
+        for (let i = 0; i < keys.length - 1; i++) {
+            if (!temp[keys[i]]) temp[keys[i]] = {};
+            temp = temp[keys[i]];
+        }
+        temp[keys[keys.length - 1]] = value;
+        return { ...obj };
+    }
+
+    function handleChange(e) {
         const { name, value } = e.target;
-        setForm({ ...form, [name]: value });
-    };
+        setForm(prevForm => setIn({ ...prevForm }, name, value));
+    }
     const handleClassChange = async (e) => {
         const { name, value } = e.target;
         setForm({ ...form, [name]: value });
@@ -203,16 +214,16 @@ function CreateCharacter(){
             ...form,
             heritage: {
                 ...form.heritage,
-                ancestry: form.heritage.ancestry.id,
-                community: form.heritage.community.id,
+                ancestry: form.heritage.ancestry,
+                community: form.heritage.community,
                 languages: form.heritage.languages.map(lang => lang.id)
             },
-            characterClass: form.characterClass.id,
-            subClass: form.subClass.id,
-            equipement: {
-                primary: form.equipement.primary.id,
-                secondary: form.equipement.secondary.id,
-                activeArmor: form.equipement.activeArmor.id
+            characterClass: form.characterClass,
+            subClass: form.subClass,
+            equipment: {
+                primary: form.equipment.primary,
+                secondary: form.equipment.secondary,
+                activeArmor: form.equipment.activeArmor
             },
             experiences: form.experiences.map(exp => ({
                 experience: exp.experience,
@@ -284,7 +295,7 @@ function CreateCharacter(){
                         knowledge: 0,
                         presence: 0
                     },
-                    equipement: {
+                    equipment: {
                         primary: {},
                         secondary: {},
                         activeArmor: {},
@@ -365,13 +376,54 @@ function CreateCharacter(){
                 </select>
             </div>
             <div>
-                <label>Heritage Languages:</label>
-                <input
-                    type={"text"}
-                    name="language"
-                    value={form.name}
-                    onChange={handleChange}
-                />
+                <label>Languages:</label>
+                <div>
+                    {form.heritage.languages.map((lang, index) => (
+                        <div key={index}>
+                            <input
+                                type="text"
+                                name={`heritage.languages[${index}]`}
+                                value={lang}
+                                onChange={(e) => {
+                                    const newLanguages = [...form.heritage.languages];
+                                    newLanguages[index] = e.target.value;
+                                    setForm({
+                                        ...form,
+                                        heritage: {
+                                            ...form.heritage,
+                                            languages: newLanguages
+                                        }
+                                    });
+                                }}
+                                placeholder="Language"
+                            />
+                            <button onClick={(e) => {
+                                e.preventDefault();
+                                const newLanguages = form.heritage.languages.filter((_, i) => i !== index);
+                                setForm({
+                                    ...form,
+                                    heritage: {
+                                        ...form.heritage,
+                                        languages: newLanguages
+                                    }
+                                });
+                            }}>Remove</button>
+                        </div>
+                    ))}
+                </div>
+                <button onClick={(e) => {
+                    e.preventDefault();
+                    setForm({
+                        ...form,
+                        heritage: {
+                            ...form.heritage,
+                            languages: [
+                                ...form.heritage.languages,
+                                ""
+                            ]
+                        }
+                    });
+                }}>Add a new language box</button>
             </div>
             <div>
                 <label>Character Class:</label>
@@ -515,12 +567,12 @@ function CreateCharacter(){
             <div>
                 <label>Equipment Primary:</label>
                 <select
-                    name="equipement.primary"
-                    value={form.equipement.primary}
+                    name="equipment.primary"
+                    value={form.equipment.primary}
                     onChange={handleChange}
                 >
                     {weapons.map((weapon) => (
-                        <option key={weapon.id} value={weapon.id}>
+                        <option key={weapon.id} value={weapon}>
                             {weapon.name}
                         </option>
                     ))}
@@ -529,8 +581,8 @@ function CreateCharacter(){
             <div>
                 <label>Equipment Secondary:</label>
                 <select
-                    name="equipement.secondary"
-                    value={form.equipement.secondary}
+                    name="equipment.secondary"
+                    value={form.equipment.secondary}
                     onChange={handleChange}
                 >
                     {weapons.map((weapon) => (
@@ -543,8 +595,8 @@ function CreateCharacter(){
             <div>
                 <label>Equipment Active Armor:</label>
                 <select
-                    name="equipement.activeArmor"
-                    value={form.equipement.activeArmor}
+                    name="equipment.activeArmor"
+                    value={form.equipment.activeArmor}
                     onChange={handleChange}
                 >
                     {armors.map((armor) => (
@@ -556,30 +608,51 @@ function CreateCharacter(){
             </div>
             <div>
                 <label>Experiences:</label>
-                {form.experiences.map((experience, index) => (
-                    <div key={index}>
-                        <input
-                            type="text"
-                            name={`experiences[${index}].experience`}
-                            value={experience.experience}
-                            onChange={(e) => {
-                                const newExperiences = [...form.experiences];
-                                newExperiences[index].experience = e.target.value;
+                <div>
+                    {form.experiences.map((exp, index) => (
+                        <div key={index}>
+                            <input
+                                type="text"
+                                name={`experiences[${index}].experience`}
+                                value={exp.experience}
+                                onChange={(e) => {
+                                    const newExperiences = [...form.experiences];
+                                    newExperiences[index].experience = e.target.value;
+                                    setForm({ ...form, experiences: newExperiences });
+                                }}
+                                placeholder="Experience"
+                            />
+                            <input
+                                type="number"
+                                name={`experiences[${index}].modifier`}
+                                value={exp.modifier}
+                                onChange={(e) => {
+                                    const newExperiences = [...form.experiences];
+                                    newExperiences[index].modifier = parseInt(e.target.value, 10);
+                                    setForm({ ...form, experiences: newExperiences });
+                                }}
+                                placeholder="Modifier"
+                            />
+                            <button onClick={(e) => {
+                                e.preventDefault();
+                                const newExperiences = form.experiences.filter((_, i) => i !== index);
                                 setForm({ ...form, experiences: newExperiences });
-                            }}
-                        />
-                        <input
-                            type="number"
-                            name={`experiences[${index}].modifier`}
-                            value={experience.modifier}
-                            onChange={(e) => {
-                                const newExperiences = [...form.experiences];
-                                newExperiences[index].modifier = e.target.value;
-                                setForm({ ...form, experiences: newExperiences });
-                            }}
-                        />
-                    </div>
-                ))}
+                            }}>Remove</button>
+                        </div>
+                    ))}
+                </div>
+                <button onClick={
+                    (e) => {
+                        e.preventDefault();
+                        setForm({
+                            ...form,
+                            experiences: [
+                                ...form.experiences,
+                                { experience: "", modifier: 0 }
+                            ]
+                        });
+                    }
+                }>Add a new experience box</button>
             </div>
             <div>
                 <label>Gold Handfuls:</label>
@@ -608,6 +681,8 @@ function CreateCharacter(){
                     onChange={handleChange}
                 />
             </div>
+            <p>{JSON.stringify(weapons)}</p>
+            <p>{JSON.stringify(form)}</p>
             {error && <div style={{ color: 'red' }}>{error}</div>}
             {success && <div style={{ color: 'green' }}>Character created successfully!</div>}
             <button type="submit">Create Character</button>
