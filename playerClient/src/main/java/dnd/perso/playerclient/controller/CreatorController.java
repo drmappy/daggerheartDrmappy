@@ -2,8 +2,11 @@ package dnd.perso.playerclient.controller;
 
 import dnd.perso.playerclient.service.CreatorService;
 import dnd.perso.playerclient.service.dto.CreatorDTO;
+import dnd.perso.playerclient.service.dto.DaggerheartClassDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/creator")
@@ -27,8 +30,17 @@ public class CreatorController {
     public ResponseEntity<CreatorDTO> getProfile(@RequestBody CreatorDTO creatorDTO) {
         try {
             CreatorDTO sentCreator = creatorService.getCreator(creatorDTO.getUsername(), creatorDTO.getPassword());
-            System.out.println("Creator retrieved: " + sentCreator);
             return ResponseEntity.ok(sentCreator);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    @PostMapping("/myClasses")
+    public ResponseEntity<List<DaggerheartClassDTO>> getMyClasses(@RequestBody CreatorDTO creatorDTO) {
+        try {
+            CreatorDTO sentCreator = creatorService.getCreator(creatorDTO.getUsername(), creatorDTO.getPassword());
+            List<DaggerheartClassDTO> classes = sentCreator.getDaggerheartClasses();
+            return ResponseEntity.ok(classes);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
