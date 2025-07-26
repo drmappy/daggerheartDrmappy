@@ -57,7 +57,7 @@ function Profile() {
                 <div>
                     <h1>{user.username}</h1>
                     <p>{user.accountType}</p>
-                    {user.accountType && user.accountType.toLowerCase() === 'player' && Array.isArray(user.characters) && user.characters.length > 0 ? (
+                    {user.accountType && user.accountType.toLowerCase() === 'player' && Array.isArray(user.characters) && user.characters.length > 0 &&(
                         <div>
                             <h2>Mes personnages</h2>
                             <ul>
@@ -65,8 +65,6 @@ function Profile() {
                                     <li key={index} onClick={() => checkoutCharacter(character)}>{character.name}</li>                                ))}
                             </ul>
                         </div>
-                    ) : (
-                        <p>No characters.</p>
                     )}
                 </div>
             )}

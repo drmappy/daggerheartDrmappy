@@ -70,6 +70,43 @@ function CreatorNavigation(){
                         </NavLink>
                     </li>
                 </ul>
+                <ul>
+                    <li>
+                        <NavLink to="/creator/myAncestries" end>
+                            My Ancestries
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/creator/myArmors" end>
+                            My Armors
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/creator/myClasses" end>
+                            My Classes
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/creator/myCommunities" end>
+                            My Communities
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/creator/myFeatures" end>
+                            My Features
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/creator/mySubclasses" end>
+                            My Subclasses
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/creator/myWeapons" end>
+                            My Weapons
+                        </NavLink>
+                    </li>
+                </ul>
             </nav>
         </header>
     );
