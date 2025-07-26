@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 function CreateCommunity(){
-    const [loading, setLoading] = useState("");
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
-    const [feature, setFeature] = useState({});
+    const [feature, setFeature] = useState({name: "", description: ""});
     const [features, setFeatures] = useState([]);
     const fetchFeatures = async () => {
         try {
+            setLoading(true);
+            setError("");
+            setSuccess("");
             const response = await fetch("http://localhost:8080/player/allFeatures", {
                 method: "GET",
                 headers: {
@@ -20,6 +23,7 @@ function CreateCommunity(){
             }
             const data = await response.json();
             setFeatures(data.filter((feature) => feature.type === "COMMUNITY"));
+            setLoading(false);
         } catch (err) {
             setError(err.message);
         }
@@ -82,13 +86,13 @@ function CreateCommunity(){
                 />
                 <label>Feature</label>
                 <select
-                    value={feature.id || ""}
-                    onChange={(e) => setFeature(features.find(f => f.id === e.target.value))}
+                    value={feature.name || ""}
+                    onChange={(e) => setFeature(features.find(f => f.name === e.target.value))}
                     required
                 >
                     <option value="" disabled>Select a feature</option>
                     {features.map((f) => (
-                        <option key={f.id} value={f.id}>{f.name}</option>
+                        <option key={f.name} value={f.name}>{f.name}</option>
                     ))}
                 </select>
                 <button type="submit" disabled={loading}>Create Community</button>

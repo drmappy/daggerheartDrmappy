@@ -1,5 +1,6 @@
 package dnd.perso.playerclient.controller;
 
+import dnd.perso.playerclient.modele.enums.Domain;
 import dnd.perso.playerclient.service.CreatorService;
 import dnd.perso.playerclient.service.dto.CreatorDTO;
 import dnd.perso.playerclient.service.dto.DaggerheartClassDTO;
@@ -41,6 +42,15 @@ public class CreatorController {
             CreatorDTO sentCreator = creatorService.getCreator(creatorDTO.getUsername(), creatorDTO.getPassword());
             List<DaggerheartClassDTO> classes = sentCreator.getDaggerheartClasses();
             return ResponseEntity.ok(classes);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    @GetMapping("/allDomains")
+    public ResponseEntity<List<Domain>> getAllDomains() {
+        try {
+            List<Domain> domains = List.of(Domain.values());
+            return ResponseEntity.ok(domains);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
