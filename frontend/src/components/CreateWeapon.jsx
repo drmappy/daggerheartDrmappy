@@ -40,21 +40,30 @@ function CreateWeapon(){
         setSuccess("");
         setError("");
         const account = JSON.parse(localStorage.getItem("Account"));
-        account.weapons.push({
-            name: name,
-            trait: trait,
-            range: range,
-            damage: damage,
-            burden: burden,
-            feature: feature
-        });
         try {
-            const response = await fetch("http://localhost:8080/creator/save", {
+            const response = await fetch("http://localhost:8080/creator/save/weapon", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "username": account.username,
+                    "password": account.password,
                 },
-                body: JSON.stringify(account),
+                body: JSON.stringify({
+                    name,
+                    trait,
+                    range,
+                    damage: {
+                        dieSize: damage.dieSize,
+                        baseDamage: damage.baseDamage,
+                        damageType: damage.damageType
+                    },
+                    burden,
+                    feature: feature ? {
+                        name: feature.name,
+                        description: feature.description,
+                        type: feature.type
+                    } : null
+                }),
             });
             if (!response.ok) {
                 throw new Error("Failed to create weapon");

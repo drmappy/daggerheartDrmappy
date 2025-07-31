@@ -21,15 +21,15 @@ public class EquipmentDTO {
     }
     public Equipment toModele(){
         return new Equipment(
-                primary.toModele(),
-                secondary.toModele(),
-                activeArmor.toModele()
+                primary != null ? primary.toModele() : null,
+                secondary != null ? secondary.toModele() : null,
+                activeArmor != null ? activeArmor.toModele() : null
         );
     }
     public EquipmentDTO(Equipment equipment){
         this.id = equipment.getId();
-        this.primary = new WeaponDTO(equipment.getPrimary());
-        this.secondary = new WeaponDTO(equipment.getSecondary());
-        this.activeArmor = new ArmorDTO(equipment.getActiveArmor());
+        this.primary = equipment.getPrimary() == null ? null : new WeaponDTO(equipment.getPrimary());
+        this.secondary = equipment.getSecondary() == null ? null : new WeaponDTO(equipment.getSecondary());
+        this.activeArmor = equipment.getActiveArmor() == null ? null : new ArmorDTO(equipment.getActiveArmor());
     }
 }

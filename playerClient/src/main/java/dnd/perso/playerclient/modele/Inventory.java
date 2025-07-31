@@ -15,9 +15,9 @@ public class Inventory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private List<String> items;
-    @OneToMany
+    @ManyToMany
     private List<Weapon> weapons;
-    @OneToMany
+    @ManyToMany
     private List<Armor> armors;
     public Inventory(List<String> items, List<Weapon> weapons, List<Armor> armors) {
         this.items = items;

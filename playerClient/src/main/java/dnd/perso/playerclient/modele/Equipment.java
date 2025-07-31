@@ -13,11 +13,11 @@ public class Equipment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @OneToOne
+    @ManyToOne
     private Weapon primary;
-    @OneToOne
+    @ManyToOne
     private Weapon secondary;
-    @OneToOne
+    @ManyToOne
     private Armor activeArmor;
     public Equipment(Weapon primary, Weapon secondary, Armor activeArmor) {
         this.primary = primary;

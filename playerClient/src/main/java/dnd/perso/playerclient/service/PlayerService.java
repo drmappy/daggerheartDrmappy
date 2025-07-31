@@ -1,6 +1,7 @@
 package dnd.perso.playerclient.service;
 
 import dnd.perso.playerclient.exception.DatabaseError;
+import dnd.perso.playerclient.modele.DaggerheartCharacter;
 import dnd.perso.playerclient.modele.Player;
 import dnd.perso.playerclient.repository.*;
 import dnd.perso.playerclient.service.dto.*;
@@ -152,7 +153,7 @@ public class PlayerService {
             throw e;
         }
     }
-
+    @Transactional
     public AncestryDTO[] getAllAncestries() throws DatabaseError {
         try {
             return ancestryRepository.findAll().stream()
@@ -162,7 +163,7 @@ public class PlayerService {
             throw new DatabaseError();
         }
     }
-
+    @Transactional
     public DaggerheartClassDTO[] getAllClasses() throws DatabaseError {
         try {
             return daggerheartClassRepository.findAll().stream()
@@ -172,7 +173,7 @@ public class PlayerService {
             throw new DatabaseError();
         }
     }
-
+    @Transactional
     public SubClassDTO[] getAllSubClasses() throws DatabaseError {
         try {
             return subclassRepository.findAll().stream()
@@ -182,7 +183,7 @@ public class PlayerService {
             throw new DatabaseError();
         }
     }
-
+    @Transactional
     public CommunityDTO[] getAllCommunities() throws DatabaseError {
         try {
             return communityRepository.findAll().stream()
@@ -192,7 +193,7 @@ public class PlayerService {
             throw new DatabaseError();
         }
     }
-
+    @Transactional
     public WeaponDTO[] getAllWeapons() throws DatabaseError {
         try {
             return weaponRepository.findAll().stream()
@@ -202,7 +203,7 @@ public class PlayerService {
             throw new DatabaseError();
         }
     }
-
+    @Transactional
     public ArmorDTO[] getAllArmors() throws DatabaseError {
         try {
             return armorRepository.findAll().stream()
@@ -212,7 +213,7 @@ public class PlayerService {
             throw new DatabaseError();
         }
     }
-
+    @Transactional
     public SubClassDTO[] getSubClassesByClass(String className) throws DatabaseError {
         try {
             return daggerheartClassRepository.findByName(className).stream()
@@ -223,7 +224,7 @@ public class PlayerService {
             throw new DatabaseError();
         }
     }
-
+    @Transactional
     public FeatureDTO[] getAllFeatures() throws DatabaseError {
         try {
             return featureRepository.findAll().stream()
@@ -231,6 +232,20 @@ public class PlayerService {
                     .toArray(FeatureDTO[]::new);
         } catch (Exception e) {
             throw new DatabaseError();
+        }
+    }
+    @Transactional
+    public void saveCharacter(DaggerheartCharacterDTO characterDTO, String username, String password) throws Exception {
+        try {
+            Player player = (Player) accountRepository.getByUsernameAndPassword(username, password);
+            if (player == null) {
+                throw new DatabaseError();
+            }
+            DaggerheartCharacter character = characterDTO.toModele(characterDTO);
+            player.addCharacter(character);
+            daggerheartCharacterRepository.save(character);
+        } catch (Exception e) {
+            throw new Exception(e);
         }
     }
 }

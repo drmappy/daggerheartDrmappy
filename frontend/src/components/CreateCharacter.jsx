@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+//TODO:review
 function CreateCharacter(){
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
@@ -7,16 +7,17 @@ function CreateCharacter(){
     const [name, setName] = useState("");
     const [pronouns, setPronouns] = useState("");
     const [heritage, setHeritage] = useState({
-        ancestry: null,
-        community: null,
+        ancestry: {},
+        community: {},
         languages: [],
     });
+    //TODO primary secondary activeArmor are the problem
     const [allAncestories, setAllAncestries] = useState([]);
     const [allCommunities, setAllCommunities] = useState([]);
     const [modifiers, setModifiers] = useState({
         evasion: 0,
         armor: 0,
-        damageThreshold: 0,
+        damageThreshold: {minorToMajor: 0, majorToSevere: 0},
         hp: 0,
         stress: 0,
         hope: 0
@@ -24,11 +25,10 @@ function CreateCharacter(){
     const [characterClass, setCharacterClass] = useState({
     });
     const [allClasses, setAllClasses] = useState([]);
-    const [subclass, setSubclass] = useState({
+    const [subClass, setsubClass] = useState({
     });
-    const [allSubclasses, setAllSubclasses] = useState([]);
-    const [stress, setStress] = useState({
-    });
+    const [allsubClasses, setAllsubClasses] = useState([]);
+    const [stress, setStress] = useState(0);
     const [traits, setTraits] = useState({
         agility: 0,
         strength: 0,
@@ -44,31 +44,76 @@ function CreateCharacter(){
     });
     const [allWeapons, setAllWeapons] = useState([]);
     const [allArmors, setAllArmors] = useState([]);
-    const [experiences, setExperiences] = useState([
-        {
-            experience: "",
-            modifier: 0
-        }
-    ]);
+    const [experiences, setExperiences] = useState([]);
     const [gold, setGold] = useState({
         handfuls: 0,
         bags: 0,
         chest: 0,
     });
     const [inventory, setInventory] = useState({
-        items: [""],
+        items: [],
         weapons: [],
         armors: [],
     });
     const [imageBinaryData, setImageBinaryData] = useState("");
-    //TODO finish the form
     const handle = () => async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        setSuccess("");
+        setError("");
+        const account = JSON.parse(localStorage.getItem("Account"));
+        try {
+            const response = await fetch("http://localhost:8080/player/save/character", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "username": account.username,
+                    "password": account.password,
+                },
+                body: JSON.stringify({
+                    name,
+                    pronouns,
+                    heritage: {
+                        ancestry: heritage.ancestry,
+                        community: heritage.community,
+                        languages: heritage.languages,
+                    },
+                    modifiers,
+                    characterClass: characterClass,
+                    subClass: subClass,
+                    traits,
+                    equipment: {
+                        primary: equipment.primary ? equipment.primary : null,
+                        secondary: equipment.secondary ? equipment.secondary : null,
+                        activeArmor: equipment.activeArmor ? equipment.activeArmor : null,
+                    },
+                    experiences,
+                    gold,
+                    inventory: {
+                        items: inventory.items,
+                        weapons: inventory.weapons.map(w => w),
+                        armors: inventory.armors.map(a => a),
+                    },
+                    imageBinaryData,
+                    stress,
+                }),
+            });
+            if (!response.ok) {
+                throw new Error("Failed to create character");
+            }
+            setSuccess(`Character "${name}" created successfully!`);
+            localStorage.setItem("Account", JSON.stringify(account));
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
     }
     useEffect(() => {
         getAllAncestries();
         getAllCommunities();
         getAllClasses();
-        getAllSubclasses(characterClass.name);
+        getAllsubClasses(characterClass.name);
         getAllWeapons();
         getAllArmors();
         setLoading(false);
@@ -124,7 +169,7 @@ function CreateCharacter(){
             setError(err.message);
         }
     }
-    const getAllSubclasses = async (className) => {
+    const getAllsubClasses = async (className) => {
         try {
             const response = await fetch(`http://localhost:8080/player/${className}/subClasses`, {
                 method: "GET",
@@ -133,10 +178,10 @@ function CreateCharacter(){
                 },
             });
             if (!response.ok) {
-                throw new Error("Failed to fetch subclasses");
+                throw new Error("Failed to fetch subClasses");
             }
             const data = await response.json();
-            setAllSubclasses(data);
+            setAllsubClasses(data);
         } catch (err) {
             setError(err.message);
         }
@@ -196,9 +241,11 @@ function CreateCharacter(){
                 <br/>
                 <label>Ancestry:</label>
                 <select
-                    value={heritage.ancestry || ""}
-                    onChange={(e) => setHeritage({...heritage, ancestry: e.target.value
-                    })}
+                    value={heritage.ancestry?.name || ""}
+                    onChange={e => {
+                        const selected = allAncestories.find(a => a.name === e.target.value);
+                        setHeritage({ ...heritage, ancestry: selected });
+                    }}
                     required
                 >
                     <option value="">Select Ancestry</option>
@@ -211,9 +258,11 @@ function CreateCharacter(){
                 <br/>
                 <label>Community:</label>
                 <select
-                    value={heritage.community || ""}
-                    onChange={(e) => setHeritage({...heritage, community: e.target.value
-                    })}
+                    value={heritage.community?.name || ""}
+                    onChange={e => {
+                        const selected = allCommunities.find(c => c.name === e.target.value);
+                        setHeritage({ ...heritage, community: selected });
+                    }}
                     required
                 >
                     <option value="">Select Community</option>
@@ -267,12 +316,23 @@ function CreateCharacter(){
                     />
                     <br/>
                     <label>Damage Threshold:</label>
-                    <input
-                        type="number"
-                        value={modifiers.damageThreshold}
-                        onChange={(e) => setModifiers({...modifiers, damageThreshold: parseInt(e.target.value)})}
-                        required
-                    />
+                    <div>
+                        <label>Minor to Major:</label>
+                        <input
+                            type="number"
+                            value={modifiers.damageThreshold.minorToMajor}
+                            onChange={(e) => setModifiers({...modifiers, damageThreshold: {...modifiers.damageThreshold, minorToMajor: parseInt(e.target.value)}})}
+                            required
+                        />
+                        <br/>
+                        <label>Major to Severe</label>
+                        <input
+                            type="number"
+                            value={modifiers.damageThreshold.majorToSevere}
+                            onChange={(e) => setModifiers({...modifiers, damageThreshold: {...modifiers.damageThreshold, majorToSevere: parseInt(e.target.value)}})}
+                            required
+                        />
+                    </div>
                     <br/>
                     <label>HP:</label>
                     <input
@@ -305,7 +365,7 @@ function CreateCharacter(){
                     onChange={(e) => {
                         const selectedClass = allClasses.find(c => c.name === e.target.value);
                         setCharacterClass(selectedClass || {});
-                        getAllSubclasses(e.target.value);
+                        getAllsubClasses(e.target.value);
                     }}
                     required
                 >
@@ -317,30 +377,22 @@ function CreateCharacter(){
                     ))}
                 </select>
                 <br/>
-                <label>Subclass:</label>
+                <label>subClass:</label>
                 <select
-                    value={subclass.name}
+                    value={subClass.name}
                     onChange={(e) => {
-                        const selectedSubclass = allSubclasses.find(sc => sc.name === e.target.value);
-                        setSubclass(selectedSubclass || {});
+                        const selectedsubClass = allsubClasses.find(sc => sc.name === e.target.value);
+                        setsubClass(selectedsubClass || {});
                     }}
                     required
                 >
-                    <option value="">Select Subclass</option>
-                    {allSubclasses.map((subclass) => (
-                        <option key={subclass.name} value={subclass.name}>
-                            {subclass.name}
+                    <option value="">Select subClass</option>
+                    {allsubClasses.map((subClass) => (
+                        <option key={subClass.name} value={subClass.name}>
+                            {subClass.name}
                         </option>
                     ))}
                 </select>
-                <br/>
-                <label>Stress:</label>
-                <input
-                    type="number"
-                    value={stress.value || ""}
-                    onChange={(e) => setStress({...stress, value: parseInt(e.target.value)})}
-                    required
-                />
                 <br/>
                 <label>Traits:</label>
                 <div>
@@ -402,7 +454,6 @@ function CreateCharacter(){
                             const selectedWeapon = allWeapons.find(w => w.name === e.target.value);
                             setEquipment({...equipment, primary: selectedWeapon || null});
                         }}
-                        required
                     >
                         <option value="">Select Primary Weapon</option>
                         {allWeapons.map((weapon) => (
@@ -412,22 +463,25 @@ function CreateCharacter(){
                         ))}
                     </select>
                     <br/>
-                    <label>Secondary Weapon:</label>
-                    <select
-                        value={equipment.secondary?.name || ""}
-                        onChange={(e) => {
-                            const selectedWeapon = allWeapons.find(w => w.name === e.target.value);
-                            setEquipment({...equipment, secondary: selectedWeapon || null});
-                        }}
-                        required
-                    >
-                        <option value="">Select Secondary Weapon</option>
-                        {allWeapons.map((weapon) => (
-                            <option key={weapon.name} value={weapon.name}>
-                                {weapon.name}
-                            </option>
-                        ))}
-                    </select>
+                    {equipment.primary?.burden && equipment.primary.burden === "ONEHANDED" && (
+                        <div>
+                            <label>Secondary Weapon:</label>
+                            <select
+                                value={equipment.secondary?.name || ""}
+                                onChange={(e) => {
+                                    const selectedWeapon = allWeapons.find(w => w.name === e.target.value);
+                                    setEquipment({...equipment, secondary: selectedWeapon || null});
+                                }}
+                            >
+                                <option value="">Select Secondary Weapon</option>
+                                {allWeapons.filter(e => e.burden === "ONEHANDED").map((weapon) => (
+                                    <option key={weapon.name} value={weapon.name}>
+                                        {weapon.name}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                    )}
                     <br/>
                     <label>Active Armor:</label>
                     <select
@@ -436,7 +490,6 @@ function CreateCharacter(){
                             const selectedArmor = allArmors.find(a => a.name === e.target.value);
                             setEquipment({...equipment, activeArmor: selectedArmor || null});
                         }}
-                        required
                     >
                         <option value="">Select Active Armor</option>
                         {allArmors.map((armor) => (
@@ -542,7 +595,6 @@ function CreateCharacter(){
                             setInventory({...inventory, weapons: newWeapons});
                         }}
                         multiple
-                        required
                     >
                         {allWeapons.map((weapon) => (
                             <option key={weapon.name} value={weapon.name}>
@@ -560,7 +612,6 @@ function CreateCharacter(){
                             setInventory({...inventory, armors: newArmors});
                         }}
                         multiple
-                        required
                     >
                         {allArmors.map((armor) => (
                             <option key={armor.name} value={armor.name}>
@@ -589,10 +640,10 @@ function CreateCharacter(){
                 {/*{imageBinaryData && (*/}
                 {/*    <img src={imageBinaryData} alt="Character" style={{ maxWidth: "200px", maxHeight: "200px" }} />*/}
                 {/*)}*/}
+                <button type={"submit"} disabled={loading}>
+                    {loading ? "Loading..." : "Create Character"}
+                </button>
             </form>
-            <button type={"submit"} disabled={loading}>
-                {loading ? "Loading..." : "Create Character"}
-            </button>
         </div>
     );
 }

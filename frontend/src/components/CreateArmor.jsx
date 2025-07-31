@@ -37,20 +37,31 @@ function CreateArmor() {
         setSuccess("");
         setError("");
         const account = JSON.parse(localStorage.getItem("Account"));
-        account.armors.push(armorData);
         try {
             const response = await fetch("http://localhost:8080/creator/save", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "username": account.username,
+                    "password": account.password,
                 },
-                body: JSON.stringify(account),
+                body: JSON.stringify({
+                        name: armorData.name,
+                        minorToMajor: armorData.minorToMajor,
+                        majorToSevere: armorData.majorToSevere,
+                        baseArmorScore: armorData.baseArmorScore,
+                        feature: armorData.feature ? {
+                            name: armorData.feature.name,
+                            description: armorData.feature.description,
+                            type: armorData.feature.type
+                        } : null
+                    }
+                ),
             });
             if (!response.ok) {
                 throw new Error("Failed to create armor");
             }
             setSuccess(`Armor "${armorData.name}" created successfully!`);
-            localStorage.setItem("Account", JSON.stringify(account));
         } catch (err) {
             setError(err.message);
         } finally {

@@ -42,31 +42,34 @@ function CreateAncestry(){
         e.preventDefault();
         setSuccess("");
         setError("");
-        if (!name || !description || !feature1 || !feature2) {
-            setError("Please fill in all fields and select at least one feature.");
-            return;
-        }
         setLoading(true);
-        setError("");
         const account = JSON.parse(localStorage.getItem("Account"));
-        account.ancestries.push({
-            name: name,
-            description: description,
-            feature1: feature1,
-            feature2: feature2
-        });
         try {
             const response = await fetch("http://localhost:8080/creator/save", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "username": account.username,
+                    "password": account.password
                 },
-                body: JSON.stringify(account),
+                body: JSON.stringify({
+                    name,
+                    description,
+                    feature1: {
+                        name: feature1.name,
+                        description: feature1.description,
+                        type: feature1.type,
+                    },
+                    feature2: {
+                        name: feature2.name,
+                        description: feature2.description,
+                        type: feature2.type
+                    }
+                })
             });
             if (!response.ok) {
                 throw new Error("Failed to create ancestry");
             }
-            localStorage.setItem("Account", JSON.stringify(account));
             setSuccess(`Ancestry "${name}" created successfully!`);
         } catch (err) {
             setError(err.message);

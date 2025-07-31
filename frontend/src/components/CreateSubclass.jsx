@@ -2,7 +2,10 @@ import React, { useState, useEffect } from "react";
 function CreateSubclass(){
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
-    const [characterSpellTrait, setCharacterSpellTrait] = useState({});
+
+    const [characterSpellTrait, setCharacterSpellTrait] = useState();
+
+    const [characterSpellTraits, setCharacterSpellTraits] = useState([]);
     const [foundationFeatures, setFoundationFeatures] = useState([{ name: "", description: "" }]);
     const [specializationFeatures, setSpecializationFeatures] = useState([{ name: "", description: "" }]);
     const [masteryFeatures, setMasteryFeatures] = useState([{ name: "", description: "" }]);
@@ -10,7 +13,7 @@ function CreateSubclass(){
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState("");
     const [classNames, setClassNames] = useState([]);
-    const [selectedClass, setSelectedClass] = useState("");
+    const [selectedClassName, setSelectedClassName] = useState("");
 
     const fetchClassNames = async () => {
         try {
@@ -31,53 +34,67 @@ function CreateSubclass(){
             setError(err.message);
         }
     }
+    const fetchCharacterSpellTraits = async () => {
+        try {
+            const response = await fetch("http://localhost:8080/creator/getAllCharacterSpellTraits", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            if (!response.ok) {
+                throw new Error("Failed to fetch character spell traits");
+            }
+            const data = await response.json();
+            setCharacterSpellTraits(data);
+        } catch (err) {
+            setError(err.message);
+        }
+    }
     useEffect(() => {
         fetchClassNames();
+        fetchCharacterSpellTraits();
     }
     , []);
-
     const handle = () => async (e) => {
         e.preventDefault();
         setLoading(true);
         setSuccess("");
         setError("");
-        if (!name || !description || !characterSpellTrait) {
-            setError("Please fill in all fields and select a character spell trait.");
-            return;
-        }
         const account = JSON.parse(localStorage.getItem("Account"));
-        account.daggerheartClasses.filter(
-            (cls) => cls.name === selectedClass
-        )[0].subClasses.push({
-            name: name,
-            description: description,
-            characterSpellTrait: characterSpellTrait,
-            foundationFeatures: foundationFeatures.map((feature) => ({
-                name: feature.name,
-                description: feature.description
-            })),
-            specializationFeatures: specializationFeatures.map((feature) => ({
-                name: feature.name,
-                description: feature.description
-            })),
-            masteryFeatures: masteryFeatures.map((feature) => ({
-                name: feature.name,
-                description: feature.description
-            }))
-        });
         try {
-            const response = await fetch("http://localhost:8080/creator/save", {
+            const response = await fetch("http://localhost:8080/creator/save/subclass", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "username": account.username,
+                    "password": account.password,
+                    "className": selectedClassName,
                 },
-                body: JSON.stringify(account),
+                body: JSON.stringify(
+                    {
+                        name,
+                        description,
+                        spellCastingTrait: characterSpellTrait,
+                        foundationFeatures: foundationFeatures.map(feature => ({
+                            name: feature.name,
+                            description: feature.description,
+                        })),
+                        specializationFeatures: specializationFeatures.map(feature => ({
+                            name: feature.name,
+                            description: feature.description,
+                        })),
+                        masteryFeatures: masteryFeatures.map(feature => ({
+                            name: feature.name,
+                            description: feature.description,
+                        })),
+                    }
+                ),
             });
             if (!response.ok) {
                 throw new Error("Failed to create subclass");
             }
             setSuccess(`Subclass "${name}" created successfully!`);
-            localStorage.setItem("Account", JSON.stringify(account));
         } catch (err) {
             setError(err.message);
         } finally {
@@ -111,12 +128,9 @@ function CreateSubclass(){
                     required
                 >
                     <option value="">Select a trait</option>
-                    <option value="AGILITY">AGILITY</option>
-                    <option value="STRENGTH">STRENGTH</option>
-                    <option value="FINESSE">FINESSE</option>
-                    <option value="INSTINCT">INSTINCT</option>
-                    <option value="PRESENCE">PRESENCE</option>
-                    <option value="KNOWLEDGE">KNOWLEDGE</option>
+                    {characterSpellTraits.map((trait, index) => (
+                        <option key={index} value={trait}>{trait}</option>
+                    ))}
                 </select>
                 <label>Foundation Features</label>
                 {foundationFeatures.map((feature, index) => (
@@ -225,8 +239,8 @@ function CreateSubclass(){
                     <label>Class Name</label>
                 )}
                 <select
-                    value={selectedClass}
-                    onChange={(e) => setSelectedClass(e.target.value)}
+                    value={selectedClassName}
+                    onChange={(e) => setSelectedClassName(e.target.value)}
                     required
                 >
                     <option value="">Select a class</option>

@@ -26,6 +26,8 @@ public class Creator extends Account{
     private List<Weapon> weapons;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Feature> features;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<SubClass> subClasses;
     public Creator(Long id, String username, String password, List<Armor> armors, List<Ancestry> ancestries, List<Community> communities, List<DaggerheartClass> daggerheartClasses, List<Weapon> weapons, List<Feature> features) {
         super(id, username, password);
         this.armors = armors;
@@ -34,5 +36,60 @@ public class Creator extends Account{
         this.daggerheartClasses = daggerheartClasses;
         this.weapons = weapons;
         this.features = features;
+    }
+
+    public void addAncestry(Ancestry modele) {
+        if (ancestries != null) {
+            ancestries.add(modele);
+        } else {
+            ancestries = List.of(modele);
+        }
+    }
+
+    public void addArmor(Armor modele) {
+        if (armors != null) {
+            armors.add(modele);
+        } else {
+            armors = List.of(modele);
+        }
+    }
+
+    public void addDaggerheartClass(DaggerheartClass modele) {
+        if (daggerheartClasses != null) {
+            daggerheartClasses.add(modele);
+        } else {
+            daggerheartClasses = List.of(modele);
+        }
+    }
+
+    public void addCommunity(Community modele) {
+        if (communities != null) {
+            communities.add(modele);
+        } else {
+            communities = List.of(modele);
+        }
+    }
+
+    public void addFeature(Feature modele) {
+        if (features != null) {
+            features.add(modele);
+        } else {
+            features = List.of(modele);
+        }
+    }
+
+    public void addWeapon(Weapon modele) {
+        if (weapons != null) {
+            weapons.add(modele);
+        } else {
+            weapons = List.of(modele);
+        }
+    }
+    public void addSubClass(SubClass modele) {
+        if (subClasses != null) {
+            subClasses.add(modele);
+        } else {
+            subClasses = List.of(modele);
+        }
     }
 }

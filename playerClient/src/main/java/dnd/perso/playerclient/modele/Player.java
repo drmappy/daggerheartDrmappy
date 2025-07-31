@@ -20,4 +20,12 @@ public class Player extends Account{
         super(id, username, password);
         this.characters = characters;
     }
+
+    public void addCharacter(DaggerheartCharacter character) {
+        if (characters != null) {
+            characters.add(character);
+        } else {
+            characters = List.of(character);
+        }
+    }
 }

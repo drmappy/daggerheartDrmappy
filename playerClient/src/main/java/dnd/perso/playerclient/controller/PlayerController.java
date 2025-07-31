@@ -5,7 +5,6 @@ import dnd.perso.playerclient.service.dto.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 
 @RestController
 @RequestMapping("/player")
@@ -24,11 +23,19 @@ public class PlayerController {
             return ResponseEntity.badRequest().build();
         }
     }
+    @PostMapping("/save/character")
+    public ResponseEntity<Void> saveCharacter(@RequestBody DaggerheartCharacterDTO characterDTO, @RequestHeader String username, @RequestHeader String password) {
+        try {
+            playerService.saveCharacter(characterDTO, username, password);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
     @PostMapping("get")
     public ResponseEntity<PlayerDTO> getPlayer(@RequestBody PlayerDTO playerDTO) {
         try {
             PlayerDTO player = playerService.getPlayer(playerDTO.getUsername(), playerDTO.getPassword());
-            System.out.println("Player retrieved: " + player);
             return ResponseEntity.ok(player);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();

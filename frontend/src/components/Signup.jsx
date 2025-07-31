@@ -30,7 +30,11 @@ function Signup(){
                 password: password,
                 accountType: accountType
             }
-            localStorage.setItem('Account', JSON.stringify(saveData));
+            localStorage.setItem('Account', JSON.stringify({
+                username: username,
+                password: password,
+                accountType: accountType
+            }));
             navigate(`/${accountType}`);
         } catch (err) {
             setError(`Erreur lors de l'inscription: ${err.message}`);

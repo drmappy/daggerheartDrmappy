@@ -31,7 +31,11 @@ function Login(){
                 password: password,
                 accountType: accountType
             }
-            localStorage.setItem('Account', JSON.stringify(saveData));
+            localStorage.setItem('Account', JSON.stringify({
+                username: username,
+                password: password,
+                accountType: accountType
+            }));
             navigate(`/${accountType}`);
         } catch (error) {
             setError(`Erreur lors de la connexion: ${error.message}`);

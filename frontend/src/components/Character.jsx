@@ -45,10 +45,9 @@ function Character() {
             <p>Stress: {character.stress}</p>
             <p>Hope: {character.modifiers.hope}</p>
             <p>Evasion: {character.modifiers.evasion + character.characterClass.startingEvasion}</p>
-            <p>Armor: {character.modifiers.armor + character.equipement.activeArmor.baseArmorScore}</p>
+            <p>Armor: {character.modifiers.armor + character.equipment.activeArmor?.baseArmorScore || ""}</p>
             <p>
-                Damage Threshold: Minor to Major: {character.modifiers.damageThreshold.minorToMajor + character.equipement.activeArmor.minorToMajor}, Major to Severe: {character.modifiers.damageThreshold.majorToSevere + character.equipement.activeArmor.majorToSevere}
-            </p>
+                Damage Threshold: Minor to Major: {(character.modifiers.damageThreshold?.minorToMajor ?? 0) + (character.equipment.activeArmor?.minorToMajor ?? 0)}, Major to Severe: {(character.modifiers.damageThreshold?.majorToSevere ?? 0) + (character.equipment.activeArmor?.majorToSevere ?? 0)}            </p>
             <h2>Class Features</h2>
             <ul>
                 {character.characterClass.classFeatures.map((feature, index) => (
@@ -107,20 +106,24 @@ function Character() {
             <h2>Equipment</h2>
             <h3>Primary Weapon</h3>
             <p>
-                <strong>{character.equipement.primary.name}</strong> - Trait: {character.equipement.primary.trait}, Range: {character.equipement.primary.range}, Damage: {character.equipement.primary.damage.baseDamage}d{character.equipement.primary.damage.dieSize} ({character.equipement.primary.damage.damageType})
+                <strong>{character.equipment.primary?.name ?? ""}</strong> - Trait: {character.equipment.primary?.trait ?? ""}, Range: {character.equipment.primary?.range ?? ""}, Damage: {character.equipment.primary?.damage?.baseDamage ?? 0}d{character.equipment.primary?.damage?.dieSize ?? 0} ({character.equipment.primary?.damage?.damageType ?? ""})            </p>
+            <p>
+                {character.equipment.primary?.feature?.name ?? ""}: {character.equipment.primary?.feature?.description ?? ""}
             </p>
-            <p>{character.equipement.primary.feature.name}: {character.equipement.primary.feature.description}</p>
             <h3>Secondary Weapon</h3>
             <p>
-                <strong>{character.equipement.secondary.name}</strong> - Trait: {character.equipement.secondary.trait}, Range: {character.equipement.secondary.range}, Damage: {character.equipement.secondary.damage.baseDamage}d{character.equipement.secondary.damage.dieSize} ({character.equipement.secondary.damage.damageType})
+                <strong>{character.equipment.secondary?.name ?? ""}</strong> - Trait: {character.equipment.secondary?.trait ?? ""}, Range: {character.equipment.secondary?.range ?? ""}, Damage: {character.equipment.secondary?.damage?.baseDamage ?? 0}d{character.equipment.secondary?.damage?.dieSize ?? 0} ({character.equipment.secondary?.damage?.damageType ?? ""})
             </p>
-            <p>{character.equipement.secondary.feature.name}: {character.equipement.secondary.feature.description}</p>
+            <p>
+                {character.equipment.secondary?.feature?.name ?? ""}: {character.equipment.secondary?.feature?.description ?? ""}
+            </p>
             <h3>Active Armor</h3>
             <p>
-                <strong>{character.equipement.activeArmor.name}</strong> - Base Armor Score: {character.equipement.activeArmor.baseArmorScore}, Minor to Major: {character.equipement.activeArmor.minorToMajor}, Major to Severe: {character.equipement.activeArmor.majorToSevere}
+                <strong>{character.equipment.activeArmor?.name ?? ""}</strong> - Base Armor Score: {character.equipment.activeArmor?.baseArmorScore ?? 0}, Minor to Major: {character.equipment.activeArmor?.minorToMajor ?? 0}, Major to Severe: {character.equipment.activeArmor?.majorToSevere ?? 0}
             </p>
-            <p>{character.equipement.activeArmor.feature.name}: {character.equipement.activeArmor.feature.description}</p>
-
+            <p>
+                {character.equipment.activeArmor?.feature?.name ?? ""}: {character.equipment.activeArmor?.feature?.description ?? ""}
+            </p>
             <h2>Inventory</h2>
             <h3>Items</h3>
             <ul>
