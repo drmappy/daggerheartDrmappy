@@ -19,11 +19,12 @@ function CreateSubclass(){
         try {
             const account = JSON.parse(localStorage.getItem("Account"));
             const response = await fetch("http://localhost:8080/creator/myClasses", {
-                method: "POST",
+                method: "GET",
                 headers: {
                     "Content-Type": "application/json",
+                    "username": account.username,
+                    "password": account.password,
                 },
-                body: JSON.stringify(account),
             });
             if (!response.ok) {
                 throw new Error("Failed to fetch class names");

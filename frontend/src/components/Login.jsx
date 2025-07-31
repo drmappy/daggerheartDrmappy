@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import { useNavigate } from 'react-router';
 
 function Login(){
@@ -8,6 +8,10 @@ function Login(){
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
+    useEffect(() => {
+        localStorage.removeItem('Account');
+        localStorage.removeItem('CurrentData');
+    }, []);
     const handleSubmit = async (w) => {
         w.preventDefault();
         const requestBody = {

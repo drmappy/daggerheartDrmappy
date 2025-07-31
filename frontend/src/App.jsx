@@ -5,28 +5,28 @@ import{
     Route,
 } from 'react-router';
 import Signup from "./components/Signup.jsx";
-import PlayerLayout from "./components/PlayerLayout.jsx";
+import PlayerLayout from "./components/player/PlayerLayout.jsx";
 import MainLayout from "./components/MainLayout.jsx";
 import Login from "./components/Login.jsx";
-import CreatorLayout from "./components/CreatorLayout.jsx";
+import CreatorLayout from "./components/creator/CreatorLayout.jsx";
 import MainPage from "./components/MainPage.jsx";
 import Profile from "./components/Profile.jsx";
-import CreateAncestry from "./components/CreateAncestry.jsx";
-import CreateCommunity from "./components/CreateCommunity.jsx";
-import CreateArmor from "./components/CreateArmor.jsx";
-import CreateWeapon from "./components/CreateWeapon.jsx";
-import CreateClass from "./components/CreateClass.jsx";
-import CreateSubclass from "./components/CreateSubclass.jsx";
-import CreateFeature from "./components/CreateFeature.jsx";
-import CreateCharacter from "./components/CreateCharacter.jsx";
-import Character from "./components/Character.jsx";
-import MyAncestries from "./components/MyAncestries.jsx";
-import MyArmors from "./components/MyArmors.jsx";
-import MyClasses from "./components/MyClasses.jsx";
-import MyCommunities from "./components/MyCommunities.jsx";
-import MyFeatures from "./components/MyFeatures.jsx";
-import MySubclasses from "./components/MySubclasses.jsx";
-import MyWeapons from "./components/MyWeapons.jsx";
+import CreateAncestry from "./components/creator/CreateAncestry.jsx";
+import CreateCommunity from "./components/creator/CreateCommunity.jsx";
+import CreateArmor from "./components/creator/CreateArmor.jsx";
+import CreateWeapon from "./components/creator/CreateWeapon.jsx";
+import CreateClass from "./components/creator/CreateClass.jsx";
+import CreateSubclass from "./components/creator/CreateSubclass.jsx";
+import CreateFeature from "./components/creator/CreateFeature.jsx";
+import CreateCharacter from "./components/player/CreateCharacter.jsx";
+import Character from "./components/player/Character.jsx";
+import MyAncestries from "./components/creator/MyAncestries.jsx";
+import MyArmors from "./components/creator/MyArmors.jsx";
+import MyClasses from "./components/creator/MyClasses.jsx";
+import MyCommunities from "./components/creator/MyCommunities.jsx";
+import MyFeatures from "./components/creator/MyFeatures.jsx";
+import MySubclasses from "./components/creator/MySubclasses.jsx";
+import MyWeapons from "./components/creator/MyWeapons.jsx";
 function App() {
     const router = createBrowserRouter(
         createRoutesFromElements(

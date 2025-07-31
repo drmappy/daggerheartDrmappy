@@ -2,22 +2,27 @@ import React, { useState, useEffect } from "react";
 function MyAncestries() {
     const [ancestries, setAncestries] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
+    const [error, setError] = useState("");
     const fetchAncestries = async () => {
         try {
+            setLoading(true);
+            setError("");
+            const account = JSON.parse(localStorage.getItem("Account"));
             const response = await fetch("http://localhost:8080/creator/myAncestries", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
+                    "username": account.username,
+                    "password": account.password
                 },
             })
             if (!response.ok) {
                 throw new Error("Network response was not ok");
             }
-            const data = await response.json();
+            const text = await response.text();
+            const data = text ? JSON.parse(text) : [];
             setAncestries(data);
         } catch (error) {
-            console.error("Error fetching ancestries:", error);
             setError(true);
         } finally {
             setLoading(false);
@@ -36,7 +41,7 @@ function MyAncestries() {
         <h1>My Ancestries</h1>
         <ul>
             {ancestries.map((ancestry) => (
-            <li key={ancestry.id}>{ancestry.name}</li>
+            <li key={ancestry.name}>{ancestry.name}</li>
             ))}
         </ul>
         </div>

@@ -7,7 +7,7 @@ function Character() {
 
     useEffect(() => {
         try {
-            const char = JSON.parse(localStorage.getItem('CurrentCharacter'));
+            const char = JSON.parse(localStorage.getItem('CurrentData'));
             if (char) {
                 setCharacter(char);
             } else {

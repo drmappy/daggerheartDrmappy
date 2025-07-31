@@ -99,12 +99,73 @@ public class CreatorController {
             return ResponseEntity.badRequest().build();
         }
     }
-    @PostMapping("/myClasses")
-    public ResponseEntity<List<DaggerheartClassDTO>> getMyClasses(@RequestBody CreatorDTO creatorDTO) {
+    @GetMapping("/myClasses")
+    public ResponseEntity<List<DaggerheartClassDTO>> getMyClasses(@RequestHeader String username, @RequestHeader String password) {
         try {
-            CreatorDTO sentCreator = creatorService.getCreator(creatorDTO.getUsername(), creatorDTO.getPassword());
+            CreatorDTO sentCreator = creatorService.getCreator(username, password);
             List<DaggerheartClassDTO> classes = sentCreator.getDaggerheartClasses();
             return ResponseEntity.ok(classes);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    @GetMapping("/mySubClasses")
+    public ResponseEntity<List<SubClassDTO>> getMySubClasses(@RequestHeader String username, @RequestHeader String password) {
+        try {
+            CreatorDTO creator = creatorService.getCreator(username, password);
+            List<SubClassDTO> subClasses = creator.getSubclasses();
+            return ResponseEntity.ok(subClasses);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    @GetMapping("/myAncestries")
+    public ResponseEntity<List<AncestryDTO>> getMyAncestries(@RequestHeader String username, @RequestHeader String password) {
+        try {
+            CreatorDTO creator = creatorService.getCreator(username, password);
+            List<AncestryDTO> ancestries = creator.getAncestries();
+            return ResponseEntity.ok(ancestries);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    @GetMapping("/myCommunities")
+    public ResponseEntity<List<CommunityDTO>> getMyCommunities(@RequestHeader String username,
+                                                                @RequestHeader String password) {
+          try {
+                CreatorDTO creator = creatorService.getCreator(username, password);
+                List<CommunityDTO> communities = creator.getCommunities();
+                return ResponseEntity.ok(communities);
+          } catch (Exception e) {
+                return ResponseEntity.badRequest().build();
+          }
+     }
+    @GetMapping("/myFeatures")
+    public ResponseEntity<List<FeatureDTO>> getMyFeatures(@RequestHeader String username, @RequestHeader String password) {
+        try {
+            CreatorDTO creator = creatorService.getCreator(username, password);
+            List<FeatureDTO> features = creator.getFeatures();
+            return ResponseEntity.ok(features);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    @GetMapping("/myWeapons")
+    public ResponseEntity<List<WeaponDTO>> getMyWeapons(@RequestHeader String username, @RequestHeader String password) {
+        try {
+            CreatorDTO creator = creatorService.getCreator(username, password);
+            List<WeaponDTO> weapons = creator.getWeapons();
+            return ResponseEntity.ok(weapons);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    @GetMapping("/myArmors")
+    public ResponseEntity<List<ArmorDTO>> getMyArmors(@RequestHeader String username, @RequestHeader String password) {
+        try {
+            CreatorDTO creator = creatorService.getCreator(username, password);
+            List<ArmorDTO> armors = creator.getArmors();
+            return ResponseEntity.ok(armors);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }

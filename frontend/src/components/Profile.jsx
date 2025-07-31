@@ -44,7 +44,7 @@ function Profile() {
     };
 
     const checkoutCharacter = (c) => {
-        localStorage.setItem('CurrentCharacter', JSON.stringify(c));
+        localStorage.setItem('CurrentData', JSON.stringify(c));
         navigate('/player/character');
     };
 
