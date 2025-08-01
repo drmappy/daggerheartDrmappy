@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router';
+
 function MySubclasses() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const [subclasses, setSubclasses] = useState([]);
+    const navigate = useNavigate();
 
     const fetchSubclasses = async () => {
         try {
             setLoading(true);
             setError("");
-            const response = await fetch("http://localhost:8080/creator/mySubClasses", {
+            const response = await fetch("http://localhost:8080/creator/mySubClassesNames", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -40,7 +43,7 @@ function MySubclasses() {
             {error && <p>Error: {error}</p>}
             <ul>
                 {subclasses.map((subclass) => (
-                    <li key={subclass.name}>{subclass.name} - {subclass.description}</li>
+                    <li key={subclass}onClick={()=>(navigate('/creator/subclass/' + subclass))}>{subclass}</li>
                 ))}
             </ul>
         </div>

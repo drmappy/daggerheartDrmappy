@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router';
+
 function MyAncestries() {
     const [ancestries, setAncestries] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const navigate = useNavigate();
+
     const fetchAncestries = async () => {
         try {
             setLoading(true);
             setError("");
             const account = JSON.parse(localStorage.getItem("Account"));
-            const response = await fetch("http://localhost:8080/creator/myAncestries", {
+            const response = await fetch("http://localhost:8080/creator/myAncestriesNames", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -41,7 +45,7 @@ function MyAncestries() {
         <h1>My Ancestries</h1>
         <ul>
             {ancestries.map((ancestry) => (
-            <li key={ancestry.name}>{ancestry.name}</li>
+            <li key={ancestry} onClick={()=>{navigate('/creator/ancestry/' + ancestry)}}>{ancestry}</li>
             ))}
         </ul>
         </div>

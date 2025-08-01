@@ -1,24 +1,38 @@
 import React, { useState, useEffect } from 'react';
+import {useParams} from "react-router";
 
 function Character() {
     const [character, setCharacter] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const { name } = useParams();
 
     useEffect(() => {
         try {
-            const char = JSON.parse(localStorage.getItem('CurrentData'));
-            if (char) {
-                setCharacter(char);
-            } else {
-                setError('No character found.');
-            }
+            setLoading(true);
+            setError(null);
+
+            fetchCharacter();
         } catch (e) {
             setError('Failed to load character.');
         }
         setLoading(false);
     }, []);
-
+    const fetchCharacter = async () => {
+        const response = await fetch(`http://localhost:8080/player/character/${name}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'username': JSON.parse(localStorage.getItem('Account')).username,
+                'password': JSON.parse(localStorage.getItem('Account')).password
+            },
+        });
+        if (!response.ok) {
+            throw new Error('Failed to fetch character');
+        }
+        const data = await response.json();
+        setCharacter(data);
+    };
     if (error) return <p>{error}</p>;
     if (loading) return <p>Loading character...</p>;
     if (!character) return null;

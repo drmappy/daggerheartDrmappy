@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router';
 
 function MyClasses(){
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const [classes, setClasses] = useState([]);
+    const navigate = useNavigate();
 
     const fetchClasses = async () => {
         try {
             setLoading(true);
             setError("");
-            const response = await fetch("http://localhost:8080/creator/myClasses", {
+            const response = await fetch("http://localhost:8080/creator/myClassesNames", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -41,7 +43,7 @@ function MyClasses(){
             {error && <p>Error: {error}</p>}
             <ul>
                 {classes.map((cls) => (
-                    <li key={cls.name}>{cls.name} - {cls.description}</li>
+                    <li key={cls} onClick={()=>(navigate('/creator/class/' + cls))}>{cls}</li>
                 ))}
             </ul>
         </div>

@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router';
+
 function MyWeapons(){
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const [weapons, setWeapons] = useState([]);
+    const navigate = useNavigate();
 
     const fetchWeapons = async () => {
         try {
             setLoading(true);
             setError("");
-            const response = await fetch("http://localhost:8080/creator/myWeapons", {
+            const response = await fetch("http://localhost:8080/creator/myWeaponsNames", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -40,7 +43,7 @@ function MyWeapons(){
             {error && <p>Error: {error}</p>}
             <ul>
                 {weapons.map((weapon) => (
-                    <li key={weapon.name}>{weapon.name}</li>
+                    <li key={weapon} onClick={()=>(navigate('/creator/weapon/' + weapon))}>{weapon}</li>
                 ))}
             </ul>
         </div>

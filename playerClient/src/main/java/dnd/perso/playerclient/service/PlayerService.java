@@ -8,6 +8,8 @@ import dnd.perso.playerclient.service.dto.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class PlayerService {
 
@@ -22,6 +24,7 @@ public class PlayerService {
     private final ArmorRepository armorRepository;
     private final ExperienceRepository experienceRepository;
     private final AccountRepository accountRepository;
+    private final PlayerRepository playerRepository;
     public PlayerService(
             DaggerheartCharacterRepository daggerheartCharacterRepository,
             DaggerheartClassRepository daggerheartClassRepository,
@@ -32,7 +35,8 @@ public class PlayerService {
             WeaponRepository weaponRepository,
             ArmorRepository armorRepository,
             ExperienceRepository experienceRepository,
-            AccountRepository accountRepository
+            AccountRepository accountRepository,
+            PlayerRepository playerRepository
     ) {
         this.daggerheartCharacterRepository = daggerheartCharacterRepository;
         this.daggerheartClassRepository = daggerheartClassRepository;
@@ -44,6 +48,7 @@ public class PlayerService {
         this.armorRepository = armorRepository;
         this.experienceRepository = experienceRepository;
         this.accountRepository = accountRepository;
+        this.playerRepository = playerRepository;
     }
 
     // Methods
@@ -246,6 +251,33 @@ public class PlayerService {
             daggerheartCharacterRepository.save(character);
         } catch (Exception e) {
             throw new Exception(e);
+        }
+    }
+    @Transactional
+    public String[] getCharacterNames(String username, String password) throws DatabaseError {
+        try {
+            Player player = (Player) accountRepository.getByUsernameAndPassword(username, password);
+            if (player == null) {
+                throw new DatabaseError();
+            }
+            return player.getCharacters().stream()
+                    .map(DaggerheartCharacter::getName)
+                    .toArray(String[]::new);
+        } catch (Exception e) {
+            throw new DatabaseError();
+        }
+    }
+
+    public DaggerheartCharacterDTO getCharacterByName(String name, String username, String password) throws DatabaseError {
+        try {
+            List<DaggerheartCharacter> characters = playerRepository.getCharactersByUsernameAndPassword(username, password);
+            return characters.stream()
+                    .filter(character -> character.getName().equals(name))
+                    .findFirst()
+                    .map(DaggerheartCharacterDTO::new)
+                    .orElseThrow(DatabaseError::new);
+        } catch (Exception e) {
+            throw new DatabaseError();
         }
     }
 }

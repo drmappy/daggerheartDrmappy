@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router';
 
 function MyArmors() {
     const [armors, setArmors] = useState([]);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         async function fetchArmors() {
         try {
-            const response = await fetch("http://localhost:8080/creator/myArmors", {
+            const response = await fetch("http://localhost:8080/creator/myArmorsNames", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -39,7 +41,7 @@ function MyArmors() {
         <h1>My Armors</h1>
         <ul>
             {armors.map((armor) => (
-            <li key={armor.name}>{armor.name}</li>
+            <li key={armor} onClick={()=>(navigate('/creator/armor/' + armor))}>{armor}</li>
             ))}
         </ul>
         </div>

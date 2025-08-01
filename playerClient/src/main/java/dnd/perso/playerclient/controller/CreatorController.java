@@ -99,72 +99,80 @@ public class CreatorController {
             return ResponseEntity.badRequest().build();
         }
     }
-    @GetMapping("/myClasses")
-    public ResponseEntity<List<DaggerheartClassDTO>> getMyClasses(@RequestHeader String username, @RequestHeader String password) {
+    @GetMapping("confirmation")
+    public ResponseEntity<Void> confirmCreator(@RequestHeader String username, @RequestHeader String password) {
         try {
-            CreatorDTO sentCreator = creatorService.getCreator(username, password);
-            List<DaggerheartClassDTO> classes = sentCreator.getDaggerheartClasses();
+            creatorService.getCreator(username, password);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    @GetMapping("/myClassesNames")
+    public ResponseEntity<List<String>> getMyClasses(@RequestHeader String username, @RequestHeader String password) {
+        try {
+            creatorService.getCreator(username, password);
+            List<String> classes = creatorService.getDaggerheartClassesNames(username, password);
             return ResponseEntity.ok(classes);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }
-    @GetMapping("/mySubClasses")
-    public ResponseEntity<List<SubClassDTO>> getMySubClasses(@RequestHeader String username, @RequestHeader String password) {
+    @GetMapping("/mySubClassesNames")
+    public ResponseEntity<List<String>> getMySubClasses(@RequestHeader String username, @RequestHeader String password) {
         try {
-            CreatorDTO creator = creatorService.getCreator(username, password);
-            List<SubClassDTO> subClasses = creator.getSubclasses();
+            creatorService.getCreator(username, password);
+            List<String> subClasses = creatorService.getSubclassesNames(username, password);
             return ResponseEntity.ok(subClasses);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }
-    @GetMapping("/myAncestries")
-    public ResponseEntity<List<AncestryDTO>> getMyAncestries(@RequestHeader String username, @RequestHeader String password) {
+    @GetMapping("/myAncestriesNames")
+    public ResponseEntity<List<String>> getMyAncestries(@RequestHeader String username, @RequestHeader String password) {
         try {
-            CreatorDTO creator = creatorService.getCreator(username, password);
-            List<AncestryDTO> ancestries = creator.getAncestries();
+            creatorService.getCreator(username, password);
+            List<String> ancestries = creatorService.getAncestriesNames(username, password);
             return ResponseEntity.ok(ancestries);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }
-    @GetMapping("/myCommunities")
-    public ResponseEntity<List<CommunityDTO>> getMyCommunities(@RequestHeader String username,
-                                                                @RequestHeader String password) {
+    @GetMapping("/myCommunitiesNames")
+    public ResponseEntity<List<String>> getMyCommunities(@RequestHeader String username, @RequestHeader String password) {
           try {
-                CreatorDTO creator = creatorService.getCreator(username, password);
-                List<CommunityDTO> communities = creator.getCommunities();
+                creatorService.getCreator(username, password);
+                List<String> communities = creatorService.getCommunitiesNames(username, password);
                 return ResponseEntity.ok(communities);
           } catch (Exception e) {
                 return ResponseEntity.badRequest().build();
           }
      }
-    @GetMapping("/myFeatures")
-    public ResponseEntity<List<FeatureDTO>> getMyFeatures(@RequestHeader String username, @RequestHeader String password) {
+    @GetMapping("/myFeaturesNames")
+    public ResponseEntity<List<String>> getMyFeatures(@RequestHeader String username, @RequestHeader String password) {
         try {
-            CreatorDTO creator = creatorService.getCreator(username, password);
-            List<FeatureDTO> features = creator.getFeatures();
+            creatorService.getCreator(username, password);
+            List<String> features = creatorService.getFeaturesNames(username, password);
             return ResponseEntity.ok(features);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }
-    @GetMapping("/myWeapons")
-    public ResponseEntity<List<WeaponDTO>> getMyWeapons(@RequestHeader String username, @RequestHeader String password) {
+    @GetMapping("/myWeaponsNames")
+    public ResponseEntity<List<String>> getMyWeapons(@RequestHeader String username, @RequestHeader String password) {
         try {
-            CreatorDTO creator = creatorService.getCreator(username, password);
-            List<WeaponDTO> weapons = creator.getWeapons();
+            creatorService.getCreator(username, password);
+            List<String> weapons = creatorService.getWeaponsNames(username, password);
             return ResponseEntity.ok(weapons);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }
-    @GetMapping("/myArmors")
-    public ResponseEntity<List<ArmorDTO>> getMyArmors(@RequestHeader String username, @RequestHeader String password) {
+    @GetMapping("/myArmorsNames")
+    public ResponseEntity<List<String>> getMyArmors(@RequestHeader String username, @RequestHeader String password) {
         try {
-            CreatorDTO creator = creatorService.getCreator(username, password);
-            List<ArmorDTO> armors = creator.getArmors();
+            creatorService.getCreator(username, password);
+            List<String> armors = creatorService.getArmorsNames(username, password);
             return ResponseEntity.ok(armors);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
@@ -188,4 +196,75 @@ public class CreatorController {
             return ResponseEntity.badRequest().build();
         }
     }
+    @GetMapping("ancestry/{name}")
+    public ResponseEntity<AncestryDTO> getAncestryByName(@PathVariable String name, @RequestHeader String username, @RequestHeader String password) {
+        try {
+            creatorService.getCreator(username, password);
+            AncestryDTO ancestry = creatorService.getAncestryByName(name);
+            return ResponseEntity.ok(ancestry);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @GetMapping("class/{name}")
+    public ResponseEntity<DaggerheartClassDTO> getDaggerheartClassByName(@PathVariable String name, @RequestHeader String username, @RequestHeader String password) {
+        try {
+            creatorService.getCreator(username, password);
+            DaggerheartClassDTO daggerheartClass = creatorService.getDaggerheartClassByName(name);
+            return ResponseEntity.ok(daggerheartClass);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @GetMapping("subclass/{name}")
+    public ResponseEntity<SubClassDTO> getSubClassByName(@PathVariable String name, @RequestHeader String username, @RequestHeader String password) {
+        try {
+            creatorService.getCreator(username, password);
+            SubClassDTO subClass = creatorService.getSubClassByName(name);
+            return ResponseEntity.ok(subClass);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @GetMapping("community/{name}")
+    public ResponseEntity<CommunityDTO> getCommunityByName(@PathVariable String name, @RequestHeader String username, @RequestHeader String password) {
+        try {
+            creatorService.getCreator(username, password);
+            CommunityDTO community = creatorService.getCommunityByName(name);
+            return ResponseEntity.ok(community);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @GetMapping("feature/{name}")
+    public ResponseEntity<FeatureDTO> getFeatureByName(@PathVariable String name, @RequestHeader String username, @RequestHeader String password) {
+        try {
+            creatorService.getCreator(username, password);
+            FeatureDTO feature = creatorService.getFeatureByName(name);
+            return ResponseEntity.ok(feature);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @GetMapping("weapon/{name}")
+    public ResponseEntity<WeaponDTO> getWeaponByName(@PathVariable String name, @RequestHeader String username, @RequestHeader String password) {
+        try {
+            creatorService.getCreator(username, password);
+            WeaponDTO weapon = creatorService.getWeaponByName(name);
+            return ResponseEntity.ok(weapon);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @GetMapping("armor/{name}")
+    public ResponseEntity<ArmorDTO> getArmorByName(@PathVariable String name, @RequestHeader String username, @RequestHeader String password) {
+        try {
+            creatorService.getCreator(username, password);
+            ArmorDTO armor = creatorService.getArmorByName(name);
+            return ResponseEntity.ok(armor);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }

@@ -32,11 +32,39 @@ public class PlayerController {
             return ResponseEntity.badRequest().build();
         }
     }
+    @GetMapping("character/{name}")
+    public ResponseEntity<DaggerheartCharacterDTO> getCharacter(@PathVariable String name, @RequestHeader String username, @RequestHeader String password) {
+        try {
+            DaggerheartCharacterDTO character = playerService.getCharacterByName(name, username, password);
+            return ResponseEntity.ok(character);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
     @PostMapping("get")
     public ResponseEntity<PlayerDTO> getPlayer(@RequestBody PlayerDTO playerDTO) {
         try {
             PlayerDTO player = playerService.getPlayer(playerDTO.getUsername(), playerDTO.getPassword());
             return ResponseEntity.ok(player);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @GetMapping("confirmation")
+    public ResponseEntity<Void> confirmPlayer(@RequestHeader String username, @RequestHeader String password) {
+        try {
+            playerService.getPlayer(username, password);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    @GetMapping("characterNames")
+    public ResponseEntity<String[]> getCharacterNames(@RequestHeader String username, @RequestHeader String password) {
+        try {
+            String[] characterNames = playerService.getCharacterNames(username, password);
+            return ResponseEntity.ok(characterNames);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }

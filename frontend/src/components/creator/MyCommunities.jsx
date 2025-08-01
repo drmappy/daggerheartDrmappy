@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router';
 
 function MyCommunities() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const [communities, setCommunities] = useState([]);
+    const navigate = useNavigate();
 
     const fetchCommunities = async () => {
         try {
             setLoading(true);
             setError("");
-            const response = await fetch("http://localhost:8080/creator/myCommunities", {
+            const response = await fetch("http://localhost:8080/creator/myCommunitiesNames", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -41,7 +43,7 @@ function MyCommunities() {
             {error && <p>Error: {error}</p>}
             <ul>
                 {communities.map((community) => (
-                    <li key={community.name}>{community.name} - {community.description}</li>
+                    <li key={community}onClick={()=>(navigate('/creator/community/' + community))}>{community}</li>
                 ))}
             </ul>
         </div>

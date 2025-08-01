@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {useParams} from "react-router";
-function Subclass() {
-    const [subclass, setSubclass] = useState(null);
+function DaggerheartClass(){
+    const [daggerheartClass, setDaggerheartClass] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const { name } = useParams();
@@ -11,15 +11,15 @@ function Subclass() {
             setLoading(true);
             setError(null);
 
-            fetchSubclass();
+            fetchDaggerheartClass();
         } catch (e) {
-            setError('Failed to load subclass.');
+            setError('Failed to load daggerheartClass.');
         }
         setLoading(false);
     }, []);
 
-    const fetchSubclass = async () => {
-        const response = await fetch(`http://localhost:8080/creator/subclass/${name}`, {
+    const fetchDaggerheartClass = async () => {
+        const response = await fetch(`http://localhost:8080/creator/daggerheartClass/${name}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -28,21 +28,21 @@ function Subclass() {
             },
         });
         if (!response.ok) {
-            throw new Error('Failed to fetch subclass');
+            throw new Error('Failed to fetch daggerheartClass');
         }
         const data = await response.json();
-        setSubclass(data);
+        setDaggerheartClass(data);
     };
 
     if (error) return <p>{error}</p>;
-    if (loading) return <p>Loading subclass...</p>;
-    if (!subclass) return null;
+    if (loading) return <p>Loading daggerheartClass...</p>;
+    if (!daggerheartClass) return null;
 
     return (
         <div>
-            <h1>{subclass.name}</h1>
-            <p>Description: {subclass.description}</p>
+            <h1>{daggerheartClass.name}</h1>
+            <p>Description: {daggerheartClass.description}</p>
         </div>
     );
 }
-export default Subclass;
+export default DaggerheartClass;

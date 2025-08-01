@@ -1,6 +1,7 @@
 package dnd.perso.playerclient.service.dto;
 
 import dnd.perso.playerclient.modele.Creator;
+import dnd.perso.playerclient.modele.DaggerheartClass;
 import lombok.*;
 
 import java.util.List;

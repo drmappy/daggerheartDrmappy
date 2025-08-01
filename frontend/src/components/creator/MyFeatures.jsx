@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router';
 
 function MyFeatures() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const [features, setFeatures] = useState([]);
+    const navigate = useNavigate();
 
     const fetchFeatures = async () => {
         try {
             setLoading(true);
             setError("");
-            const response = await fetch("http://localhost:8080/creator/myFeatures", {
+            const response = await fetch("http://localhost:8080/creator/myFeaturesNames", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -41,7 +43,7 @@ function MyFeatures() {
             {error && <p>Error: {error}</p>}
             <ul>
                 {features.map((feature) => (
-                    <li key={feature.name}>{feature.name} - {feature.description}</li>
+                    <li key={feature}onClick={()=>(navigate('/creator/feature/' + feature))}>{feature}</li>
                 ))}
             </ul>
         </div>

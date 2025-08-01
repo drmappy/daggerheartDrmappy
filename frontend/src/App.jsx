@@ -27,6 +27,13 @@ import MyCommunities from "./components/creator/MyCommunities.jsx";
 import MyFeatures from "./components/creator/MyFeatures.jsx";
 import MySubclasses from "./components/creator/MySubclasses.jsx";
 import MyWeapons from "./components/creator/MyWeapons.jsx";
+import Ancestry from "./components/Ancestry.jsx";
+import DaggerheartClass from "./components/DaggerheartClass.jsx";
+import Subclass from "./components/Subclass.jsx";
+import Weapon from "./components/Weapon.jsx";
+import Armor from "./components/Armor.jsx";
+import Community from "./components/Community.jsx";
+import Feature from "./components/Feature.jsx";
 function App() {
     const router = createBrowserRouter(
         createRoutesFromElements(
@@ -52,11 +59,19 @@ function App() {
                     <Route path="createClass" element={<CreateClass/>}/>
                     <Route path="createSubclass" element={<CreateSubclass/>}/>
                     <Route path="createFeatureItems" element={<CreateFeature/>}/>
+
+                    <Route path="ancestry/:name" element={<Ancestry/>}/>
+                    <Route path="class/:name" element={<DaggerheartClass/>}/>
+                    <Route path="subclass/:name" element={<Subclass/>}/>
+                    <Route path="weapon/:name" element={<Weapon/>}/>
+                    <Route path="armor/:name" element={<Armor/>}/>
+                    <Route path="community/:name" element={<Community/>}/>
+                    <Route path="feature/:name" element={<Feature/>}/>
                 </Route>
                 <Route path="player" element={<PlayerLayout/>}>
                     <Route index element={<Profile/>}/>
                     <Route path="createCharacter" element={<CreateCharacter/>}/>
-                    <Route path="character" element={<Character/>}/>
+                    <Route path="character/:name" element={<Character/>}/>
                 </Route>
             </Route>
         )

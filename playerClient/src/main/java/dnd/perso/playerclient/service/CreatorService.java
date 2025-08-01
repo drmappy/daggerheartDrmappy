@@ -1,9 +1,7 @@
 package dnd.perso.playerclient.service;
 
 import dnd.perso.playerclient.exception.DatabaseError;
-import dnd.perso.playerclient.modele.Creator;
-import dnd.perso.playerclient.modele.DaggerheartClass;
-import dnd.perso.playerclient.modele.SubClass;
+import dnd.perso.playerclient.modele.*;
 import dnd.perso.playerclient.repository.*;
 import dnd.perso.playerclient.service.dto.*;
 import org.springframework.stereotype.Service;
@@ -16,12 +14,28 @@ public class CreatorService {
     // Constructor
     private final AccountRepository accountRepository;
     private final DaggerheartClassRepository daggerheartClassRepository;
+    private final CreatorRepository creatorRepository;
+    private final AncestryRepository ancestryRepository;
+    private final SubclassRepository subclassRepository;
+    private final CommunityRepository communityRepository;
+    private final FeatureRepository featureRepository;
+    private final WeaponRepository weaponRepository;
+    private final ArmorRepository armorRepository;
 
     public CreatorService(
             AccountRepository accountRepository,
-            DaggerheartClassRepository daggerheartClassRepository) {
+            DaggerheartClassRepository daggerheartClassRepository,
+            CreatorRepository creatorRepository,
+            AncestryRepository ancestryRepository, SubclassRepository subclassRepository, CommunityRepository communityRepository, FeatureRepository featureRepository, WeaponRepository weaponRepository, ArmorRepository armorRepository) {
         this.accountRepository = accountRepository;
         this.daggerheartClassRepository = daggerheartClassRepository;
+        this.creatorRepository = creatorRepository;
+        this.ancestryRepository = ancestryRepository;
+        this.subclassRepository = subclassRepository;
+        this.communityRepository = communityRepository;
+        this.featureRepository = featureRepository;
+        this.weaponRepository = weaponRepository;
+        this.armorRepository = armorRepository;
     }
 
     // Methods
@@ -113,6 +127,174 @@ public class CreatorService {
                 subClasses.add(subClassDTO.toModele());
                 daggerheartClass.setSubClasses(subClasses);
                 daggerheartClassRepository.save(daggerheartClass);
+            } else {
+                throw new DatabaseError();
+            }
+        } catch (Exception e) {
+            throw new DatabaseError();
+        }
+    }
+    @Transactional
+    public List<String> getDaggerheartClassesNames(String username, String password) throws DatabaseError {
+        try{
+            return creatorRepository.findClassesByUsernameAndPassword(username, password)
+                    .stream()
+                    .map(DaggerheartClass::getName)
+                    .toList();
+        } catch (Exception e) {
+            throw new DatabaseError();
+        }
+    }
+    @Transactional
+    public List<String> getSubclassesNames(String username, String password) throws DatabaseError {
+        try {
+            return creatorRepository.findSubClassesByUsernameAndPassword(username, password)
+                    .stream()
+                    .map(SubClass::getName)
+                    .toList();
+        } catch (Exception e) {
+            throw new DatabaseError();
+        }
+    }
+    @Transactional
+    public List<String> getAncestriesNames(String username, String password) throws DatabaseError {
+        try {
+            return creatorRepository.findAncestriesByUsernameAndPassword(username, password)
+                    .stream()
+                    .map(Ancestry::getName)
+                    .toList();
+        } catch (Exception e) {
+            throw new DatabaseError();
+        }
+    }
+    @Transactional
+    public List<String> getCommunitiesNames(String username, String password) throws DatabaseError {
+        try {
+            return creatorRepository.findCommunityByUsernameAndPassword(username, password)
+                    .stream()
+                    .map(Community::getName)
+                    .toList();
+        } catch (Exception e) {
+            throw new DatabaseError();
+        }
+    }
+    @Transactional
+    public List<String> getFeaturesNames(String username, String password) throws DatabaseError {
+        try {
+            return creatorRepository.findFeatureByUsernameAndPassword(username, password)
+                    .stream()
+                    .map(Feature::getName)
+                    .toList();
+        } catch (Exception e) {
+            throw new DatabaseError();
+        }
+    }
+    @Transactional
+    public List<String> getWeaponsNames(String username, String password) throws DatabaseError {
+        try {
+            return creatorRepository.findWeaponsByUsernameAndPassword(username, password)
+                    .stream()
+                    .map(Weapon::getName)
+                    .toList();
+        } catch (Exception e) {
+            throw new DatabaseError();
+        }
+    }
+    @Transactional
+    public List<String> getArmorsNames(String username, String password) throws DatabaseError {
+        try {
+            return creatorRepository.findArmorByUsernameAndPassword(username, password)
+                    .stream()
+                    .map(Armor::getName)
+                    .toList();
+        } catch (Exception e) {
+            throw new DatabaseError();
+        }
+    }
+
+    public AncestryDTO getAncestryByName(String name) throws DatabaseError {
+        try {
+            Ancestry ancestry = ancestryRepository.findById(name).orElse(null);
+            if (ancestry != null) {
+                return new AncestryDTO(ancestry);
+            } else {
+                throw new DatabaseError();
+            }
+        } catch (Exception e) {
+            throw new DatabaseError();
+        }
+    }
+
+    public DaggerheartClassDTO getDaggerheartClassByName(String name) throws DatabaseError {
+        try {
+            DaggerheartClass daggerheartClass = daggerheartClassRepository.findById(name).orElse(null);
+            if (daggerheartClass != null) {
+                return new DaggerheartClassDTO(daggerheartClass);
+            } else {
+                throw new DatabaseError();
+            }
+        } catch (Exception e) {
+            throw new DatabaseError();
+        }
+    }
+
+    public SubClassDTO getSubClassByName(String name) throws DatabaseError {
+        try {
+            SubClass subClass = subclassRepository.findById(name).orElse(null);
+            if (subClass != null) {
+                return new SubClassDTO(subClass);
+            } else {
+                throw new DatabaseError();
+            }
+        } catch (Exception e) {
+            throw new DatabaseError();
+        }
+    }
+
+    public CommunityDTO getCommunityByName(String name) throws DatabaseError {
+        try {
+            Community community = communityRepository.findById(name).orElse(null);
+            if (community != null) {
+                return new CommunityDTO(community);
+            } else {
+                throw new DatabaseError();
+            }
+        } catch (Exception e) {
+            throw new DatabaseError();
+        }
+    }
+
+    public FeatureDTO getFeatureByName(String name) throws DatabaseError {
+        try {
+            Feature feature = featureRepository.findById(name).orElse(null);
+            if (feature != null) {
+                return new FeatureDTO(feature);
+            } else {
+                throw new DatabaseError();
+            }
+        } catch (Exception e) {
+            throw new DatabaseError();
+        }
+    }
+
+    public WeaponDTO getWeaponByName(String name) throws DatabaseError {
+        try {
+            Weapon weapon = weaponRepository.findById(name).orElse(null);
+            if (weapon != null) {
+                return new WeaponDTO(weapon);
+            } else {
+                throw new DatabaseError();
+            }
+        } catch (Exception e) {
+            throw new DatabaseError();
+        }
+    }
+
+    public ArmorDTO getArmorByName(String name) throws DatabaseError {
+        try {
+            Armor armor = armorRepository.findById(name).orElse(null);
+            if (armor != null) {
+                return new ArmorDTO(armor);
             } else {
                 throw new DatabaseError();
             }
