@@ -24,6 +24,6 @@ public class DaggerheartClass {
     private List<Feature> hopeFeatures;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Feature> classFeatures;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     private List<SubClass> subClasses;
 }
