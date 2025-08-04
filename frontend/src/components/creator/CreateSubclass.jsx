@@ -18,7 +18,7 @@ function CreateSubclass(){
     const fetchClassNames = async () => {
         try {
             const account = JSON.parse(localStorage.getItem("Account"));
-            const response = await fetch("http://localhost:8080/creator/myClasses", {
+            const response = await fetch("http://localhost:8080/creator/myClassesNames", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -30,7 +30,7 @@ function CreateSubclass(){
                 throw new Error("Failed to fetch class names");
             }
             const data = await response.json();
-            setClassNames(data.map((cls) => cls.name));
+            setClassNames(data.map((cls) => cls));
         } catch (err) {
             setError(err.message);
         }

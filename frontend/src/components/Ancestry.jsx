@@ -42,6 +42,11 @@ function Ancestry() {
         <div>
             <h1>{ancestry.name}</h1>
             <p>Description: {ancestry.description}</p>
+            <h2>Features</h2>
+            <h3>{ancestry.feature1.name}</h3>
+            <p>{ancestry.feature1.description}</p>
+            <h3>{ancestry.feature2.name}</h3>
+            <p>{ancestry.feature2.description}</p>
         </div>
     );
 }

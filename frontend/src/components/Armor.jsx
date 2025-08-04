@@ -41,7 +41,10 @@ function Armor() {
     return (
         <div>
             <h1>{armor.name}</h1>
-            <p>Description: {armor.description}</p>
+            Two tables centered bottom one containing threshold nums
+            <p>Minor to major: {armor.minorToMajor}</p>
+            <p>Major to sever: {armor.majorToSevere}</p>
+            <p>Base armor score: {armor.baseArmorScore}</p>
         </div>
     );
 }
