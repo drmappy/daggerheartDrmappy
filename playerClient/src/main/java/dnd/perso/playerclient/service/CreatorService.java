@@ -121,7 +121,7 @@ public class CreatorService {
             Creator creator = (Creator) accountRepository.getByUsernameAndPassword(username, password);
             creator.addSubClass(subClassDTO.toModele());
             accountRepository.save(creator);
-            DaggerheartClass daggerheartClass = daggerheartClassRepository.findById(className).orElse(null);
+            DaggerheartClass daggerheartClass = daggerheartClassRepository.findByName(className);
             if (daggerheartClass != null) {
                 List<SubClass> subClasses = daggerheartClass.getSubClasses();
                 subClasses.add(subClassDTO.toModele());
@@ -214,7 +214,7 @@ public class CreatorService {
 
     public AncestryDTO getAncestryByName(String name) throws DatabaseError {
         try {
-            Ancestry ancestry = ancestryRepository.findById(name).orElse(null);
+            Ancestry ancestry = ancestryRepository.findByName(name);
             if (ancestry != null) {
                 return new AncestryDTO(ancestry);
             } else {
@@ -227,7 +227,7 @@ public class CreatorService {
 
     public DaggerheartClassDTO getDaggerheartClassByName(String name) throws DatabaseError {
         try {
-            DaggerheartClass daggerheartClass = daggerheartClassRepository.findById(name).orElse(null);
+            DaggerheartClass daggerheartClass = daggerheartClassRepository.findByName(name);
             if (daggerheartClass != null) {
                 return new DaggerheartClassDTO(daggerheartClass);
             } else {
@@ -240,7 +240,7 @@ public class CreatorService {
 
     public SubClassDTO getSubClassByName(String name) throws DatabaseError {
         try {
-            SubClass subClass = subclassRepository.findById(name).orElse(null);
+            SubClass subClass = subclassRepository.findByName(name);
             if (subClass != null) {
                 return new SubClassDTO(subClass);
             } else {
@@ -253,7 +253,7 @@ public class CreatorService {
 
     public CommunityDTO getCommunityByName(String name) throws DatabaseError {
         try {
-            Community community = communityRepository.findById(name).orElse(null);
+            Community community = communityRepository.findByName(name);
             if (community != null) {
                 return new CommunityDTO(community);
             } else {
@@ -266,7 +266,7 @@ public class CreatorService {
 
     public FeatureDTO getFeatureByName(String name) throws DatabaseError {
         try {
-            Feature feature = featureRepository.findById(name).orElse(null);
+            Feature feature = featureRepository.findByName(name);
             if (feature != null) {
                 return new FeatureDTO(feature);
             } else {
@@ -279,7 +279,7 @@ public class CreatorService {
 
     public WeaponDTO getWeaponByName(String name) throws DatabaseError {
         try {
-            Weapon weapon = weaponRepository.findById(name).orElse(null);
+            Weapon weapon = weaponRepository.findByName(name);
             if (weapon != null) {
                 return new WeaponDTO(weapon);
             } else {
@@ -292,7 +292,7 @@ public class CreatorService {
 
     public ArmorDTO getArmorByName(String name) throws DatabaseError {
         try {
-            Armor armor = armorRepository.findById(name).orElse(null);
+            Armor armor = armorRepository.findByName(name);
             if (armor != null) {
                 return new ArmorDTO(armor);
             } else {

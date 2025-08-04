@@ -56,11 +56,13 @@ function CreateAncestry(){
                     name,
                     description,
                     feature1: {
+                        id: feature1.id,
                         name: feature1.name,
                         description: feature1.description,
                         type: feature1.type,
                     },
                     feature2: {
+                        id: feature2.id,
                         name: feature2.name,
                         description: feature2.description,
                         type: feature2.type

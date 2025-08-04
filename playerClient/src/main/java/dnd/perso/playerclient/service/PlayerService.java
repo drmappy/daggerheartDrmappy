@@ -53,21 +53,17 @@ public class PlayerService {
 
     // Methods
     @Transactional
-    public DaggerheartClassDTO getClassById(String name) throws DatabaseError {
+    public DaggerheartClassDTO getClassByName(String name) throws DatabaseError {
         try {
-            return daggerheartClassRepository.findById(name)
-                    .map(DaggerheartClassDTO::new)
-                    .orElseThrow(DatabaseError::new);
+            return new DaggerheartClassDTO(daggerheartClassRepository.findByName(name));
         } catch (Exception e) {
             throw e;
         }
     }
     @Transactional
-    public SubClassDTO getSubClassById(String name) throws DatabaseError {
+    public SubClassDTO getSubClassByName(String name) throws DatabaseError {
         try {
-            return subclassRepository.findById(name)
-                    .map(SubClassDTO::new)
-                    .orElseThrow(DatabaseError::new);
+            return new SubClassDTO(subclassRepository.findByName(name));
         } catch (Exception e) {
             throw e;
         }
@@ -99,51 +95,41 @@ public class PlayerService {
         }
     }
     @Transactional
-    public AncestryDTO getAncestryById(String name) throws DatabaseError {
+    public AncestryDTO getAncestryByName(String name) throws DatabaseError {
         try {
-            return ancestryRepository.findById(name)
-                    .map(AncestryDTO::new)
-                    .orElseThrow(DatabaseError::new);
+            return new AncestryDTO(ancestryRepository.findByName(name));
         } catch (Exception e) {
             throw e;
         }
     }
     @Transactional
-    public CommunityDTO getCommunityById(String name) throws DatabaseError {
+    public CommunityDTO getCommunityByName(String name) throws DatabaseError {
         try {
-            return communityRepository.findById(name)
-                    .map(CommunityDTO::new)
-                    .orElseThrow(DatabaseError::new);
+            return new CommunityDTO(communityRepository.findByName(name));
         } catch (Exception e) {
             throw e;
         }
     }
     @Transactional
-    public FeatureDTO getFeatureById(String name) throws DatabaseError {
+    public FeatureDTO getFeatureByName(String name) throws DatabaseError {
         try {
-            return featureRepository.findById(name)
-                    .map(FeatureDTO::new)
-                    .orElseThrow(DatabaseError::new);
+            return new FeatureDTO(featureRepository.findByName(name));
         } catch (Exception e) {
             throw e;
         }
     }
     @Transactional
-    public WeaponDTO getWeaponById(String name) throws DatabaseError {
+    public WeaponDTO getWeaponByName(String name) throws DatabaseError {
         try {
-            return weaponRepository.findById(name)
-                    .map(WeaponDTO::new)
-                    .orElseThrow(DatabaseError::new);
+            return new WeaponDTO(weaponRepository.findByName(name));
         } catch (Exception e) {
             throw e;
         }
     }
     @Transactional
-    public ArmorDTO getArmorById(String name) throws DatabaseError {
+    public ArmorDTO getArmorByName(String name) throws DatabaseError {
         try {
-            return armorRepository.findById(name)
-                    .map(ArmorDTO::new)
-                    .orElseThrow(DatabaseError::new);
+            return new ArmorDTO(armorRepository.findByName(name));
         } catch (Exception e) {
             throw e;
         }
@@ -221,8 +207,8 @@ public class PlayerService {
     @Transactional
     public SubClassDTO[] getSubClassesByClass(String className) throws DatabaseError {
         try {
-            return daggerheartClassRepository.findByName(className).stream()
-                    .flatMap(daggerheartClass -> daggerheartClass.getSubClasses().stream())
+            return daggerheartClassRepository.findByName(className)
+                    .getSubClasses().stream()
                     .map(SubClassDTO::new)
                     .toArray(SubClassDTO[]::new);
         } catch (Exception e) {

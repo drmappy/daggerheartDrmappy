@@ -72,7 +72,7 @@ public class PlayerController {
     @GetMapping("/class/{name}")
     public ResponseEntity<DaggerheartClassDTO> getDaggerHeartClass(@PathVariable String name) {
         try{
-            return ResponseEntity.ok().body(playerService.getClassById(name));
+            return ResponseEntity.ok().body(playerService.getClassByName(name));
         }catch (Exception e){
             return ResponseEntity.notFound().build();
         }
@@ -80,7 +80,7 @@ public class PlayerController {
     @GetMapping("/subclass/{name}")
     public ResponseEntity<SubClassDTO> getSubClass(@PathVariable String name) {
         try{
-            return ResponseEntity.ok().body(playerService.getSubClassById(name));
+            return ResponseEntity.ok().body(playerService.getSubClassByName(name));
         }catch (Exception e){
             return ResponseEntity.notFound().build();
         }
@@ -106,7 +106,7 @@ public class PlayerController {
     @GetMapping("/ancestry")
     public ResponseEntity<AncestryDTO>getAncestry(@RequestBody String name) {
         try {
-            AncestryDTO ancestry = playerService.getAncestryById(name);
+            AncestryDTO ancestry = playerService.getAncestryByName(name);
             return ResponseEntity.ok(ancestry);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
@@ -115,7 +115,7 @@ public class PlayerController {
     @GetMapping("/community")
     public ResponseEntity<CommunityDTO> getCommunity(@RequestBody String name){
         try {
-            CommunityDTO community = playerService.getCommunityById(name);
+            CommunityDTO community = playerService.getCommunityByName(name);
             return ResponseEntity.ok(community);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
@@ -124,7 +124,7 @@ public class PlayerController {
     @GetMapping("/feature")
     public ResponseEntity<FeatureDTO> getFeature(@RequestBody String name){
         try {
-            FeatureDTO feature = playerService.getFeatureById(name);
+            FeatureDTO feature = playerService.getFeatureByName(name);
             return ResponseEntity.ok(feature);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
@@ -133,7 +133,7 @@ public class PlayerController {
     @GetMapping("/weapon")
     public ResponseEntity<WeaponDTO> getWeapon(@RequestBody String name) {
         try {
-            WeaponDTO weapon = playerService.getWeaponById(name);
+            WeaponDTO weapon = playerService.getWeaponByName(name);
             return ResponseEntity.ok(weapon);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
@@ -142,7 +142,7 @@ public class PlayerController {
     @GetMapping("/armor")
     public ResponseEntity<ArmorDTO> getArmor(@RequestBody String name) {
         try {
-            ArmorDTO armor = playerService.getArmorById(name);
+            ArmorDTO armor = playerService.getArmorByName(name);
             return ResponseEntity.ok(armor);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();

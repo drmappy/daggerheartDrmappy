@@ -3,5 +3,9 @@ package dnd.perso.playerclient.repository;
 import dnd.perso.playerclient.modele.SubClass;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface SubclassRepository extends JpaRepository<SubClass, String> {
+import java.util.Optional;
+
+public interface SubclassRepository extends JpaRepository<SubClass, Long> {
+
+    SubClass findByName(String name);
 }

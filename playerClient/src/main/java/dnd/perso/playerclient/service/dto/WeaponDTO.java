@@ -12,6 +12,7 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class WeaponDTO {
+    private Long id;
     private String name;
     private CharacterSpellTrait trait;
     private Range range;
@@ -26,8 +27,18 @@ public class WeaponDTO {
         this.burden = burden;
     }
 
+    public WeaponDTO(String name, CharacterSpellTrait trait, Range range, DamageDTO damageDTO, Burden burden, FeatureDTO feature) {
+        this.name = name;
+        this.trait = trait;
+        this.range = range;
+        this.damage = damageDTO;
+        this.burden = burden;
+        this.feature = feature;
+    }
+
     public Weapon toModele() {
         return new Weapon(
+                id,
                 name,
                 trait,
                 range,

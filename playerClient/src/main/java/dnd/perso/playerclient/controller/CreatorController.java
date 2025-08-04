@@ -1,5 +1,6 @@
 package dnd.perso.playerclient.controller;
 
+import dnd.perso.playerclient.exception.DatabaseError;
 import dnd.perso.playerclient.modele.enums.CharacterSpellTrait;
 import dnd.perso.playerclient.modele.enums.Domain;
 import dnd.perso.playerclient.service.CreatorService;
@@ -62,7 +63,6 @@ public class CreatorController {
             return ResponseEntity.badRequest().build();
         }
     }
-
     @PostMapping("/save/community")
     public ResponseEntity<Void> saveCommunity(@RequestBody CommunityDTO communityDTO, @RequestHeader String username, @RequestHeader String password) {
         try {

@@ -39,7 +39,7 @@ function CreateCommunity(){
         const account = JSON.parse(localStorage.getItem("Account"));
 
         try {
-            const response = await fetch("http://localhost:8080/creator/save", {
+            const response = await fetch("http://localhost:8080/creator/save/community", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

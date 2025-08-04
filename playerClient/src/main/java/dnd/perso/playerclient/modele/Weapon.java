@@ -14,6 +14,9 @@ import lombok.*;
 @ToString
 public class Weapon {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(unique = true)
     private String name;
     private CharacterSpellTrait trait;
     private Range range;

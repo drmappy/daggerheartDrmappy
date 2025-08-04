@@ -9,6 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class ArmorDTO {
+    private Long id;
     private String name;
     private int minorToMajor;
     private int majorToSevere;
@@ -20,8 +21,18 @@ public class ArmorDTO {
         this.majorToSevere = majorToSevere;
         this.baseArmorScore = baseArmorScore;
     }
+
+    public ArmorDTO(String name, int minorToMajor, int majorToSevere, int baseArmorScore, FeatureDTO feature) {
+        this.name = name;
+        this.minorToMajor = minorToMajor;
+        this.majorToSevere = majorToSevere;
+        this.baseArmorScore = baseArmorScore;
+        this.feature = feature;
+    }
+
     public Armor toModele(){
         return new Armor(
+                id,
                 name,
                 minorToMajor,
                 majorToSevere,

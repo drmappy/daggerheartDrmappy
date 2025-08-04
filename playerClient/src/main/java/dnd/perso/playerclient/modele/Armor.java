@@ -11,6 +11,9 @@ import lombok.*;
 @ToString
 public class Armor {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(unique = true)
     private String name;
     private int minorToMajor;
     private int majorToSevere;
