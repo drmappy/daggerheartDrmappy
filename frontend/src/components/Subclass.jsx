@@ -42,6 +42,34 @@ function Subclass() {
         <div>
             <h1>{subclass.name}</h1>
             <p>Description: {subclass.description}</p>
+            <p>Spell casting trait: {subclass.spellcastingTrait}</p>
+            <h2>Foundation Features</h2>
+            <ul>
+                {subclass.foundationFeatures.map((feature, index) => (
+                    <li key={index}>
+                        <h3>{feature.name}</h3>
+                        <p>{feature.description}</p>
+                    </li>
+                ))}
+            </ul>
+            <h2>Specialization Features</h2>
+            <ul>
+                {subclass.specializationFeatures.map((feature, index) => (
+                    <li key={index}>
+                        <h3>{feature.name}</h3>
+                        <p>{feature.description}</p>
+                    </li>
+                ))}
+            </ul>
+            <h2>Mastery Features</h2>
+            <ul>
+                {subclass.masteryFeatures.map((feature, index) => (
+                    <li key={index}>
+                        <h3>{feature.name}</h3>
+                        <p>{feature.description}</p>
+                    </li>
+                ))}
+            </ul>
         </div>
     );
 }

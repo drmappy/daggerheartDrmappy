@@ -41,7 +41,15 @@ function Weapon(){
     return (
         <div>
             <h1>{weapon.name}</h1>
-            <p>Description: {weapon.description}</p>
+            <p>Trait: {weapon.trait}</p>
+            <p>Range: {weapon.range}</p>
+            <p>Damage: {weapon.damage.damageType}</p>
+            <p>Damage Die: {weapon.damage.dieSize}</p>
+            <p>Base Damage: {weapon.damage.baseDamage}</p>
+            <p>Burden: {weapon.burden}</p>
+            {weapon.feature && (<div><h2>Feature</h2>
+                <p>{weapon.feature.name}</p>
+                <p>{weapon.feature.description}</p></div>)}
         </div>
     );
 }

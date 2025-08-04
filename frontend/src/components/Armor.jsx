@@ -45,6 +45,11 @@ function Armor() {
             <p>Minor to major: {armor.minorToMajor}</p>
             <p>Major to sever: {armor.majorToSevere}</p>
             <p>Base armor score: {armor.baseArmorScore}</p>
+            {armor.feature !== null && (<div>
+                <h2>Feature</h2>
+                <p>Name: {armor.feature.name}</p>
+                <p>Description: {armor.feature.description}</p>
+            </div>)}
         </div>
     );
 }
