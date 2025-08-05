@@ -228,7 +228,7 @@ public class PlayerService {
     @Transactional
     public void saveCharacter(DaggerheartCharacterDTO characterDTO, String username, String password) throws Exception {
         try {
-            Player player = (Player) accountRepository.getByUsernameAndPassword(username, password);
+            Player player = getPlayer(username, password).toModele();
             if (player == null) {
                 throw new DatabaseError();
             }
@@ -242,7 +242,7 @@ public class PlayerService {
     @Transactional
     public String[] getCharacterNames(String username, String password) throws DatabaseError {
         try {
-            Player player = (Player) accountRepository.getByUsernameAndPassword(username, password);
+            Player player = getPlayer(username, password).toModele();
             if (player == null) {
                 throw new DatabaseError();
             }

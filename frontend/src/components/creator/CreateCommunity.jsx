@@ -50,6 +50,7 @@ function CreateCommunity(){
                     name,
                     description,
                     feature: {
+                        id: feature.id,
                         name: feature.name,
                         description: feature.description,
                         type: feature.type || "COMMUNITY"

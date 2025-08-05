@@ -12,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 public class DaggerheartClassDTO {
+    private Long id;
     private String name;
     private String description;
     private List<Domain> domains;
@@ -23,6 +24,7 @@ public class DaggerheartClassDTO {
     private List<SubClassDTO> subClasses;
     public DaggerheartClass toModele(){
         return new DaggerheartClass(
+                id,
                 name,
                 description,
                 domains,
@@ -35,6 +37,7 @@ public class DaggerheartClassDTO {
         );
     }
     public DaggerheartClassDTO(DaggerheartClass daggerheartClass) {
+        this.id = daggerheartClass.getId();
         this.name = daggerheartClass.getName();
         this.description = daggerheartClass.getDescription();
         this.domains = daggerheartClass.getDomains();

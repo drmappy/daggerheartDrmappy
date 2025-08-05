@@ -12,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 public class SubClassDTO {
+    private Long id;
     private String name;
     private String description;
     private CharacterSpellTrait spellCastingTrait;
@@ -21,6 +22,7 @@ public class SubClassDTO {
 
     public SubClass toModele() {
         return new SubClass(
+                id,
                 name,
                 description,
                 spellCastingTrait,
@@ -30,6 +32,7 @@ public class SubClassDTO {
         );
     }
     public SubClassDTO(SubClass subClass) {
+        this.id = subClass.getId();
         this.name = subClass.getName();
         this.description = subClass.getDescription();
         this.spellCastingTrait = subClass.getSpellcastingTrait();

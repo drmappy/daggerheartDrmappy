@@ -5,6 +5,8 @@ import dnd.perso.playerclient.service.dto.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+
 
 @RestController
 @RequestMapping("/player")
@@ -56,7 +58,6 @@ public class PlayerController {
             playerService.getPlayer(username, password);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             return ResponseEntity.badRequest().build();
         }
     }

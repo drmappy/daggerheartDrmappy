@@ -51,7 +51,8 @@ public class CreatorDTO extends AccountDTO {
                 this.communities != null ? this.communities.stream().map(CommunityDTO::toModele).toList() : List.of(),
                 this.daggerheartClasses != null ? this.daggerheartClasses.stream().map(DaggerheartClassDTO::toModele).toList() : List.of(),
                 this.weapons != null ? this.weapons.stream().map(WeaponDTO::toModele).toList() : List.of(),
-                this.features != null ? this.features.stream().map(FeatureDTO::toModele).toList() : List.of()
+                this.features != null ? this.features.stream().map(FeatureDTO::toModele).toList() : List.of(),
+                this.subclasses != null ? this.subclasses.stream().map(SubClassDTO::toModele).toList() : List.of()
         );
     }
 }

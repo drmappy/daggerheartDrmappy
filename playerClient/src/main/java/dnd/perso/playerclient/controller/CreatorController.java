@@ -57,6 +57,7 @@ public class CreatorController {
     @PostMapping("/save/subclass")
     public ResponseEntity<Void> saveSubClass(@RequestBody SubClassDTO subClassDTO, @RequestHeader String username, @RequestHeader String password, @RequestHeader String className) {
         try {
+            System.out.println("Saving subclass: " + subClassDTO + " for class: " + className);
             creatorService.saveSubClass(subClassDTO, username, password, className);
             return ResponseEntity.ok().build();
         } catch (Exception e) {

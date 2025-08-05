@@ -118,13 +118,16 @@ public class CreatorService {
     @Transactional
     public void saveSubClass(SubClassDTO subClassDTO, String username, String password, String className) throws DatabaseError {
         try {
+            SubClass subClass = subClassDTO.toModele();
             Creator creator = (Creator) accountRepository.getByUsernameAndPassword(username, password);
-            creator.addSubClass(subClassDTO.toModele());
+            creator.addSubClass(subClass);
             accountRepository.save(creator);
             DaggerheartClass daggerheartClass = daggerheartClassRepository.findByName(className);
             if (daggerheartClass != null) {
                 List<SubClass> subClasses = daggerheartClass.getSubClasses();
-                subClasses.add(subClassDTO.toModele());
+                creator = (Creator) accountRepository.getByUsernameAndPassword(username, password);
+                List<SubClass> creatorSubClasses = creator.getSubClasses();
+                subClasses.add((creatorSubClasses.stream().filter(subClass1 -> subClass1.getName().equals(subClassDTO.getName())).findFirst().get()));
                 daggerheartClass.setSubClasses(subClasses);
                 daggerheartClassRepository.save(daggerheartClass);
             } else {

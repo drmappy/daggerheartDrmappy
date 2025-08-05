@@ -28,7 +28,7 @@ public class Creator extends Account{
     private List<Feature> features;
     @OneToMany(cascade = CascadeType.ALL)
     private List<SubClass> subClasses;
-    public Creator(Long id, String username, String password, List<Armor> armors, List<Ancestry> ancestries, List<Community> communities, List<DaggerheartClass> daggerheartClasses, List<Weapon> weapons, List<Feature> features) {
+    public Creator(Long id, String username, String password, List<Armor> armors, List<Ancestry> ancestries, List<Community> communities, List<DaggerheartClass> daggerheartClasses, List<Weapon> weapons, List<Feature> features, List<SubClass> subClasses) {
         super(id, username, password);
         this.armors = armors;
         this.ancestries = ancestries;
@@ -36,6 +36,7 @@ public class Creator extends Account{
         this.daggerheartClasses = daggerheartClasses;
         this.weapons = weapons;
         this.features = features;
+        this.subClasses = subClasses;
     }
 
     public void addAncestry(Ancestry modele) {
