@@ -230,4 +230,13 @@ public class PlayerController {
             return ResponseEntity.notFound().build();
         }
     }
+    @GetMapping("/search")
+    public ResponseEntity<SearchInfo[]> search(@RequestHeader String name, @RequestHeader int page, @RequestHeader String objects) {
+        try {
+            SearchInfo[] results = playerService.search(name, page, objects.split(","));
+            return ResponseEntity.ok(results);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

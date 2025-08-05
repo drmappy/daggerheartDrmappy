@@ -34,6 +34,7 @@ import Weapon from "./components/Weapon.jsx";
 import Armor from "./components/Armor.jsx";
 import Community from "./components/Community.jsx";
 import Feature from "./components/Feature.jsx";
+import Search from "./components/Search.jsx";
 function App() {
     const router = createBrowserRouter(
         createRoutesFromElements(
@@ -41,6 +42,7 @@ function App() {
                 <Route index element={<Login/>}/>
                 <Route path="signup" element={<Signup/>}/>
                 <Route path="main" element={<MainPage/>}/>
+                <Route path="search" element={<Search/>}/>
                 <Route path="creator" element={<CreatorLayout/>}>
                     <Route index element={<Profile/>}/>
 
