@@ -254,7 +254,7 @@ public class PlayerService {
             throw new DatabaseError();
         }
     }
-
+    @Transactional
     public DaggerheartCharacterDTO getCharacterByName(String name, String username, String password) throws DatabaseError {
         try {
             List<DaggerheartCharacter> characters = playerRepository.getCharactersByUsernameAndPassword(username, password);
@@ -267,7 +267,7 @@ public class PlayerService {
             throw new DatabaseError();
         }
     }
-
+    @Transactional
     public SearchData search(String name, int page, String[] objectsToSearch) {
         List<SearchInfo> results = new ArrayList<>();
         try {

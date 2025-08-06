@@ -33,14 +33,11 @@ function Search(){
         setLoading(true);
         setError("");
         try {
-            const response = await fetch(`http://localhost:8080/player/search/`,
+            const response = await fetch(`http://localhost:8080/player/search?name=${searchName}&page=${page}&objects=${objects.join(",")}`,
                 {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
-                        "name": searchName,
-                        "page": page,
-                        "objects": objects.join(",")
                     },
                 }
             )

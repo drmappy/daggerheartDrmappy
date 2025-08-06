@@ -231,7 +231,7 @@ public class PlayerController {
         }
     }
     @GetMapping("/search")
-    public ResponseEntity<SearchData> search(@RequestHeader String name, @RequestHeader int page, @RequestHeader String objects) {
+    public ResponseEntity<SearchData> search(@RequestParam String name, @RequestParam int page, @RequestParam String objects) {
         try {
             String[] objectsToSearch = objects.split(",");
             SearchData results = playerService.search(name, page, objectsToSearch);
