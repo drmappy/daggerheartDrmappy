@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 function Search(){
+    useEffect(
+        () => {
+            handleSearch();
+        }, []
+    )
     const [searchName, setSearchName] = useState("");
     const [objects, setObjects] = useState([]);
-    const [objectOptions, setObjectOptions] = useState([
+    const objectOptions = [
         "ANCESTRY",
         "COMMUNITY",
         "FEATURE",
@@ -11,18 +16,20 @@ function Search(){
         "CLASS",
         "SUBCLASS",
         "WEAPON"
-    ]);
+    ];
     const [page, setPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
     const limitPageChoice = 5;
-    const pageBandwidth = Math.min(totalPages, limitPageChoice);
 
     const [searchResults, setSearchResults] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const navigate = useNavigate();
-    const handleSearch = async (e) => {
-        e.preventDefault();
+    const handleSearch = async () => {
+        if(objects.length === 0) {
+            setError("Please select at least one object type to search.");
+            return;
+        }
         setLoading(true);
         setError("");
         try {
@@ -33,7 +40,7 @@ function Search(){
                         "Content-Type": "application/json",
                         "name": searchName,
                         "page": page,
-                        "objectType": objects.join(",")
+                        "objects": objects.join(",")
                     },
                 }
             )
@@ -61,7 +68,11 @@ function Search(){
             <h1>Search</h1>
             <p>This component will allow users to search for various objects.</p>
             {error && <p className="error">{error}</p>}
-            <form onSubmit={handleSearch}>
+            <form onSubmit={(e)=> {
+                e.preventDefault();
+                handleSearch();
+                setPage(0);
+            }}>
                 <input
                     type="text"
                     value={searchName}
@@ -90,8 +101,8 @@ function Search(){
                     <h2>Results</h2>
                     <ul>
                         {searchResults.map((result, index) => (
-                            <li key={index} onClick={() => navigate(`/player/${result.objectType.toLowerCase()}/${result.name}`)}>
-                                {result.name} ({result.objectType})
+                            <li key={index} onClick={() => navigate(`/player/${result.type.toLowerCase()}/${result.name}`)}>
+                                {result.name} ({result.type})
                             </li>
                         ))}
                     </ul>
@@ -99,20 +110,19 @@ function Search(){
             )}
             <div>
                 {totalPages > 0 && (() => {
-                    let start = 0;
-                    if (pageBandwidth % 2 !== 0) {
-                        start = Math.max(0, page - Math.floor(pageBandwidth / 2));
-                        if (start + pageBandwidth > totalPages) {
-                            start = Math.max(0, totalPages - pageBandwidth);
-                        }
+                    let start = Math.max(0, page - Math.floor(limitPageChoice / 2));
+                    let end = Math.min(totalPages, start + limitPageChoice);
+                    if (end - start < limitPageChoice) {
+                        start = Math.max(0, end - limitPageChoice);
                     }
-                    const pages = Array.from({ length: pageBandwidth }, (_, i) =>
-                        (pageBandwidth % 2 !== 0 ? start + i : i)
-                    );
+                    const pages = Array.from({ length: end - start }, (_, i) => start + i);
                     return pages.map(i => (
                         <button
                             key={i}
-                            onClick={() => setPage(i)}
+                            onClick={() => {
+                                setPage(i)
+                                setSearchResults([]);
+                            }}
                             disabled={i === page}
                         >
                             {i + 1}

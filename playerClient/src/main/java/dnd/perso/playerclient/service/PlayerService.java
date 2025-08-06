@@ -8,11 +8,12 @@ import dnd.perso.playerclient.service.dto.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class PlayerService {
-
+    private final int PAGE_LIMIT = 10;
     // Constructor
     private final DaggerheartCharacterRepository daggerheartCharacterRepository;
     private final DaggerheartClassRepository daggerheartClassRepository;
@@ -265,5 +266,51 @@ public class PlayerService {
         } catch (Exception e) {
             throw new DatabaseError();
         }
+    }
+
+    public SearchData search(String name, int page, String[] objectsToSearch) {
+        List<SearchInfo> results = new ArrayList<>();
+        try {
+            for (String objectType : objectsToSearch) {
+                switch (objectType) {
+                    case "CLASS":
+                        daggerheartClassRepository.findByNameContaining(name)
+                                .forEach(c -> results.add(new SearchInfo(c.getName(), "class")));
+                        break;
+                    case "SUBCLASS":
+                        subclassRepository.findByNameContaining(name)
+                                .forEach(sc -> results.add(new SearchInfo(sc.getName(), "subclass")));
+                        break;
+                    case "ANCESTRY":
+                        ancestryRepository.findByNameContaining(name)
+                                .forEach(a -> results.add(new SearchInfo(a.getName(), "ancestry")));
+                        break;
+                    case "COMMUNITY":
+                        communityRepository.findByNameContaining(name)
+                                .forEach(c -> results.add(new SearchInfo(c.getName(), "community")));
+                        break;
+                    case "FEATURE":
+                        featureRepository.findByNameContaining(name)
+                                .forEach(f -> results.add(new SearchInfo(f.getName(), "feature")));
+                        break;
+                    case "WEAPON":
+                        weaponRepository.findByNameContaining(name)
+                                .forEach(w -> results.add(new SearchInfo(w.getName(), "weapon")));
+                        break;
+                    case "ARMOR":
+                        armorRepository.findByNameContaining(name)
+                                .forEach(a -> results.add(new SearchInfo(a.getName(), "armor")));
+                        break;
+                    default:
+                        break;
+                }
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+        int fromIndex = Math.min(page * PAGE_LIMIT, results.size());
+        int toIndex = Math.min(fromIndex + PAGE_LIMIT, results.size());
+        List<SearchInfo> infoToSend = results.subList(fromIndex, toIndex);
+        return new SearchData(infoToSend, results.size()/ PAGE_LIMIT + (results.size() % PAGE_LIMIT == 0 ? 0 : 1));
     }
 }
