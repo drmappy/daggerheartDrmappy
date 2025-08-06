@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 function Search(){
-    useEffect(
-        () => {
-            handleSearch();
-        }, []
-    )
     const [searchName, setSearchName] = useState("");
     const [objects, setObjects] = useState([]);
     const objectOptions = [
@@ -25,7 +20,7 @@ function Search(){
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const navigate = useNavigate();
-    const handleSearch = async () => {
+    const handleSearch = async (newPage) => {
         if(objects.length === 0) {
             setError("Please select at least one object type to search.");
             return;
@@ -33,7 +28,7 @@ function Search(){
         setLoading(true);
         setError("");
         try {
-            const response = await fetch(`http://localhost:8080/player/search?name=${searchName}&page=${page}&objects=${objects.join(",")}`,
+            const response = await fetch(`http://localhost:8080/player/search?name=${searchName}&page=${newPage ?? page}&objects=${objects.join(",")}`,
                 {
                     method: "GET",
                     headers: {
@@ -116,9 +111,10 @@ function Search(){
                     return pages.map(i => (
                         <button
                             key={i}
-                            onClick={() => {
+                            onClick={async () => {
                                 setPage(i)
                                 setSearchResults([]);
+                                await handleSearch(i);
                             }}
                             disabled={i === page}
                         >
