@@ -10,7 +10,8 @@ function Search(){
         "ARMOR",
         "CLASS",
         "SUBCLASS",
-        "WEAPON"
+        "WEAPON",
+        "ENEMY"
     ];
     const [page, setPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);

@@ -26,6 +26,8 @@ public class PlayerService {
     private final ExperienceRepository experienceRepository;
     private final AccountRepository accountRepository;
     private final PlayerRepository playerRepository;
+    private final EnemyRepository enemyRepository;
+
     public PlayerService(
             DaggerheartCharacterRepository daggerheartCharacterRepository,
             DaggerheartClassRepository daggerheartClassRepository,
@@ -37,8 +39,8 @@ public class PlayerService {
             ArmorRepository armorRepository,
             ExperienceRepository experienceRepository,
             AccountRepository accountRepository,
-            PlayerRepository playerRepository
-    ) {
+            PlayerRepository playerRepository,
+            EnemyRepository enemyRepository) {
         this.daggerheartCharacterRepository = daggerheartCharacterRepository;
         this.daggerheartClassRepository = daggerheartClassRepository;
         this.subclassRepository = subclassRepository;
@@ -50,6 +52,7 @@ public class PlayerService {
         this.experienceRepository = experienceRepository;
         this.accountRepository = accountRepository;
         this.playerRepository = playerRepository;
+        this.enemyRepository = enemyRepository;
     }
 
     // Methods
@@ -300,6 +303,10 @@ public class PlayerService {
                     case "ARMOR":
                         armorRepository.findByNameContaining(name)
                                 .forEach(a -> results.add(new SearchInfo(a.getName(), "armor")));
+                        break;
+                    case "ENEMY":
+                        enemyRepository.findByNameContaining(name)
+                                .forEach(e -> results.add(new SearchInfo(e.getName(), "enemy")));
                         break;
                     default:
                         break;
