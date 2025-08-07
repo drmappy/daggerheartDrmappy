@@ -4,6 +4,7 @@ import dnd.perso.playerclient.modele.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Arrays;
 import java.util.List;
 
 public interface CreatorRepository extends JpaRepository<Creator, Long> {
@@ -21,4 +22,6 @@ public interface CreatorRepository extends JpaRepository<Creator, Long> {
     List<Community> findCommunityByUsernameAndPassword(String username, String password);
     @Query("select c.ancestries from Creator c where c.username = ?1 and c.password = ?2")
     List<Ancestry> findAncestriesByUsernameAndPassword(String username, String password);
+    @Query("select c.enemies from Creator c where c.username = ?1 and c.password = ?2")
+    List<Enemy> findEnemiesByUsernameAndPassword(String username, String password);
 }

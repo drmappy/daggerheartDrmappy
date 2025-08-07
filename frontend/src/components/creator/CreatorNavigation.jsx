@@ -69,6 +69,14 @@ function CreatorNavigation(){
                             Create a Feature
                         </NavLink>
                     </li>
+                    <li>
+                        <NavLink
+                            to="/creator/createEnemy"
+                            end
+                        >
+                            Create an Enemy
+                        </NavLink>
+                    </li>
                 </ul>
                 <ul>
                     <li>
@@ -104,6 +112,11 @@ function CreatorNavigation(){
                     <li>
                         <NavLink to="/creator/myWeapons" end>
                             My Weapons
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/creator/myEnemies" end>
+                            My Enemies
                         </NavLink>
                     </li>
                 </ul>

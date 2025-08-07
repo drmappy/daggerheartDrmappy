@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import lombok.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Entity
@@ -28,7 +29,9 @@ public class Creator extends Account{
     private List<Feature> features;
     @OneToMany(cascade = CascadeType.ALL)
     private List<SubClass> subClasses;
-    public Creator(Long id, String username, String password, List<Armor> armors, List<Ancestry> ancestries, List<Community> communities, List<DaggerheartClass> daggerheartClasses, List<Weapon> weapons, List<Feature> features, List<SubClass> subClasses) {
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Enemy> enemies;
+    public Creator(Long id, String username, String password, List<Armor> armors, List<Ancestry> ancestries, List<Community> communities, List<DaggerheartClass> daggerheartClasses, List<Weapon> weapons, List<Feature> features, List<SubClass> subClasses, List<Enemy> enemies) {
         super(id, username, password);
         this.armors = armors;
         this.ancestries = ancestries;
@@ -37,6 +40,7 @@ public class Creator extends Account{
         this.weapons = weapons;
         this.features = features;
         this.subClasses = subClasses;
+        this.enemies = enemies;
     }
 
     public void addAncestry(Ancestry modele) {
@@ -91,6 +95,13 @@ public class Creator extends Account{
             subClasses.add(modele);
         } else {
             subClasses = List.of(modele);
+        }
+    }
+    public void addEnemy(Enemy modele) {
+        if (enemies != null) {
+            enemies.add(modele);
+        } else {
+            enemies = List.of(modele);
         }
     }
 }

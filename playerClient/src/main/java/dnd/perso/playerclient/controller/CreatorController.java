@@ -91,6 +91,15 @@ public class CreatorController {
             return ResponseEntity.badRequest().build();
         }
     }
+    @PostMapping("/saveEnemy")
+    public ResponseEntity<Void> saveEnemy(@RequestBody EnemyDTO enemyDTO, @RequestHeader String username, @RequestHeader String password) {
+        try {
+            creatorService.saveEnemy(enemyDTO, username, password);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
     @PostMapping("/get")
     public ResponseEntity<CreatorDTO> getProfile(@RequestBody CreatorDTO creatorDTO) {
         try {
@@ -175,6 +184,16 @@ public class CreatorController {
             creatorService.getCreator(username, password);
             List<String> armors = creatorService.getArmorsNames(username, password);
             return ResponseEntity.ok(armors);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    @GetMapping("/myEnemiesNames")
+    public ResponseEntity<List<String>> getAllEnemies(@RequestHeader String username, @RequestHeader String password) {
+        try {
+            creatorService.getCreator(username, password);
+            List<String> enemies = creatorService.getEnemyNames(username, password);
+            return ResponseEntity.ok(enemies);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
@@ -267,5 +286,14 @@ public class CreatorController {
             return ResponseEntity.notFound().build();
         }
     }
-
+    @GetMapping("/enemy/{name}")
+    public ResponseEntity<EnemyDTO> getEnemyByName(@PathVariable String name, @RequestHeader String username, @RequestHeader String password) {
+        try {
+            creatorService.getCreator(username, password);
+            EnemyDTO enemy = creatorService.getEnemyByName(name);
+            return ResponseEntity.ok(enemy);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

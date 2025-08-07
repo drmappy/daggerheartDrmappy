@@ -20,6 +20,7 @@ public class CreatorDTO extends AccountDTO {
     private List<SubClassDTO> subclasses;
     private List<WeaponDTO> weapons;
     private List<FeatureDTO> features;
+    private List<EnemyDTO> enemyDTOS;
     public CreatorDTO(Long id, String username, String password) {
         super(id, username, password);
     }
@@ -40,6 +41,8 @@ public class CreatorDTO extends AccountDTO {
         this.daggerheartClasses = creator.getDaggerheartClasses().stream().map(DaggerheartClassDTO::new).toList();
         this.weapons = creator.getWeapons().stream().map(WeaponDTO::new).toList();
         this.features = creator.getFeatures().stream().map(FeatureDTO::new).toList();
+        this.subclasses = creator.getSubClasses().stream().map(SubClassDTO::new).toList();
+        this.enemyDTOS = creator.getEnemies().stream().map(EnemyDTO::new).toList();
     }
     public Creator toModele(){
         return new Creator(
@@ -52,7 +55,8 @@ public class CreatorDTO extends AccountDTO {
                 this.daggerheartClasses != null ? this.daggerheartClasses.stream().map(DaggerheartClassDTO::toModele).toList() : List.of(),
                 this.weapons != null ? this.weapons.stream().map(WeaponDTO::toModele).toList() : List.of(),
                 this.features != null ? this.features.stream().map(FeatureDTO::toModele).toList() : List.of(),
-                this.subclasses != null ? this.subclasses.stream().map(SubClassDTO::toModele).toList() : List.of()
+                this.subclasses != null ? this.subclasses.stream().map(SubClassDTO::toModele).toList() : List.of(),
+                this.enemyDTOS != null ? this.enemyDTOS.stream().map(EnemyDTO::toModele).toList() : List.of()
         );
     }
 }

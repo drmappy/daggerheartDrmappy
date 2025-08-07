@@ -21,12 +21,13 @@ public class CreatorService {
     private final FeatureRepository featureRepository;
     private final WeaponRepository weaponRepository;
     private final ArmorRepository armorRepository;
+    private final EnemyRepository enemyRepository;
 
     public CreatorService(
             AccountRepository accountRepository,
             DaggerheartClassRepository daggerheartClassRepository,
             CreatorRepository creatorRepository,
-            AncestryRepository ancestryRepository, SubclassRepository subclassRepository, CommunityRepository communityRepository, FeatureRepository featureRepository, WeaponRepository weaponRepository, ArmorRepository armorRepository) {
+            AncestryRepository ancestryRepository, SubclassRepository subclassRepository, CommunityRepository communityRepository, FeatureRepository featureRepository, WeaponRepository weaponRepository, ArmorRepository armorRepository, EnemyRepository enemyRepository) {
         this.accountRepository = accountRepository;
         this.daggerheartClassRepository = daggerheartClassRepository;
         this.creatorRepository = creatorRepository;
@@ -36,6 +37,7 @@ public class CreatorService {
         this.featureRepository = featureRepository;
         this.weaponRepository = weaponRepository;
         this.armorRepository = armorRepository;
+        this.enemyRepository = enemyRepository;
     }
 
     // Methods
@@ -138,6 +140,16 @@ public class CreatorService {
         }
     }
     @Transactional
+    public void saveEnemy(EnemyDTO enemyDTO, String username, String password) throws DatabaseError {
+        try {
+            Creator creator = (Creator) accountRepository.getByUsernameAndPassword(username, password);
+            creator.addEnemy(enemyDTO.toModele());
+            accountRepository.save(creator);
+        } catch (Exception e) {
+            throw new DatabaseError();
+        }
+    }
+    @Transactional
     public List<String> getDaggerheartClassesNames(String username, String password) throws DatabaseError {
         try{
             return creatorRepository.findClassesByUsernameAndPassword(username, password)
@@ -214,7 +226,18 @@ public class CreatorService {
             throw new DatabaseError();
         }
     }
-
+    @Transactional
+    public List<String> getEnemyNames(String username, String password) throws DatabaseError {
+        try {
+            return creatorRepository.findEnemiesByUsernameAndPassword(username, password)
+                    .stream()
+                    .map(Enemy::getName)
+                    .toList();
+        } catch (Exception e) {
+            throw new DatabaseError();
+        }
+    }
+    @Transactional
     public AncestryDTO getAncestryByName(String name) throws DatabaseError {
         try {
             Ancestry ancestry = ancestryRepository.findByName(name);
@@ -227,7 +250,7 @@ public class CreatorService {
             throw new DatabaseError();
         }
     }
-
+    @Transactional
     public DaggerheartClassDTO getDaggerheartClassByName(String name) throws DatabaseError {
         try {
             DaggerheartClass daggerheartClass = daggerheartClassRepository.findByName(name);
@@ -240,7 +263,7 @@ public class CreatorService {
             throw new DatabaseError();
         }
     }
-
+    @Transactional
     public SubClassDTO getSubClassByName(String name) throws DatabaseError {
         try {
             SubClass subClass = subclassRepository.findByName(name);
@@ -253,7 +276,7 @@ public class CreatorService {
             throw new DatabaseError();
         }
     }
-
+    @Transactional
     public CommunityDTO getCommunityByName(String name) throws DatabaseError {
         try {
             Community community = communityRepository.findByName(name);
@@ -266,7 +289,7 @@ public class CreatorService {
             throw new DatabaseError();
         }
     }
-
+    @Transactional
     public FeatureDTO getFeatureByName(String name) throws DatabaseError {
         try {
             Feature feature = featureRepository.findByName(name);
@@ -279,7 +302,7 @@ public class CreatorService {
             throw new DatabaseError();
         }
     }
-
+    @Transactional
     public WeaponDTO getWeaponByName(String name) throws DatabaseError {
         try {
             Weapon weapon = weaponRepository.findByName(name);
@@ -292,12 +315,25 @@ public class CreatorService {
             throw new DatabaseError();
         }
     }
-
+    @Transactional
     public ArmorDTO getArmorByName(String name) throws DatabaseError {
         try {
             Armor armor = armorRepository.findByName(name);
             if (armor != null) {
                 return new ArmorDTO(armor);
+            } else {
+                throw new DatabaseError();
+            }
+        } catch (Exception e) {
+            throw new DatabaseError();
+        }
+    }
+    @Transactional
+    public EnemyDTO getEnemyByName(String name) throws DatabaseError {
+        try {
+            Enemy enemy = enemyRepository.findByName(name);
+            if (enemy != null) {
+                return new EnemyDTO(enemy);
             } else {
                 throw new DatabaseError();
             }
