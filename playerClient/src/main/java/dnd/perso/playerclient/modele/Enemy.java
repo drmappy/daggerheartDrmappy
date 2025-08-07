@@ -27,7 +27,7 @@ public class Enemy {
     private int attackModifier;
     @OneToOne(cascade = CascadeType.ALL)
     private DamageThreshold damageThreshold;
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Weapon weapon;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Experience> experience;

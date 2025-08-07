@@ -3,6 +3,8 @@ package dnd.perso.playerclient.controller;
 import dnd.perso.playerclient.exception.DatabaseError;
 import dnd.perso.playerclient.modele.enums.CharacterSpellTrait;
 import dnd.perso.playerclient.modele.enums.Domain;
+import dnd.perso.playerclient.modele.enums.EnemyType;
+import dnd.perso.playerclient.modele.enums.Tier;
 import dnd.perso.playerclient.service.CreatorService;
 import dnd.perso.playerclient.service.dto.*;
 import org.springframework.http.ResponseEntity;
@@ -294,6 +296,24 @@ public class CreatorController {
             return ResponseEntity.ok(enemy);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
+        }
+    }
+    @GetMapping("/types")
+    public ResponseEntity<List<EnemyType>> getAllTypes() {
+        try {
+            List<EnemyType> enemyTypes = List.of(EnemyType.values());
+            return ResponseEntity.ok(enemyTypes);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    @GetMapping("/tiers")
+    public ResponseEntity<List<Tier>> getAllTiers() {
+        try {
+            List<Tier> tiers = List.of(Tier.values());
+            return ResponseEntity.ok(tiers);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
         }
     }
 }

@@ -1,14 +1,14 @@
 package dnd.perso.playerclient.modele.enums;
 
 public enum EnemyType {
-    BRUISERS,
-    HORDES,
-    LEADERS,
-    MINIONS,
+    BRUISER,
+    HORDE,
+    LEADER,
+    MINION,
     RANGED,
-    SKULKS,
-    SOCIALS,
-    SOLOS,
-    STANDARDS,
-    SUPPORTS
+    SKULK,
+    SOCIAL,
+    SOLO,
+    STANDARD,
+    SUPPORT
 }

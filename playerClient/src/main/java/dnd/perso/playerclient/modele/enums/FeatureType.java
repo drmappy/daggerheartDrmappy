@@ -9,5 +9,8 @@ public enum FeatureType {
     FOUNDATION,
     SPECIALIZATION,
     MASTERY,
-    WEAPON
+    WEAPON,
+    ACTION,
+    REACTION,
+    PASSIVE
 }
