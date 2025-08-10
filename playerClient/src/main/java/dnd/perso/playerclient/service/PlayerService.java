@@ -240,6 +240,8 @@ public class PlayerService {
             player.addCharacter(character);
             daggerheartCharacterRepository.save(character);
         } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
             throw new Exception(e);
         }
     }

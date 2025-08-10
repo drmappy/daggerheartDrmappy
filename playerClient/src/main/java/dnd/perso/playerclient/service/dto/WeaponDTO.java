@@ -4,6 +4,7 @@ import dnd.perso.playerclient.modele.Weapon;
 import dnd.perso.playerclient.modele.enums.Burden;
 import dnd.perso.playerclient.modele.enums.CharacterSpellTrait;
 import dnd.perso.playerclient.modele.enums.Range;
+import dnd.perso.playerclient.modele.enums.Tier;
 import lombok.*;
 
 @Getter
@@ -14,12 +15,14 @@ import lombok.*;
 public class WeaponDTO {
     private Long id;
     private String name;
+    private Tier tier;
     private CharacterSpellTrait trait;
     private Range range;
     private DamageDTO damage;
     private Burden burden;
     private FeatureDTO feature;
-    public WeaponDTO(String name, CharacterSpellTrait trait, Range range, DamageDTO damage, Burden burden) {
+    public WeaponDTO(String name, CharacterSpellTrait trait, Range range, DamageDTO damage, Burden burden, Tier tier) {
+        this.tier = tier;
         this.name = name;
         this.trait = trait;
         this.range = range;
@@ -27,7 +30,8 @@ public class WeaponDTO {
         this.burden = burden;
     }
 
-    public WeaponDTO(String name, CharacterSpellTrait trait, Range range, DamageDTO damageDTO, Burden burden, FeatureDTO feature) {
+    public WeaponDTO(String name, CharacterSpellTrait trait, Range range, DamageDTO damageDTO, Burden burden, FeatureDTO feature, Tier tier) {
+        this.tier = tier;
         this.name = name;
         this.trait = trait;
         this.range = range;
@@ -40,6 +44,7 @@ public class WeaponDTO {
         return new Weapon(
                 id,
                 name,
+                tier,
                 trait,
                 range,
                 damage.toModele(),
@@ -49,6 +54,8 @@ public class WeaponDTO {
     }
     public WeaponDTO(Weapon weapon) {
         this.name = weapon.getName();
+        this.id = weapon.getId();
+        this.tier = weapon.getTier();
         this.trait = weapon.getTrait();
         this.range = weapon.getRange();
         this.damage = new DamageDTO(weapon.getDamage());

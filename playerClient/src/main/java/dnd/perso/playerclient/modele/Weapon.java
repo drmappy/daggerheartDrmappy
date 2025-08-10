@@ -3,6 +3,7 @@ package dnd.perso.playerclient.modele;
 import dnd.perso.playerclient.modele.enums.Burden;
 import dnd.perso.playerclient.modele.enums.CharacterSpellTrait;
 import dnd.perso.playerclient.modele.enums.Range;
+import dnd.perso.playerclient.modele.enums.Tier;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,6 +19,7 @@ public class Weapon {
     private Long id;
     @Column(unique = true)
     private String name;
+    private Tier tier;
     private CharacterSpellTrait trait;
     private Range range;
     @OneToOne(cascade = CascadeType.ALL)
@@ -25,11 +27,12 @@ public class Weapon {
     private Burden burden;
     @ManyToOne
     private Feature feature;
-    public Weapon(String name, CharacterSpellTrait trait, Range range, Damage damage, Burden burden) {
+    public Weapon(String name, CharacterSpellTrait trait, Range range, Damage damage, Burden burden, Tier tier) {
         this.name = name;
         this.trait = trait;
         this.range = range;
         this.damage = damage;
         this.burden = burden;
+        this.tier = tier;
     }
 }

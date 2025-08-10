@@ -12,6 +12,7 @@ import java.util.List;
 @ToString
 public class DaggerheartCharacterDTO {
     private Long id;
+    private int level;
     private String name;
     private String pronouns;
     private HeritageDTO heritage;
@@ -26,7 +27,21 @@ public class DaggerheartCharacterDTO {
     private InventoryDTO inventory;
     private String imageBinaryData;
 
-    public DaggerheartCharacterDTO(String name, String pronouns, HeritageDTO heritage, ModifiersDTO modifiers, DaggerheartClassDTO characterClass, SubClassDTO subClass, int stress, CharacterTraitsDTO traits, EquipmentDTO equipment, List<ExperienceDTO> experiences, GoldDTO gold, InventoryDTO inventory, String imageBinaryData) {
+    public DaggerheartCharacterDTO(String name,
+                                   String pronouns,
+                                   HeritageDTO heritage,
+                                   ModifiersDTO modifiers,
+                                   DaggerheartClassDTO characterClass,
+                                   SubClassDTO subClass,
+                                   int stress,
+                                   CharacterTraitsDTO traits,
+                                   EquipmentDTO equipment,
+                                   List<ExperienceDTO> experiences,
+                                   GoldDTO gold,
+                                   InventoryDTO inventory,
+                                   String imageBinaryData,
+                                   int level) {
+        this.level = level;
         this.name = name;
         this.pronouns = pronouns;
         this.heritage = heritage;
@@ -56,7 +71,8 @@ public class DaggerheartCharacterDTO {
                 experiences.stream().map(ExperienceDTO::toModele).toList(),
                 gold.toModele(),
                 inventory.toModele(),
-                imageBinaryData
+                imageBinaryData,
+                level
         );
     }
     public DaggerheartCharacterDTO(DaggerheartCharacter daggerheartCharacter) {
@@ -76,5 +92,6 @@ public class DaggerheartCharacterDTO {
         this.gold = new GoldDTO(daggerheartCharacter.getGold());
         this.inventory = new InventoryDTO(daggerheartCharacter.getInventory());
         this.imageBinaryData = daggerheartCharacter.getImageBinaryData();
+        this.level = daggerheartCharacter.getLevel();
     }
 }

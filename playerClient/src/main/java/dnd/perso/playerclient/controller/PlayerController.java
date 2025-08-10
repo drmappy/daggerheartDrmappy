@@ -31,6 +31,7 @@ public class PlayerController {
             playerService.saveCharacter(characterDTO, username, password);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
+            System.out.println(e);
             return ResponseEntity.badRequest().build();
         }
     }

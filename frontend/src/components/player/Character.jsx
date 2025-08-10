@@ -40,6 +40,7 @@ function Character() {
     return (
         <div>
             <h1>{character.name}</h1>
+            <p>Level: {character.level}</p>
             <p>Pronouns: {character.pronouns}</p>
             <p>Ancestry: {character.heritage.ancestry.name}</p>
             <p>Community: {character.heritage.community.name}</p>

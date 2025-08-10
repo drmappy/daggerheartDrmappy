@@ -41,6 +41,7 @@ function Weapon(){
     return (
         <div>
             <h1>{weapon.name}</h1>
+            <p>Tier: {weapon.tier}</p>
             <p>Trait: {weapon.trait}</p>
             <p>Range: {weapon.range}</p>
             <p>Damage: {weapon.damage.damageType}</p>

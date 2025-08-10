@@ -8,6 +8,8 @@ function CreateWeapon(){
         baseDamage: 0,
         damageType: "MAGICAL"
     });
+    const [tiers, setTiers] = useState([]);
+    const [tier, setTier] = useState("");
     const [burden, setBurden] = useState("ONEHANDED");
     const [feature, setFeature] = useState(null);
     const [features, setFeatures] = useState([]);
@@ -31,8 +33,27 @@ function CreateWeapon(){
             setError(err.message);
         }
     }
+    const fetchTiers = async () => {
+        try {
+            const response = await fetch("http://localhost:8080/creator/tiers", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            if (!response.ok) {
+                throw new Error("Failed to fetch tiers");
+            }
+            const data = await response.json();
+            setTiers(data);
+            setTier(data[0]);
+        } catch (err) {
+            setError(err.message);
+        }
+    }
     useEffect(() => {
         fetchFeatures();
+        fetchTiers();
     }, []);
     const handle = () => async (e) => {
         e.preventDefault();
@@ -58,6 +79,7 @@ function CreateWeapon(){
                         damageType: damage.damageType
                     },
                     burden,
+                    tier,
                     feature: feature ? {
                         name: feature.name,
                         description: feature.description,
@@ -142,6 +164,17 @@ function CreateWeapon(){
                 >
                     <option value="ONEHANDED">One handed</option>
                     <option value="TWOHANDED">Two handed</option>
+                </select>
+                <label>Tier</label>
+                <select onChange={(e) => setTier(e.target.value)}
+                    value={tier}
+                    required
+                >
+                    {tiers.map((t) => (
+                        <option key={t} value={t}>
+                            {t}
+                        </option>
+                    ))}
                 </select>
                 <label>Feature</label>
                 <select

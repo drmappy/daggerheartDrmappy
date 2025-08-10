@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -25,7 +26,8 @@ public class Player extends Account{
         if (characters != null) {
             characters.add(character);
         } else {
-            characters = List.of(character);
+            characters = new ArrayList<>();
+            characters.add(character);
         }
     }
 }

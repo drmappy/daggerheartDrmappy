@@ -6,6 +6,7 @@ function CreateCharacter(){
     const [success, setSuccess] = useState("");
     const [name, setName] = useState("");
     const [pronouns, setPronouns] = useState("");
+    const [level, setLevel] = useState(1);
     const [heritage, setHeritage] = useState({
         ancestry: {},
         community: {},
@@ -63,6 +64,16 @@ function CreateCharacter(){
         setError("");
         const account = JSON.parse(localStorage.getItem("Account"));
         try {
+            localStorage.setItem("Character", JSON.stringify(
+                {
+                    name,
+                    pronouns,
+                    level,
+                    heritage,
+                    modifiers,
+                    characterClass,
+                    subClass, traits, equipment, experiences, gold, inventory, imageBinaryData, stress }
+            ));
             const response = await fetch("http://localhost:8080/player/save/character", {
                 method: "POST",
                 headers: {
@@ -73,6 +84,7 @@ function CreateCharacter(){
                 body: JSON.stringify({
                     name,
                     pronouns,
+                    level,
                     heritage: {
                         ancestry: heritage.ancestry,
                         community: heritage.community,
@@ -113,7 +125,6 @@ function CreateCharacter(){
         getAllAncestries();
         getAllCommunities();
         getAllClasses();
-        getAllsubClasses(characterClass.name);
         getAllWeapons();
         getAllArmors();
         setLoading(false);
@@ -272,6 +283,14 @@ function CreateCharacter(){
                         </option>
                     ))}
                 </select>
+                <br/>
+                <label>Level</label>
+                <input
+                    type="number"
+                    value={level}
+                    onChange={(e) => setLevel(parseInt(e.target.value))}
+                    required
+                />
                 <br/>
                 <label>Languages:</label>
                 <div>
