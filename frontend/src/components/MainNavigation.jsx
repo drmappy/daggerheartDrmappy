@@ -13,9 +13,6 @@ function MainNavigation(){
                     <li>
                         <NavLink to="/main" end>Main Page</NavLink>
                     </li>
-                    <li>
-                        <NavLink to="/search" end>Search</NavLink>
-                    </li>
                 </ul>
             </nav>
         </header>

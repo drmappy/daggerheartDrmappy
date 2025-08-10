@@ -45,9 +45,9 @@ function App() {
                 <Route index element={<Login/>}/>
                 <Route path="signup" element={<Signup/>}/>
                 <Route path="main" element={<MainPage/>}/>
-                <Route path="search" element={<Search/>}/>
                 <Route path="creator" element={<CreatorLayout/>}>
                     <Route index element={<Profile/>}/>
+                    <Route path="search" element={<Search/>}/>
 
                     <Route path="myAncestries" element={<MyAncestries/>} />
                     <Route path="myArmors" element={<MyArmors/>} />
@@ -78,6 +78,7 @@ function App() {
                 </Route>
                 <Route path="player" element={<PlayerLayout/>}>
                     <Route index element={<Profile/>}/>
+                    <Route path="search" element={<Search/>}/>
                     <Route path="createCharacter" element={<CreateCharacter/>}/>
                     <Route path="character/:name" element={<Character/>}/>
                 </Route>

@@ -119,6 +119,9 @@ function CreatorNavigation(){
                             My Enemies
                         </NavLink>
                     </li>
+                    <li>
+                        <NavLink to="/creator/search" end>Search</NavLink>
+                    </li>
                 </ul>
             </nav>
         </header>

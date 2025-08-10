@@ -21,6 +21,11 @@ function PlayerNavigation(){
                             Profile
                         </NavLink>
                     </li>
+                    <li>
+                        <NavLink to="/player/search" end>
+                            Search
+                        </NavLink>
+                    </li>
                 </ul>
             </nav>
         </header>
