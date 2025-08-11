@@ -93,7 +93,7 @@ public class CreatorController {
             return ResponseEntity.badRequest().build();
         }
     }
-    @PostMapping("/saveEnemy")
+    @PostMapping("/save/enemy")
     public ResponseEntity<Void> saveEnemy(@RequestBody EnemyDTO enemyDTO, @RequestHeader String username, @RequestHeader String password) {
         try {
             creatorService.saveEnemy(enemyDTO, username, password);

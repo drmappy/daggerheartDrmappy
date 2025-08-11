@@ -52,6 +52,7 @@ function CreateEnemy(){
             if (!response.ok) throw new Error("Failed to fetch tiers");
             const data = await response.json();
             setTiers(data);
+            setTier(data[0]);
         } catch (error) {
             setError(error.message);
         }
@@ -69,6 +70,7 @@ function CreateEnemy(){
             if (!response.ok) throw new Error("Failed to fetch types");
             const data = await response.json();
             setTypes(data);
+            setType(data[0]);
         } catch (error) {
             setError(error.message);
         }

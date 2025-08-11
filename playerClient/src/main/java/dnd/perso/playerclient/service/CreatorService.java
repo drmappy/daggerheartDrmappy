@@ -146,6 +146,7 @@ public class CreatorService {
             creator.addEnemy(enemyDTO.toModele());
             accountRepository.save(creator);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new DatabaseError();
         }
     }

@@ -6,8 +6,8 @@ function Enemy(){
     const [error, setError] = useState(null);
     const { name } = useParams();
     useEffect(() => {
-
-    })
+        fetchData();
+    },[name])
     const fetchData = async () => {
         setLoading(true);
         setError(null);
@@ -25,7 +25,6 @@ function Enemy(){
             }
             const data = await response.json();
             setEnemy(data);
-
         } catch (e) {
             setError('Failed to load enemy.');
         } finally {
@@ -52,18 +51,16 @@ function Enemy(){
                         <h3>MajorToSevere: {enemy.damageThreshold.majorToSevere}</h3>
 
                         <h3>Weapon: {enemy.weapon.name}</h3>
-                        <p>Weapon Description: {enemy.weapon.description}</p>
                         <h3>Weapon trait: {enemy.weapon.trait}</h3>
                         <h3>Weapon Range: {enemy.weapon.range}</h3>
                         <h3>Weapon Damage: {enemy.weapon.damage.dieSize}</h3>
                         <h3>Weapon Damage: {enemy.weapon.damage.baseDamage}</h3>
                         <h3>Weapon Damage: {enemy.weapon.damage.damageType}</h3>
                         <h3>Weapon Burden: {enemy.weapon.burden}</h3>
-                        <h3>Weapon feature: {enemy.weapon.feature.name}</h3>
-                        <p>Weapon Feature Description: {enemy.weapon.feature.description}</p>
-
+                        {enemy.weapon.feature?.name && <p>Weapon Feature Name: {enemy.weapon.feature.name}</p>}
+                        {enemy.weapon.feature?.description && <p>Weapon Feature Description: {enemy.weapon.feature.description}</p>}
                         <h3>Experiences</h3>
-                        {enemy.experiences.map((exp, index) => (
+                        {enemy.experiences?.map((exp, index) => (
                             <div key={index}>
                                 <h4>{exp.name}</h4>
                                 <p>{exp.description}</p>
