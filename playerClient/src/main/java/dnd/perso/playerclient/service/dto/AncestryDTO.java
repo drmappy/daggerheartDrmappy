@@ -9,12 +9,14 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class AncestryDTO {
+    private Long id;
     private String name;
     private String description;
     private FeatureDTO feature1;
     private FeatureDTO feature2;
     public Ancestry toModele(){
         return new Ancestry(
+                id,
                 this.name,
                 this.description,
                 this.feature1.toModele(),
@@ -22,6 +24,7 @@ public class AncestryDTO {
         );
     }
     public AncestryDTO(Ancestry ancestry) {
+        this.id = ancestry.getId();
         this.name = ancestry.getName();
         this.description = ancestry.getDescription();
         this.feature1 = new FeatureDTO(ancestry.getFeature1());

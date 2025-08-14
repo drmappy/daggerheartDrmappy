@@ -59,4 +59,26 @@ public class CreatorDTO extends AccountDTO {
                 this.enemyDTOS != null ? this.enemyDTOS.stream().map(EnemyDTO::toModele).toList() : List.of()
         );
     }
+    public CreatorDTO(
+            String username,
+            String password,
+            List<ArmorDTO> armors,
+            List<AncestryDTO> ancestries,
+            List<CommunityDTO> communities,
+            List<DaggerheartClassDTO> daggerheartClasses,
+            List<SubClassDTO> subclasses,
+            List<WeaponDTO> weapons,
+            List<FeatureDTO> features,
+            List<EnemyDTO> enemyDTOS
+    ) {
+        super(null, username, password);
+        this.armors = armors;
+        this.ancestries = ancestries;
+        this.communities = communities;
+        this.daggerheartClasses = daggerheartClasses;
+        this.subclasses = subclasses;
+        this.weapons = weapons;
+        this.features = features;
+        this.enemyDTOS = enemyDTOS;
+    }
 }

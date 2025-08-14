@@ -13,6 +13,13 @@ public class CommunityDTO {
     private String name;
     private String description;
     private FeatureDTO feature;
+
+    public CommunityDTO(String community, String descriptionOfCommunity, FeatureDTO featureDTOCommunity) {
+        this.name = community;
+        this.description = descriptionOfCommunity;
+        this.feature = featureDTOCommunity;
+    }
+
     public Community toModele() {
         return new Community(
                 id,

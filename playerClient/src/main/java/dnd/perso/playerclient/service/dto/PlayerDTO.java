@@ -1,8 +1,10 @@
 package dnd.perso.playerclient.service.dto;
 
+import dnd.perso.playerclient.modele.DaggerheartCharacter;
 import dnd.perso.playerclient.modele.Player;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 @Getter
 @Setter
@@ -21,18 +23,22 @@ public class PlayerDTO extends AccountDTO{
     }
     public PlayerDTO(Player player) {
         super(player.getId(), player.getUsername(), player.getPassword());
-        this.characters = player.getCharacters().stream()
-                .map(DaggerheartCharacterDTO::new)
-                .toList();
+        this.characters = new ArrayList<>(
+                player.getCharacters().stream()
+                        .map(DaggerheartCharacterDTO::new)
+                        .toList()
+        );
     }
     public Player toModele(){
         return new Player(
                 this.getId(),
                 this.getUsername(),
                 this.getPassword(),
-                this.characters != null ? this.characters.stream()
-                        .map(character -> character.toModele(character))
-                        .toList() : List.of()
+                this.characters != null ?
+                        new ArrayList<>(this.characters.stream()
+                                .map(character -> character.toModele(character))
+                                .toList())
+                        : new ArrayList<>()
         );
     }
 }

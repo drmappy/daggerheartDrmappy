@@ -12,7 +12,6 @@ function CreateCharacter(){
         community: {},
         languages: [],
     });
-    //TODO primary secondary activeArmor are the problem
     const [allAncestories, setAllAncestries] = useState([]);
     const [allCommunities, setAllCommunities] = useState([]);
     const [modifiers, setModifiers] = useState({

@@ -28,6 +28,7 @@ public class PlayerController {
     @PostMapping("/save/character")
     public ResponseEntity<Void> saveCharacter(@RequestBody DaggerheartCharacterDTO characterDTO, @RequestHeader String username, @RequestHeader String password) {
         try {
+            System.out.println(characterDTO);
             playerService.saveCharacter(characterDTO, username, password);
             return ResponseEntity.ok().build();
         } catch (Exception e) {

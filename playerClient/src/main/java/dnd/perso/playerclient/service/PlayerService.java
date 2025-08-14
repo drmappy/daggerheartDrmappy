@@ -238,7 +238,7 @@ public class PlayerService {
             }
             DaggerheartCharacter character = characterDTO.toModele(characterDTO);
             player.addCharacter(character);
-            daggerheartCharacterRepository.save(character);
+            playerRepository.save(player);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
