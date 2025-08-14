@@ -10,6 +10,8 @@ import dnd.perso.playerclient.service.dto.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @RestController
@@ -59,7 +61,6 @@ public class CreatorController {
     @PostMapping("/save/subclass")
     public ResponseEntity<Void> saveSubClass(@RequestBody SubClassDTO subClassDTO, @RequestHeader String username, @RequestHeader String password, @RequestHeader String className) {
         try {
-            System.out.println("Saving subclass: " + subClassDTO + " for class: " + className);
             creatorService.saveSubClass(subClassDTO, username, password, className);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
@@ -219,80 +220,80 @@ public class CreatorController {
         }
     }
     @GetMapping("ancestry/{name}")
-    public ResponseEntity<AncestryDTO> getAncestryByName(@PathVariable String name, @RequestHeader String username, @RequestHeader String password) {
+    public ResponseEntity<AncestryDTO> getAncestryByName(@PathVariable String name) {
         try {
-            creatorService.getCreator(username, password);
-            AncestryDTO ancestry = creatorService.getAncestryByName(name);
+            String decodedName = URLDecoder.decode(name, StandardCharsets.UTF_8);
+            AncestryDTO ancestry = creatorService.getAncestryByName(decodedName);
             return ResponseEntity.ok(ancestry);
-        } catch (Exception e) {
+        } catch (Exception e) {;
             return ResponseEntity.notFound().build();
         }
     }
     @GetMapping("class/{name}")
-    public ResponseEntity<DaggerheartClassDTO> getDaggerheartClassByName(@PathVariable String name, @RequestHeader String username, @RequestHeader String password) {
+    public ResponseEntity<DaggerheartClassDTO> getDaggerheartClassByName(@PathVariable String name) {
         try {
-            creatorService.getCreator(username, password);
-            DaggerheartClassDTO daggerheartClass = creatorService.getDaggerheartClassByName(name);
+            String decodedName = URLDecoder.decode(name, StandardCharsets.UTF_8);
+            DaggerheartClassDTO daggerheartClass = creatorService.getDaggerheartClassByName(decodedName);
             return ResponseEntity.ok(daggerheartClass);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
     }
     @GetMapping("subclass/{name}")
-    public ResponseEntity<SubClassDTO> getSubClassByName(@PathVariable String name, @RequestHeader String username, @RequestHeader String password) {
+    public ResponseEntity<SubClassDTO> getSubClassByName(@PathVariable String name) {
         try {
-            creatorService.getCreator(username, password);
-            SubClassDTO subClass = creatorService.getSubClassByName(name);
+            String decodedName = URLDecoder.decode(name, StandardCharsets.UTF_8);
+            SubClassDTO subClass = creatorService.getSubClassByName(decodedName);
             return ResponseEntity.ok(subClass);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
     }
     @GetMapping("community/{name}")
-    public ResponseEntity<CommunityDTO> getCommunityByName(@PathVariable String name, @RequestHeader String username, @RequestHeader String password) {
+    public ResponseEntity<CommunityDTO> getCommunityByName(@PathVariable String name) {
         try {
-            creatorService.getCreator(username, password);
-            CommunityDTO community = creatorService.getCommunityByName(name);
+            String decodedName = URLDecoder.decode(name, StandardCharsets.UTF_8);
+            CommunityDTO community = creatorService.getCommunityByName(decodedName);
             return ResponseEntity.ok(community);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
     }
     @GetMapping("feature/{name}")
-    public ResponseEntity<FeatureDTO> getFeatureByName(@PathVariable String name, @RequestHeader String username, @RequestHeader String password) {
+    public ResponseEntity<FeatureDTO> getFeatureByName(@PathVariable String name) {
         try {
-            creatorService.getCreator(username, password);
-            FeatureDTO feature = creatorService.getFeatureByName(name);
+            String decodedName = URLDecoder.decode(name, StandardCharsets.UTF_8);
+            FeatureDTO feature = creatorService.getFeatureByName(decodedName);
             return ResponseEntity.ok(feature);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
     }
     @GetMapping("weapon/{name}")
-    public ResponseEntity<WeaponDTO> getWeaponByName(@PathVariable String name, @RequestHeader String username, @RequestHeader String password) {
+    public ResponseEntity<WeaponDTO> getWeaponByName(@PathVariable String name) {
         try {
-            creatorService.getCreator(username, password);
-            WeaponDTO weapon = creatorService.getWeaponByName(name);
+            String decodedName = URLDecoder.decode(name, StandardCharsets.UTF_8);
+            WeaponDTO weapon = creatorService.getWeaponByName(decodedName);
             return ResponseEntity.ok(weapon);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
     }
     @GetMapping("armor/{name}")
-    public ResponseEntity<ArmorDTO> getArmorByName(@PathVariable String name, @RequestHeader String username, @RequestHeader String password) {
+    public ResponseEntity<ArmorDTO> getArmorByName(@PathVariable String name) {
         try {
-            creatorService.getCreator(username, password);
-            ArmorDTO armor = creatorService.getArmorByName(name);
+            String decodedName = URLDecoder.decode(name, StandardCharsets.UTF_8);
+            ArmorDTO armor = creatorService.getArmorByName(decodedName);
             return ResponseEntity.ok(armor);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
     }
     @GetMapping("/enemy/{name}")
-    public ResponseEntity<EnemyDTO> getEnemyByName(@PathVariable String name, @RequestHeader String username, @RequestHeader String password) {
+    public ResponseEntity<EnemyDTO> getEnemyByName(@PathVariable String name) {
         try {
-            creatorService.getCreator(username, password);
-            EnemyDTO enemy = creatorService.getEnemyByName(name);
+            String decodedName = URLDecoder.decode(name, StandardCharsets.UTF_8);
+            EnemyDTO enemy = creatorService.getEnemyByName(decodedName);
             return ResponseEntity.ok(enemy);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();

@@ -19,12 +19,11 @@ function Feature(){
     }, []);
 
     const fetchFeature = async () => {
+        localStorage.setItem("nsmr", name);
         const response = await fetch(`http://localhost:8080/creator/feature/${name}`, {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json',
-                'username': JSON.parse(localStorage.getItem('Account')).username,
-                'password': JSON.parse(localStorage.getItem('Account')).password
+                'Content-Type': 'application/json'
             },
         });
         if (!response.ok) {

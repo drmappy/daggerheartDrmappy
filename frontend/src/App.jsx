@@ -81,6 +81,14 @@ function App() {
                     <Route path="search" element={<Search/>}/>
                     <Route path="createCharacter" element={<CreateCharacter/>}/>
                     <Route path="character/:name" element={<Character/>}/>
+                    <Route path="ancestry/:name" element={<Ancestry/>}/>
+                    <Route path="class/:name" element={<DaggerheartClass/>}/>
+                    <Route path="subclass/:name" element={<Subclass/>}/>
+                    <Route path="weapon/:name" element={<Weapon/>}/>
+                    <Route path="armor/:name" element={<Armor/>}/>
+                    <Route path="community/:name" element={<Community/>}/>
+                    <Route path="feature/:name" element={<Feature/>}/>
+                    <Route path="enemy/:name" element={<Enemy/>}/>
                 </Route>
             </Route>
         )
