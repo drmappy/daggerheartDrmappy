@@ -115,6 +115,7 @@ public class CreatorController {
     @GetMapping("confirmation")
     public ResponseEntity<Void> confirmCreator(@RequestHeader String username, @RequestHeader String password) {
         try {
+            System.out.println(username + " " + password);
             creatorService.getCreator(username, password);
             return ResponseEntity.ok().build();
         } catch (Exception e) {

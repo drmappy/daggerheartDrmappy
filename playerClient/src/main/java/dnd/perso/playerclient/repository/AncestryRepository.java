@@ -10,4 +10,6 @@ public interface AncestryRepository extends JpaRepository<Ancestry, Long> {
     Ancestry findByName(String name);
 
     List<Ancestry> findByNameContaining(String name);
+
+    void removeAncestryById(Long id);
 }

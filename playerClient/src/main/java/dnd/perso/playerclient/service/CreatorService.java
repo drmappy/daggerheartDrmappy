@@ -56,14 +56,29 @@ public class CreatorService {
         } catch (Exception e) {
             throw new DatabaseError();
         }
-    }
+    }// Java
     @Transactional
     public void saveAncestry(AncestryDTO ancestryDTO, String username, String password) throws DatabaseError {
         try {
             Creator creator = (Creator) accountRepository.getByUsernameAndPassword(username, password);
-            creator.addAncestry(ancestryDTO.toModele());
-            accountRepository.save(creator);
+
+            Ancestry ancestry;
+            if (ancestryDTO.getId() != null) {
+                ancestry = ancestryRepository.findById(ancestryDTO.getId())
+                        .orElseGet(() -> ancestryDTO.toModele());
+            } else {
+                ancestry = ancestryDTO.toModele();
+            }
+
+            ancestry.setName(ancestryDTO.getName());
+            ancestry.setDescription(ancestryDTO.getDescription());
+            // ... update other fields as needed
+            if (creator.getAncestries().stream().noneMatch(a -> a.getId().equals(ancestry.getId()))) {
+                creator.addAncestry(ancestry);
+                accountRepository.save(creator);
+            }
         } catch (Exception e) {
+            e.printStackTrace();
             throw new DatabaseError();
         }
     }
