@@ -322,4 +322,14 @@ public class PlayerService {
         List<SearchInfo> infoToSend = results.subList(fromIndex, toIndex);
         return new SearchData(infoToSend, results.size()/ PAGE_LIMIT + (results.size() % PAGE_LIMIT == 0 ? 0 : 1));
     }
+
+    public FeatureDTO[] getAllFeaturesByType(String featureType) throws DatabaseError{
+        try {
+            return featureRepository.findByType(featureType).stream()
+                    .map(FeatureDTO::new)
+                    .toArray(FeatureDTO[]::new);
+        } catch (Exception e) {
+            throw new DatabaseError();
+        }
+    }
 }

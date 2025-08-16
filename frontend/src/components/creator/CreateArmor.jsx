@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { fetchFeatures } from "../FetchFeatures.jsx";
+
 function CreateArmor() {
     const [armorData, setArmorData] = useState({
         name: "",
@@ -11,26 +13,17 @@ function CreateArmor() {
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState("");
     const [features, setFeatures] = useState([]);
-    const fetchFeatures = async () => {
-        try {
-            const response = await fetch("http://localhost:8080/player/allFeatures", {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-            if (!response.ok) {
-                throw new Error("Failed to fetch features");
-            }
-            const data = await response.json();
-            setFeatures(data.filter((feature) => feature.type === "ARMOR"));
-        } catch (err) {
-            setError(err.message);
-        }
-    }
     useEffect(() => {
-        fetchFeatures();
-    }, []);
+        const fetchData = async () => {
+            try {
+                const allFeatures = await fetchFeatures("ARMOR");
+                setFeatures(allFeatures);
+            } catch (err) {
+                setError(err.message);
+            }
+        }
+        fetchData();
+        }, []);
     const handle = () => async (e) => {
         e.preventDefault();
         setLoading(true);

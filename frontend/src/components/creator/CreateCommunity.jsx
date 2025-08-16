@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { fetchFeatures} from "../FetchFeatures.jsx";
 function CreateCommunity(){
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
@@ -7,29 +8,18 @@ function CreateCommunity(){
     const [description, setDescription] = useState("");
     const [feature, setFeature] = useState({name: "", description: ""});
     const [features, setFeatures] = useState([]);
-    const fetchFeatures = async () => {
-        try {
-            setLoading(true);
-            setError("");
-            setSuccess("");
-            const response = await fetch("http://localhost:8080/player/allFeatures", {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-            if (!response.ok) {
-                throw new Error("Failed to fetch features");
-            }
-            const data = await response.json();
-            setFeatures(data.filter((feature) => feature.type === "COMMUNITY"));
-            setLoading(false);
-        } catch (err) {
-            setError(err.message);
-        }
-    };
     useEffect(() => {
-        fetchFeatures();
+        const fetchData = async () => {
+            try {
+                const allFeatures = await fetchFeatures("COMMUNITY");
+                setFeatures(allFeatures);
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchData();
     }, []);
     const handle = () => async (e) => {
         e.preventDefault();

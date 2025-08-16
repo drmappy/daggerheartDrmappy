@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { fetchFeatures } from "../fetchFeatures";
 function CreateAncestry(){
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
@@ -16,27 +17,16 @@ function CreateAncestry(){
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(true);
     const [success, setSuccess] = useState("");
-    const fetchFeatures = async () => {
-        try {
-            const response = await fetch("http://localhost:8080/player/allFeatures", {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-            if (!response.ok) {
-                throw new Error("Failed to fetch features");
-            }
-            const data = await response.json();
-            setFeatures(data.filter((feature) => feature.type === "ANCESTRY"));
-        } catch (err) {
-            setError(err.message);
-        } finally {
-            setLoading(false);
-        }
-    };
     useEffect(() => {
-        fetchFeatures();
+        const fetchData = async () => {
+            try {
+                const allFeatures = await fetchFeatures("ANCESTRY");
+                setFeatures(allFeatures);
+            } catch (err) {
+                setError(err.message);
+            }
+        };
+        fetchData();
     }, []);
     const handleSubmit = () => async (e) => {
         e.preventDefault();

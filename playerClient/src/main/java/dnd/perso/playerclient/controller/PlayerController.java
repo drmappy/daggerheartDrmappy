@@ -232,6 +232,15 @@ public class PlayerController {
             return ResponseEntity.notFound().build();
         }
     }
+    @GetMapping("all{featureType}")
+    public ResponseEntity<FeatureDTO[]> getAllFeaturesByType(@RequestParam String featureType) {
+        try {
+            FeatureDTO[] features = playerService.getAllFeaturesByType(featureType);
+            return ResponseEntity.ok(features);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
     @GetMapping("/search")
     public ResponseEntity<SearchData> search(@RequestParam String name, @RequestParam int page, @RequestParam String objects) {
         try {

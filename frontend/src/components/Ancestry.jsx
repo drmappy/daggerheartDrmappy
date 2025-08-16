@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {useParams, useNavigate} from "react-router";
-
+import { verifyAccount } from "./VerifyAccount.jsx";
 function Ancestry() {
     const [ancestry, setAncestry] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -31,7 +31,9 @@ function Ancestry() {
         }
         const data = await response.json();
         setAncestry(data);
-        verifyAccount();
+        const bool = await verifyAccount();
+        setCanModify(bool);
+        setLoading(false);
     };
     const modifyInfo = () => {
         setLoading(true);
@@ -53,24 +55,6 @@ function Ancestry() {
                 setError('Failed to modify ancestry.');
             });
     };
-    const verifyAccount = () => {
-        const account = JSON.parse(localStorage.getItem("Account"));
-        fetch('http://localhost:8080/creator/confirmation', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                "username": account.username,
-                "password": account.password
-            },
-        })
-            .then(() => {
-                setCanModify(true);
-            })
-            .catch(() => {
-                setCanModify(false);
-            });
-        setLoading(false);
-    }
     if (error) return <p>{error}</p>;
     if (loading) return <p>Loading ancestry...</p>;
     if (!ancestry) return null;
