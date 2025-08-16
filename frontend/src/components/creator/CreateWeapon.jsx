@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import { fetchFeatures } from "../util/FetchFeatures.jsx"
 function CreateWeapon(){
     const [name, setName] = useState("");
     const [trait, setTrait] = useState("AGILITY");
@@ -16,23 +17,6 @@ function CreateWeapon(){
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState("");
-    const fetchFeatures = async () => {
-        try {
-            const response = await fetch("http://localhost:8080/player/allFeatures", {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-            if (!response.ok) {
-                throw new Error("Failed to fetch features");
-            }
-            const data = await response.json();
-            setFeatures(data.filter((feature) => feature.type === "WEAPON"));
-        } catch (err) {
-            setError(err.message);
-        }
-    }
     const fetchTiers = async () => {
         try {
             const response = await fetch("http://localhost:8080/creator/tiers", {
@@ -52,7 +36,11 @@ function CreateWeapon(){
         }
     }
     useEffect(() => {
-        fetchFeatures();
+        fetchFeatures("WEAPON").then((fetchedFeatures) => {
+            setFeatures(fetchedFeatures);
+        }).catch((err) => {
+            setError(err.message);
+        });
         fetchTiers();
     }, []);
     const handle = () => async (e) => {

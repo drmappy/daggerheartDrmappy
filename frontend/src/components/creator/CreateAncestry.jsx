@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { fetchFeatures } from "../fetchFeatures";
+import { fetchFeatures } from "../util/FetchFeatures.jsx";
 function CreateAncestry(){
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");

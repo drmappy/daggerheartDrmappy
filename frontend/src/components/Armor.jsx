@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {useParams} from "react-router";
-import { verifyAccount } from "./VerifyAccount.jsx";
+import { verifyAccount } from "./util/VerifyAccount.jsx";
 function Armor() {
     const [armor, setArmor] = useState(null);
     const [loading, setLoading] = useState(true);

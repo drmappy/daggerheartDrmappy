@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { fetchFeatures } from "../FetchFeatures.jsx";
+import { fetchFeatures } from "../util/FetchFeatures.jsx";
 
 function CreateArmor() {
     const [armorData, setArmorData] = useState({
