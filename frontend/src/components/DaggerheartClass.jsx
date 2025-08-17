@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from "react-router";
+import { useParams, useNavigate } from "react-router";
+import { verifyAccount } from "./util/VerifyAccount.jsx";
 
 function DaggerheartClass() {
+    const navigate = useNavigate();
     const [daggerheartClass, setDaggerheartClass] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [canModify, setCanModify] = useState(false);
     const { name } = useParams();
 
     useEffect(() => {
@@ -23,6 +26,8 @@ function DaggerheartClass() {
                 }
                 const data = await response.json();
                 setDaggerheartClass(data);
+                const bool = await verifyAccount();
+                setCanModify(bool);
             } catch (e) {
                 setError('Failed to load daggerheartClass.');
             } finally {

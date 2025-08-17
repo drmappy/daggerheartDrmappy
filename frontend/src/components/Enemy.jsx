@@ -1,12 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from "react-router";
+import { useParams, useNavigate} from "react-router";
+import { verifyAccount } from "./util/VerifyAccount.jsx";
 function Enemy(){
+    const navigate = useNavigate();
+    const [canModify, setCanModify] = useState(false);
     const [enemy, setEnemy] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const { name } = useParams();
     useEffect(() => {
-        fetchData();
+        fetchData().then(
+            () => {
+                verifyAccount().then((bool) => {
+                    setCanModify(bool);
+                });
+                setLoading(false);
+            }
+        ).catch(
+            (e) => {
+                setError('Failed to load enemy.');
+                setLoading(false);
+            }
+        )
     },[name])
     const fetchData = async () => {
         setLoading(true);

@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import {useParams} from "react-router";
+import {useParams, useNavigate} from "react-router";
+import { verifyAccount } from "./util/VerifyAccount.jsx";
 function Feature(){
+    const navigate = useNavigate();
+    const [canModify, setCanModify] = useState(false);
     const [feature, setFeature] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -10,8 +13,13 @@ function Feature(){
         try {
             setLoading(true);
             setError(null);
-
-            fetchFeature();
+            fetchFeature().then(
+                () => {
+                    verifyAccount().then((bool) => {
+                        setCanModify(bool);
+                    });
+                }
+            );
         } catch (e) {
             setError('Failed to load feature.');
         }
@@ -19,7 +27,6 @@ function Feature(){
     }, []);
 
     const fetchFeature = async () => {
-        localStorage.setItem("nsmr", name);
         const response = await fetch(`http://localhost:8080/creator/feature/${name}`, {
             method: 'GET',
             headers: {
