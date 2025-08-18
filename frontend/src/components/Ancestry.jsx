@@ -62,7 +62,10 @@ function Ancestry() {
     return (
         <div>
             {canModify &&
-            <form>
+            <form onSubmit={(e)=> {
+                e.preventDefault();
+                modifyInfo();
+            }}>
                 <label>Ancestry Name</label>
                 <input
                     type="text"
@@ -78,10 +81,9 @@ function Ancestry() {
                     placeholder={ancestry.description}
                     onChange={(e) => setAncestry({...ancestry, description: e.target.value})}
                 />
-                <button type="submit" onClick={(e) => {
-                    e.preventDefault();
-                    modifyInfo();
-                }}>Modify</button>
+                <button type="submit"
+                        disabled={loading}
+                >Modify</button>
             </form>
 
             }

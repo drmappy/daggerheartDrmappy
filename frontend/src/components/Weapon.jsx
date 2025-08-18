@@ -39,7 +39,26 @@ function Weapon(){
         const data = await response.json();
         setWeapon(data);
     };
-
+    const modifyInfo = () => {
+        setLoading(true);
+        fetch('http://localhost:8080/creator/save/weapon', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'username': JSON.parse(localStorage.getItem("Account")).username,
+                'password': JSON.parse(localStorage.getItem("Account")).password
+            },
+            body: JSON.stringify(weapon)
+        })
+            .then(() => {
+                setError(null);
+                setLoading(false);
+                navigate(`/creator/weapon/${weapon.name}`);
+            })
+            .catch(() => {
+                setError('Failed to modify weapon.');
+            });
+    }
     if (error) return <p>{error}</p>;
     if (loading) return <p>Loading weapon...</p>;
     if (!weapon) return null;
@@ -47,7 +66,10 @@ function Weapon(){
     return (
         <div>
             {canModify && (
-                <form onSubmit={}>
+                <form onSubmit={(e)=>{
+                    e.preventDefault();
+                    modifyInfo();
+                }}>
                     <label>Name</label>
                     <input
                         type="text"

@@ -44,8 +44,44 @@ function Enemy(){
             setLoading(false);
         }
     }
+    const modifyInfo = () => {
+        setLoading(true);
+        fetch('http://localhost:8080/creator/save/enemy', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'username': JSON.parse(localStorage.getItem("Account")).username,
+                'password': JSON.parse(localStorage.getItem("Account")).password
+            },
+            body: JSON.stringify(enemy)
+        })
+            .then(() => {
+                setError(null);
+                setLoading(false);
+                navigate(`/creator/enemy/${enemy.name}`);
+            })
+            .catch(() => {
+                setError('Failed to modify enemy.');
+            });
+    }
     return(
         <div>
+            {canModify && (
+                <form onSubmit={(e) => {
+                    e.preventDefault();
+                    modifyInfo();
+                }}>
+                    <label>Name</label>
+                    <label>Description</label>
+                    <label>Tier</label>
+                    <label>Type</label>
+                    <label>Motives & Tactics</label>
+                    <label>Difficulty</label>
+                    <label>Hit Points</label>
+                    <label>Stress</label>
+                    <label>Attack Modifier</label>
+                </form>
+            )}
             <h1>Enemy</h1>
             {error && <p className="error">{error}</p>}
             {loading ? <p>Loading enemy...</p> : (

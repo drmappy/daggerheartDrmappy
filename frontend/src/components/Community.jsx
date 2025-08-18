@@ -63,7 +63,10 @@ function Community(){
     return (
         <div>
             {canModify && (
-                <div>
+                <form onSubmit={(e)=>{
+                    e.preventDefault();
+                    modifyInfo();
+                }}>
                     <label>Name</label>
                     <input
                         type="text"
@@ -76,7 +79,12 @@ function Community(){
                         value={community.description}
                         onChange={(e) => setCommunity({...community, description: e.target.value})}
                     />
-                </div>
+                    <button type="submit"
+                            disabled={loading}
+                    >
+                        Modify
+                    </button>
+                </form>
             )}
             <div>
                 <h1>{community.name}</h1>

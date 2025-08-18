@@ -38,7 +38,26 @@ function Subclass() {
         const data = await response.json();
         setSubclass(data);
     };
-
+    const modifyInfo = () => {
+        setLoading(true);
+        fetch('http://localhost:8080/creator/save/subclass', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'username': JSON.parse(localStorage.getItem("Account")).username,
+                'password': JSON.parse(localStorage.getItem("Account")).password
+            },
+            body: JSON.stringify(subclass)
+        })
+            .then(() => {
+                setError(null);
+                setLoading(false);
+                navigate(`/creator/subclass/${subclass.name}`);
+            })
+            .catch(() => {
+                setError('Failed to modify subclass.');
+            });
+    }
     if (error) return <p>{error}</p>;
     if (loading) return <p>Loading subclass...</p>;
     if (!subclass) return null;
@@ -46,7 +65,10 @@ function Subclass() {
     return (
         <div>
             {canModify && (
-                <form>
+                <form onSubmit={(e) =>{
+                    e.preventDefault();
+                    modifyInfo();
+                }}>
                     <label>Name</label>
                     <input
                         type="text"
@@ -137,7 +159,7 @@ function Subclass() {
                             </div>
                         ))
                     }
-                    <button type="submit" disabled={loading}>Save Changes</button>
+                    <button type="submit" disabled={loading}>Modify</button>
                 </form>
             )}
             <div>

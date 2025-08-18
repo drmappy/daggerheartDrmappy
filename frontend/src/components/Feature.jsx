@@ -46,9 +46,37 @@ function Feature(){
 
     return (
         <div>
-            <h1>{feature.name}</h1>
-            <p>Description: {feature.description}</p>
-            <p>Type: {feature.type}</p>
+            <form onSubmit={(e)=>{
+                e.preventDefault();
+                modifyInfo();
+            }}>
+                {canModify && (
+                    <>
+                        <label>Name</label>
+                        <input
+                            type="text"
+                            value={feature.name}
+                            onChange={(e) => setFeature({...feature, name: e.target.value})}
+                        />
+                        <label>Description</label>
+                        <textarea
+                            value={feature.description}
+                            onChange={(e) => setFeature({...feature, description: e.target.value})}
+                        />
+                        <label>Type</label>
+
+                        <button
+                            type="submit"
+                            disabled={loading}
+                        >Modify</button>
+                    </>
+                )}
+            </form>
+            <div>
+                <h1>{feature.name}</h1>
+                <p>Description: {feature.description}</p>
+                <p>Type: {feature.type}</p>
+            </div>
         </div>
     );
 }

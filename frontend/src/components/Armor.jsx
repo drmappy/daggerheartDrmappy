@@ -63,7 +63,10 @@ function Armor() {
     return (
         <div>
             {canModify && (
-                <form onSubmit={modifyInfo}>
+                <form onSubmit={(e)=>{
+                    e.preventDefault();
+                    modifyInfo();
+                }}>
                     <label>Name</label>
                     <input
                         type="text"
@@ -92,11 +95,9 @@ function Armor() {
                         onChange={(e) => setArmor({ ...armor, baseArmorScore: e.target.value })}
                         placeholder={armor.baseArmorScore}
                     />
-                    {armor.feature !== null && (
-                        <div>
-                            <label></label>
-                        </div>
-                    )}
+                    <button type="submit"
+                            disabled={loading}
+                    >Modify</button>
                 </form>
             )}
             <div>
