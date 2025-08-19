@@ -144,9 +144,26 @@ public class CreatorService {
     public void saveWeapon(WeaponDTO weaponDTO, String username, String password) throws DatabaseError {
         try {
             Creator creator = (Creator) accountRepository.getByUsernameAndPassword(username, password);
-            creator.addWeapon(weaponDTO.toModele());
+
+            Weapon weapon;
+            if (weaponDTO.getId() != null) {
+                weapon = weaponRepository.findById(weaponDTO.getId())
+                        .orElseThrow(DatabaseError::new);
+                weapon.setName(weaponDTO.getName());
+                weapon.setTier(weaponDTO.getTier());
+                weapon.setTrait(weaponDTO.getTrait());
+                weapon.setRange(weaponDTO.getRange());
+                weapon.setDamage(weaponDTO.getDamage().toModele());
+                weapon.setBurden(weaponDTO.getBurden());
+                weapon.setFeature(weaponDTO.getFeature() != null ? weaponDTO.getFeature().toModele() : null);
+            } else {
+                weapon = weaponDTO.toModele();
+                creator.addWeapon(weapon);
+            }
+
             accountRepository.save(creator);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new DatabaseError();
         }
     }

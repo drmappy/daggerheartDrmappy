@@ -20,7 +20,7 @@ function CreateAncestry(){
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const allFeatures = await fetchFeatures("ANCESTRY");
+                const allFeatures = await fetchFeatures("Ancestries");
                 setFeatures(allFeatures);
             } catch (err) {
                 setError(err.message);

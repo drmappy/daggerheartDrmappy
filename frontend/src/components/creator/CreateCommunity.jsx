@@ -11,7 +11,7 @@ function CreateCommunity(){
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const allFeatures = await fetchFeatures("COMMUNITY");
+                const allFeatures = await fetchFeatures("Communities");
                 setFeatures(allFeatures);
             } catch (err) {
                 setError(err.message);

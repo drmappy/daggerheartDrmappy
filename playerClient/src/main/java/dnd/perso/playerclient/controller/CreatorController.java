@@ -1,10 +1,6 @@
 package dnd.perso.playerclient.controller;
 
-import dnd.perso.playerclient.exception.DatabaseError;
-import dnd.perso.playerclient.modele.enums.CharacterSpellTrait;
-import dnd.perso.playerclient.modele.enums.Domain;
-import dnd.perso.playerclient.modele.enums.EnemyType;
-import dnd.perso.playerclient.modele.enums.Tier;
+import dnd.perso.playerclient.modele.enums.*;
 import dnd.perso.playerclient.service.CreatorService;
 import dnd.perso.playerclient.service.dto.*;
 import org.springframework.http.ResponseEntity;
@@ -115,7 +111,6 @@ public class CreatorController {
     @GetMapping("confirmation")
     public ResponseEntity<Void> confirmCreator(@RequestHeader String username, @RequestHeader String password) {
         try {
-            System.out.println(username + " " + password);
             creatorService.getCreator(username, password);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
@@ -300,7 +295,7 @@ public class CreatorController {
             return ResponseEntity.notFound().build();
         }
     }
-    @GetMapping("/types")
+    @GetMapping("/enemyTypes")
     public ResponseEntity<List<EnemyType>> getAllTypes() {
         try {
             List<EnemyType> enemyTypes = List.of(EnemyType.values());
@@ -314,6 +309,38 @@ public class CreatorController {
         try {
             List<Tier> tiers = List.of(Tier.values());
             return ResponseEntity.ok(tiers);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    @GetMapping("/burdens")
+    public ResponseEntity<List<Burden>> getAllBurdens() {
+        List<Burden> burdens = List.of(Burden.values());
+        return ResponseEntity.ok(burdens);
+    }
+    @GetMapping("/ranges")
+    public ResponseEntity<List<Range>> getAllRanges() {
+        try {
+            List<Range> ranges = List.of(Range.values());
+            return ResponseEntity.ok(ranges);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    @GetMapping("/traits")
+    public ResponseEntity<List<CharacterSpellTrait>> getAllWeaponTraits() {
+        try {
+            List<CharacterSpellTrait> weaponTraits = List.of(CharacterSpellTrait.values());
+            return ResponseEntity.ok(weaponTraits);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    @GetMapping("/damageTypes")
+    public ResponseEntity<List<DamageType>> getAllDamageTypes() {
+        try {
+            List<DamageType> damageTypes = List.of(DamageType.values());
+            return ResponseEntity.ok(damageTypes);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }

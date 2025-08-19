@@ -1,7 +1,7 @@
 export const verifyAccount = async () => {
     const account = JSON.parse(localStorage.getItem("Account"));
     try{
-        await fetch('http://localhost:8080/creator/confirmation', {
+        const response = await fetch('http://localhost:8080/creator/confirmation', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -9,7 +9,7 @@ export const verifyAccount = async () => {
                 "password": account.password
             }
         });
-        return true;
+        return response.ok;
     }catch(e) {
         return false;
     }

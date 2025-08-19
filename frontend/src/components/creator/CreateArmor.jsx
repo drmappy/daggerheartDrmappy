@@ -16,7 +16,7 @@ function CreateArmor() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const allFeatures = await fetchFeatures("ARMOR");
+                const allFeatures = await fetchFeatures("Armors");
                 setFeatures(allFeatures);
             } catch (err) {
                 setError(err.message);
