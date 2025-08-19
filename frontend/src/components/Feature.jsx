@@ -39,7 +39,26 @@ function Feature(){
         const data = await response.json();
         setFeature(data);
     };
-
+    const modifyInfo = () => {
+        setLoading(true);
+        fetch('http://localhost:8080/creator/save/feature', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'username': JSON.parse(localStorage.getItem("Account")).username,
+                'password': JSON.parse(localStorage.getItem("Account")).password
+            },
+            body: JSON.stringify(feature)
+        })
+            .then(() => {
+                setError(null);
+                navigate(`/creator/feature/${feature.name}`);
+            })
+            .catch(() => {
+                setError('Failed to modify feature.');
+            });
+        setLoading(false);
+    }
     if (error) return <p>{error}</p>;
     if (loading) return <p>Loading feature...</p>;
     if (!feature) return null;

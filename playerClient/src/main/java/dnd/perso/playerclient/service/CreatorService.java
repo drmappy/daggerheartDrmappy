@@ -116,9 +116,27 @@ public class CreatorService {
     public void saveFeature(FeatureDTO featureDTO, String username, String password) throws DatabaseError {
         try {
             Creator creator = (Creator) accountRepository.getByUsernameAndPassword(username, password);
-            creator.addFeature(featureDTO.toModele());
-            accountRepository.save(creator);
+
+            Feature feature;
+            if (featureDTO.getId() != null) {
+                // Fetch managed entity and update fields
+                feature = featureRepository.findById(featureDTO.getId())
+                        .orElseThrow(DatabaseError::new);
+                feature.setName(featureDTO.getName());
+                feature.setDescription(featureDTO.getDescription());
+                feature.setType(featureDTO.getType());
+            } else {
+                // Create new entity
+                feature = featureDTO.toModele();
+            }
+
+            // Avoid duplicates
+            if (creator.getFeatures() == null || creator.getFeatures().stream().noneMatch(f -> f.getId() != null && f.getId().equals(feature.getId()))) {
+                creator.addFeature(feature);
+                accountRepository.save(creator);
+            }
         } catch (Exception e) {
+            e.printStackTrace();
             throw new DatabaseError();
         }
     }
