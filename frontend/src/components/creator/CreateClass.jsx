@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { fetchDomainOptions } from "../util/FetchDomains.jsx";
 function CreateClass(){
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
@@ -60,23 +61,7 @@ function CreateClass(){
             setLoading(false);
         }
     }
-    const fetchDomainOptions = async () => {
-        try {
-            const response = await fetch("http://localhost:8080/creator/allDomains", {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-            if (!response.ok) {
-                throw new Error("Failed to fetch domain options");
-            }
-            const data = await response.json();
-            setDomainOptions(data);
-        } catch (err) {
-            setError(err.message);
-        }
-    }
+
     return (
         <div>
             <h1>Create Class</h1>

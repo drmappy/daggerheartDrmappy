@@ -96,9 +96,22 @@ public class CreatorService {
     public void saveDaggerheartClass(DaggerheartClassDTO daggerheartClassDTO, String username, String password) throws DatabaseError {
         try {
             Creator creator = (Creator) accountRepository.getByUsernameAndPassword(username, password);
-            creator.addDaggerheartClass(daggerheartClassDTO.toModele());
+            if (daggerheartClassDTO.getId() == null) {
+                creator.addDaggerheartClass(daggerheartClassDTO.toModele());
+            } else {
+                DaggerheartClass managedClass = daggerheartClassRepository.findById(daggerheartClassDTO.getId()).orElse(null);
+                managedClass.setName(daggerheartClassDTO.getName());
+                managedClass.setDescription(daggerheartClassDTO.getDescription());
+                managedClass.setDomains(daggerheartClassDTO.getDomains());
+                managedClass.setStartingEvasion(daggerheartClassDTO.getStartingEvasion());
+                managedClass.setStartingHitPoints(daggerheartClassDTO.getStartingHitPoints());
+                managedClass.setClassItem(daggerheartClassDTO.getClassItem());
+                managedClass.setHopeFeatures(daggerheartClassDTO.getHopeFeatures().stream().map(FeatureDTO::toModele).toList());
+                managedClass.setClassFeatures(daggerheartClassDTO.getClassFeatures().stream().map(FeatureDTO::toModele).toList());
+            }
             accountRepository.save(creator);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new DatabaseError();
         }
     }

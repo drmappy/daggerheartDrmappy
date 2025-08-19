@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from "react-router";
 import { verifyAccount } from "./util/VerifyAccount.jsx";
-
+import { fetchDomainOptions } from "./util/FetchDomains.jsx";
 function DaggerheartClass() {
     const navigate = useNavigate();
     const [daggerheartClass, setDaggerheartClass] = useState(null);
@@ -36,9 +36,32 @@ function DaggerheartClass() {
             }
         };
         fetchDaggerheartClass();
+        fetchDomainOptions().then((domains) => {
+            setAllDomains(domains);
+        }).catch((err) => {
+            setError('Failed to load domains.');
+        });
     }, [name]);
     const modfiyInfo = () => {
-
+        setLoading(true);
+        fetch('http://localhost:8080/creator/save/class', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'username': JSON.parse(localStorage.getItem("Account")).username,
+                'password': JSON.parse(localStorage.getItem("Account")).password
+            },
+            body: JSON.stringify(daggerheartClass)
+        })
+            .then(() => {
+                setError(null);
+                setLoading(false);
+                navigate(`/creator/class/${daggerheartClass.name}`);
+            })
+            .catch(() => {
+                setError('Failed to modify daggerheartClass.');
+                setLoading(false);
+            });
     }
     if (error) return <p>{error}</p>;
     if (loading) return <p>Loading daggerheartClass...</p>;
@@ -69,7 +92,8 @@ function DaggerheartClass() {
                             required
                             value={daggerheartClass.domains[0] || ''}
                             onChange={(e) => {
-                                daggerheartClass.domains[0] = e.target.value;
+                                const newDomains = [e.target.value, daggerheartClass.domains[1]];
+                                setDaggerheartClass({ ...daggerheartClass, domains: newDomains });
                             }}>
                             {allDomains
                                 .filter(domain => domain !== daggerheartClass.domains[1])
@@ -81,7 +105,8 @@ function DaggerheartClass() {
                             required
                             value={daggerheartClass.domains[1] || ''}
                             onChange={(e) => {
-                                daggerheartClass.domains[1] = e.target.value;
+                                const newDomains = [daggerheartClass.domains[0], e.target.value];
+                                setDaggerheartClass({ ...daggerheartClass, domains: newDomains });
                             }}>
                             {allDomains
                                 .filter(domain => domain !== daggerheartClass.domains[0])
@@ -146,7 +171,44 @@ function DaggerheartClass() {
                         }
                         >Add another feature</button>
                         <br/>
-
+                        <label>Class Features</label>
+                        {daggerheartClass.classFeatures.map((feature, index) => (
+                            <div key={index}>
+                                <input
+                                    type="text"
+                                    value={feature.name}
+                                    onChange={(e) => {
+                                        const newFeatures = [...daggerheartClass.classFeatures];
+                                        newFeatures[index] = { ...newFeatures[index], name: e.target.value };
+                                        setDaggerheartClass({...daggerheartClass, classFeatures: newFeatures});
+                                    }}
+                                />
+                                <input
+                                    type="text"
+                                    value={feature.description}
+                                    onChange={(e) => {
+                                        const newFeatures = [...daggerheartClass.classFeatures];
+                                        newFeatures[index] = { ...newFeatures[index], description: e.target.value };
+                                        setDaggerheartClass({...daggerheartClass, classFeatures: newFeatures});
+                                    }}
+                                />
+                                <button type="button" onClick={() => {
+                                    const newFeatures = daggerheartClass.classFeatures.filter((f) => f.name !== feature.name);
+                                    setDaggerheartClass({...daggerheartClass, classFeatures: newFeatures});
+                                }}>Remove</button>
+                            </div>
+                        ))}
+                        <button
+                            type="button"
+                            onClick={() =>
+                                setDaggerheartClass({
+                                    ...daggerheartClass,
+                                    classFeatures: [...daggerheartClass.classFeatures, {name: "", description: "", type: "CLASS"}]
+                                })
+                            }
+                        >Add another feature</button>
+                        <br/>
+                        <button type={"submit"}>Modify</button>
                     </form>
                 )}
             <div>

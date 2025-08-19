@@ -9,6 +9,6 @@ import java.util.Optional;
 
 public interface DaggerheartClassRepository extends JpaRepository<DaggerheartClass,Long> {
     DaggerheartClass findByName(String name);
-
+    DaggerheartClass findById(long id);
     List<DaggerheartClass> findByNameContaining(String name);
 }
