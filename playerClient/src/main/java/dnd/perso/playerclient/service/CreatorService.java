@@ -106,9 +106,20 @@ public class CreatorService {
     public void saveCommunity(CommunityDTO communityDTO, String username, String password) throws DatabaseError {
         try {
             Creator creator = (Creator) accountRepository.getByUsernameAndPassword(username, password);
-            creator.addCommunity(communityDTO.toModele());
+
+            Community community;
+            if (communityDTO.getId() != null) {
+                community = communityRepository.findById(communityDTO.getId())
+                        .orElseThrow(DatabaseError::new);
+                community.setName(communityDTO.getName());
+                community.setDescription(communityDTO.getDescription());
+            } else {
+                community = communityDTO.toModele();
+                creator.addCommunity(community);
+            }
             accountRepository.save(creator);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new DatabaseError();
         }
     }
