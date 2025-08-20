@@ -157,43 +157,44 @@ function Enemy(){
                         onChange={(e) => setEnemy({ ...enemy, damageThreshold: { ...enemy.damageThreshold, majorToSevere: e.target.value } })}
                     />
                     <label>Experiences</label>
-                    {enemy?.experiences && enemy.experiences.map((experience, index) => (
+                    {enemy.experience && enemy.experience.map((experience, index) => (
                         <div key={index}>
                             <input
                                 type="text"
-                                value={experience.name}
+                                value={experience.experience}
                                 onChange={(e) => {
-                                    const newExperiences = enemy.experiences.map((exp) =>
-                                        exp.name === experience.name ? { ...exp, name: e.target.value } : exp
+                                    const newExperiences = enemy.experience.map((exp) =>
+                                        exp.experience === experience.experience ? { ...exp, experience: e.target.value } : exp
                                     );
-                                    setEnemy({ ...enemy, experiences: newExperiences });
+                                    setEnemy({ ...enemy, experience: newExperiences });
                                 }}
                             />
-                            <textarea
-                                value={experience.description}
+                            <input
+                                type="number"
+                                value={experience.modifier}
                                 onChange={(e) => {
-                                    const newExperiences = enemy.experiences.map((exp) =>
-                                        exp.name === experience.name ? { ...exp, description: e.target.value } : exp
+                                    const newExperiences = enemy.experience.map((exp) =>
+                                        exp.experience === experience.experience ? { ...exp, modifier: e.target.value } : exp
                                     );
-                                    setEnemy({ ...enemy, experiences: newExperiences });
+                                    setEnemy({ ...enemy, experience: newExperiences });
                                 }}
                             />
 
                             <button
                                 type="button"
                                 onClick={() => {
-                                    const newExperiences = enemy.experiences.filter((exp) => exp.name !== experience.name);
-                                    setEnemy({ ...enemy, experiences: newExperiences });
+                                    const newExperiences = enemy.experience.filter((exp) => exp.experience !== experience.experience);
+                                    setEnemy({ ...enemy, experience: newExperiences });
                                 }}
                             >remove</button>
                         </div>
                         ))}
                     <button
                         type="button"
-                        onClick={() => setEnemy({ ...enemy, experiences: [...(enemy.experiences || []), { name: '', description: '' }] })}
+                        onClick={() => setEnemy({ ...enemy, experience: [...(enemy.experience || []), { experience: '', modifier: 0 }] })}
                     >Add another experience</button>
                     <label>Features</label>
-                    {enemy?.features && enemy.features.map((feature, index) => (
+                    {enemy.features && enemy.features.map((feature, index) => (
                         <div key={index}>
                             <input
                                 type="text"
@@ -273,10 +274,10 @@ function Enemy(){
                         {enemy.weapon.feature?.name && <p>Weapon Feature Name: {enemy.weapon.feature.name}</p>}
                         {enemy.weapon.feature?.description && <p>Weapon Feature Description: {enemy.weapon.feature.description}</p>}
                         <h3>Experiences</h3>
-                        {enemy.experiences?.map((exp, index) => (
+                        {enemy.experience?.map((exp, index) => (
                             <div key={index}>
-                                <h4>{exp.name}</h4>
-                                <p>{exp.description}</p>
+                                <h4>{exp.experience}</h4>
+                                <p>{exp.modifier}</p>
                             </div>
                         ))}
                         <h3>Features</h3>
