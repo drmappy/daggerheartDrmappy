@@ -96,6 +96,7 @@ public class CreatorController {
             creatorService.saveEnemy(enemyDTO, username, password);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().build();
         }
     }

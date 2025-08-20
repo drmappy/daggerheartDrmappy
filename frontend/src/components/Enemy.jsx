@@ -1,14 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate} from "react-router";
 import { verifyAccount } from "./util/VerifyAccount.jsx";
+import { fetchTiers } from "./util/FetchTiers.jsx";
+import { fetchEnemyTypes } from "./util/FetchEnemyTypes.jsx";
 function Enemy(){
     const navigate = useNavigate();
     const [canModify, setCanModify] = useState(false);
     const [enemy, setEnemy] = useState(null);
+    const [tiers, setTiers] = useState([]);
+    const [enemyTypes, setEnemyTypes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const { name } = useParams();
     useEffect(() => {
+        setLoading(true);
+        setError(null);
+        fetchEnemyTypes().then(
+            (e)=>{
+                setEnemyTypes(e)
+            }
+        ).catch(
+            setError('Failed to load enemy types.')
+        )
+        fetchTiers().then((e)=>{setTiers(e)}).catch(setError('Failed to load tiers.'));
         fetchData().then(
             () => {
                 verifyAccount().then((bool) => {
@@ -72,14 +86,164 @@ function Enemy(){
                     modifyInfo();
                 }}>
                     <label>Name</label>
+                    <input
+                        type="text"
+                        value={enemy ? enemy.name : ''}
+                        onChange={(e) => setEnemy({ ...enemy, name: e.target.value })}
+                    />
                     <label>Description</label>
+                    <textarea
+                        value={enemy ? enemy.description : ''}
+                        onChange={(e) => setEnemy({ ...enemy, description: e.target.value })}
+                    />
                     <label>Tier</label>
+                    <select
+                        value={enemy ? enemy.tier : ''}
+                        onChange={(e) => setEnemy({ ...enemy, tier: e.target.value })}
+                    >
+                        {tiers.map((tier) => (
+                            <option key={tier} value={tier}>{tier}</option>
+                        ))}
+                    </select>
                     <label>Type</label>
+                    <select
+                        value={enemy ? enemy.type : ''}
+                        onChange={(e) => setEnemy({ ...enemy, type: e.target.value })}
+                    >
+                        {enemyTypes.map((type) => (
+                            <option key={type} value={type}>{type}</option>
+                        ))}
+                    </select>
                     <label>Motives & Tactics</label>
+                    <input
+                        type="text"
+                        value={enemy ? enemy.motivesAndTactics : ''}
+                        onChange={(e) => setEnemy({ ...enemy, motivesAndTactics: e.target.value })}
+                    />
                     <label>Difficulty</label>
+                    <input
+                        type="number"
+                        value={enemy ? enemy.difficulty : ''}
+                        onChange={(e) => setEnemy({ ...enemy, difficulty: e.target.value })}
+                    />
                     <label>Hit Points</label>
+                    <input
+                        type="number"
+                        value={enemy ? enemy.hitPoints : ''}
+                        onChange={(e) => setEnemy({ ...enemy, hitPoints: e.target.value })}
+                    />
                     <label>Stress</label>
+                    <input
+                        type="number"
+                        value={enemy ? enemy.stress : ''}
+                        onChange={(e) => setEnemy({ ...enemy, stress: e.target.value })}
+                    />
                     <label>Attack Modifier</label>
+                    <input
+                        type="number"
+                        value={enemy ? enemy.attackModifier : ''}
+                        onChange={(e) => setEnemy({ ...enemy, attackModifier: e.target.value })}
+                    />
+                    <label>Minor To Major</label>
+                    <input
+                        type="number"
+                        value={enemy ? enemy.damageThreshold.minorToMajor : ''}
+                        onChange={(e) => setEnemy({ ...enemy, damageThreshold: { ...enemy.damageThreshold, minorToMajor: e.target.value } })}
+                    />
+                    <label>Major To Severe</label>
+                    <input
+                        type="number"
+                        value={enemy ? enemy.damageThreshold.majorToSevere : ''}
+                        onChange={(e) => setEnemy({ ...enemy, damageThreshold: { ...enemy.damageThreshold, majorToSevere: e.target.value } })}
+                    />
+                    <label>Experiences</label>
+                    {enemy?.experiences && enemy.experiences.map((experience, index) => (
+                        <div key={index}>
+                            <input
+                                type="text"
+                                value={experience.name}
+                                onChange={(e) => {
+                                    const newExperiences = enemy.experiences.map((exp) =>
+                                        exp.name === experience.name ? { ...exp, name: e.target.value } : exp
+                                    );
+                                    setEnemy({ ...enemy, experiences: newExperiences });
+                                }}
+                            />
+                            <textarea
+                                value={experience.description}
+                                onChange={(e) => {
+                                    const newExperiences = enemy.experiences.map((exp) =>
+                                        exp.name === experience.name ? { ...exp, description: e.target.value } : exp
+                                    );
+                                    setEnemy({ ...enemy, experiences: newExperiences });
+                                }}
+                            />
+
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    const newExperiences = enemy.experiences.filter((exp) => exp.name !== experience.name);
+                                    setEnemy({ ...enemy, experiences: newExperiences });
+                                }}
+                            >remove</button>
+                        </div>
+                        ))}
+                    <button
+                        type="button"
+                        onClick={() => setEnemy({ ...enemy, experiences: [...(enemy.experiences || []), { name: '', description: '' }] })}
+                    >Add another experience</button>
+                    <label>Features</label>
+                    {enemy?.features && enemy.features.map((feature, index) => (
+                        <div key={index}>
+                            <input
+                                type="text"
+                                value={feature.name}
+                                onChange={(e) => {
+                                    const newFeatures = enemy.features.map((f) =>
+                                        f.name === feature.name ? { ...f, name: e.target.value } : f
+                                    );
+                                    setEnemy({ ...enemy, features: newFeatures });
+                                }}
+                            />
+                            <textarea
+                                value={feature.description}
+                                onChange={(e) => {
+                                    const newFeatures = enemy.features.map((f) =>
+                                        f.name === feature.name ? { ...f, description: e.target.value } : f
+                                    );
+                                    setEnemy({ ...enemy, features: newFeatures });
+                                }}
+                            />
+                            <label>Type</label>
+                            <select
+                                value={feature.type}
+                                onChange={(e) => {
+                                    const newFeatures = enemy.features.map((f) =>
+                                        f.name === feature.name ? { ...f, type: e.target.value } : f
+                                    );
+                                    setEnemy({ ...enemy, features: newFeatures });
+                                }}
+                            >
+                                <option value="ACTION">Action</option>
+                                <option value="REACTION">Reaction</option>
+                                <option value="PASSIVE">Passive</option>
+                            </select>
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    const newFeatures = enemy.features.filter((f) => f.name !== feature.name);
+                                    setEnemy({ ...enemy, features: newFeatures });
+                                }}
+                            >remove</button>
+                        </div>
+                    ))}
+                    <button
+                        type="button"
+                        onClick={() => setEnemy({ ...enemy, features: [...(enemy.features || []), { name: '', description: '', type: 'ACTION' }] })}
+                    >Add another feature</button>
+                    <button type={"submit"} disabled={loading}>
+                        {loading ? "Saving..." : "Modify"}
+                    </button>
                 </form>
             )}
             <h1>Enemy</h1>
@@ -94,7 +258,7 @@ function Enemy(){
                         <h3>Motives & Tactics {enemy.motivesAndTactics}</h3>
                         <h3>Difficulty: {enemy.difficulty}</h3>
                         <h3>Hit Points: {enemy.hitPoints}</h3>
-                        <h3>Armor Class: {enemy.stress}</h3>
+                        <h3>Stress: {enemy.stress}</h3>
                         <h3>Attack Bonus: {enemy.attackModifier}</h3>
                         <h3>MinorToMajor: {enemy.damageThreshold.minorToMajor}</h3>
                         <h3>MajorToSevere: {enemy.damageThreshold.majorToSevere}</h3>

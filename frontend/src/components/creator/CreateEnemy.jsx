@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import {fetchEnemyTypes} from "../util/FetchEnemyTypes.jsx";
+import {fetchTiers} from "../util/FetchTiers.jsx";
 
 function CreateEnemy(){
     const [name, setName] = useState("");
@@ -35,46 +37,20 @@ function CreateEnemy(){
     const [success, setSuccess] = useState("");
     const account = JSON.parse(localStorage.getItem("Account"));
     useEffect(() => {
-        fetchTiers();
-        fetchTypes();
+        fetchTiers().then((response) => {
+            setTier(response[0]);
+            setTiers(response);
+        }).catch((error) => {
+            setError(error);
+        })
+        fetchEnemyTypes().then((response) => {
+            setType(response[0]);
+            setTypes(response);
+        }).catch((error) => {
+            setError(error);
+        })
         fetchWeapons();
     }, []);
-    const fetchTiers = async () => {
-        try {
-            const response = await fetch("http://localhost:8080/creator/tiers", {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    "username": account.username,
-                    "password": account.password
-                },
-            });
-            if (!response.ok) throw new Error("Failed to fetch tiers");
-            const data = await response.json();
-            setTiers(data);
-            setTier(data[0]);
-        } catch (error) {
-            setError(error.message);
-        }
-    };
-    const fetchTypes = async () => {
-        try {
-            const response = await fetch("http://localhost:8080/creator/types", {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    "username": account.username,
-                    "password": account.password
-                },
-            });
-            if (!response.ok) throw new Error("Failed to fetch types");
-            const data = await response.json();
-            setTypes(data);
-            setType(data[0]);
-        } catch (error) {
-            setError(error.message);
-        }
-    };
     const fetchWeapons = async () => {
         try {
             const response = await fetch("http://localhost:8080/player/allWeapons", {

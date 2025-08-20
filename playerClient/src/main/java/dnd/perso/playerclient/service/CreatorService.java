@@ -22,12 +22,13 @@ public class CreatorService {
     private final WeaponRepository weaponRepository;
     private final ArmorRepository armorRepository;
     private final EnemyRepository enemyRepository;
+    private final DamageThresholdRepository damageThresholdRepository;
 
     public CreatorService(
             AccountRepository accountRepository,
             DaggerheartClassRepository daggerheartClassRepository,
             CreatorRepository creatorRepository,
-            AncestryRepository ancestryRepository, SubclassRepository subclassRepository, CommunityRepository communityRepository, FeatureRepository featureRepository, WeaponRepository weaponRepository, ArmorRepository armorRepository, EnemyRepository enemyRepository) {
+            AncestryRepository ancestryRepository, SubclassRepository subclassRepository, CommunityRepository communityRepository, FeatureRepository featureRepository, WeaponRepository weaponRepository, ArmorRepository armorRepository, EnemyRepository enemyRepository, DamageThresholdRepository damageThresholdRepository) {
         this.accountRepository = accountRepository;
         this.daggerheartClassRepository = daggerheartClassRepository;
         this.creatorRepository = creatorRepository;
@@ -38,6 +39,7 @@ public class CreatorService {
         this.weaponRepository = weaponRepository;
         this.armorRepository = armorRepository;
         this.enemyRepository = enemyRepository;
+        this.damageThresholdRepository = damageThresholdRepository;
     }
 
     // Methods
@@ -217,7 +219,24 @@ public class CreatorService {
     public void saveEnemy(EnemyDTO enemyDTO, String username, String password) throws DatabaseError {
         try {
             Creator creator = (Creator) accountRepository.getByUsernameAndPassword(username, password);
-            creator.addEnemy(enemyDTO.toModele());
+            if(enemyDTO.getId() != null) {
+                Enemy enemyToMod = enemyRepository.findById(enemyDTO.getId()).orElse(null);
+                enemyToMod.setName(enemyDTO.getName());
+                enemyToMod.setDescription(enemyDTO.getDescription());
+                enemyToMod.setTier(enemyDTO.getTier());
+                enemyToMod.setType(enemyDTO.getType());
+                enemyToMod.setDifficulty(enemyDTO.getDifficulty());
+                enemyToMod.setHitPoints(enemyDTO.getHitPoints());
+                enemyToMod.setStress(enemyDTO.getStress());
+                enemyToMod.setAttackModifier(enemyDTO.getAttackModifier());
+                DamageThreshold damageThreshold = damageThresholdRepository.getById(enemyDTO.getDamageThreshold().getId());
+                damageThreshold.setMinorToMajor(damageThreshold.getMinorToMajor());
+                damageThreshold.setMajorToSevere(damageThreshold.getMajorToSevere());
+                enemyToMod.setExperience(enemyDTO.getExperience());
+                enemyToMod.setFeatures(enemyDTO.getFeatures());
+            } else {
+                creator.addEnemy(enemyDTO.toModele());
+            }
             accountRepository.save(creator);
         } catch (Exception e) {
             e.printStackTrace();
