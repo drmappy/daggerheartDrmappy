@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import {useParams, useNavigate} from "react-router";
 import { verifyAccount } from "./util/VerifyAccount.jsx";
+import { fetchTraits} from "./util/FetchTraits.jsx";
+
 function Subclass() {
     const navigate = useNavigate();
     const [canModify, setCanModify] = useState(false);
     const [subclass, setSubclass] = useState(null);
+    const [traits, setTraits] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const { name } = useParams();
@@ -22,6 +25,11 @@ function Subclass() {
         } catch (e) {
             setError('Failed to load subclass.');
         }
+        fetchTraits().then((traits)=>{
+            setTraits(traits);
+        }).catch(()=>{
+            setError('Failed to load traits.');
+        })
         setLoading(false);
     }, []);
 
@@ -45,7 +53,8 @@ function Subclass() {
             headers: {
                 'Content-Type': 'application/json',
                 'username': JSON.parse(localStorage.getItem("Account")).username,
-                'password': JSON.parse(localStorage.getItem("Account")).password
+                'password': JSON.parse(localStorage.getItem("Account")).password,
+                'className': subclass.daggerheartClass
             },
             body: JSON.stringify(subclass)
         })
@@ -81,6 +90,14 @@ function Subclass() {
                         onChange={(e) => setSubclass({...subclass, description: e.target.value})}
                     />
                     <label>Spellcasting Trait</label>
+                    <select
+                        value={subclass.spellCastingTrait}
+                        onChange={(e) => setSubclass({...subclass, spellCastingTrait: e.target.value})}
+                    >
+                        {traits.map((trait) => (
+                            <option key={trait} value={trait}>{trait}</option>
+                        ))}
+                    </select>
                     <label>Foundation Features</label>
                     {
                         subclass.foundationFeatures.map((feature, index) => (
@@ -104,9 +121,27 @@ function Subclass() {
                                         setSubclass({...subclass, foundationFeatures: newFeatures});
                                     }}
                                 />
+                                <button
+                                    type={"button"}
+                                    onClick={
+                                    () => {
+                                        const newFeatures = [...subclass.foundationFeatures];
+                                        newFeatures.splice(index, 1);
+                                        setSubclass({...subclass, foundationFeatures: newFeatures});
+                                    }
+                                }
+                                >Remove Feature</button>
                             </div>
                         ))
                     }
+                    <button
+                        type="button"
+                        onClick={() => setSubclass({
+                            ...subclass,
+                            foundationFeatures: [...subclass.foundationFeatures, {name: "", description: "", type: "FOUNDATION"}]
+                        })}
+                    >Add Foundation Feature</button>
+                    <br/>
                     <label>Specialization Features</label>
                     {
                         subclass.specializationFeatures.map((feature, index) => (
@@ -130,9 +165,27 @@ function Subclass() {
                                         setSubclass({...subclass, specializationFeatures: newFeatures});
                                     }}
                                 />
+                                <button
+                                    type={"button"}
+                                    onClick={
+                                    () => {
+                                        const newFeatures = [...subclass.specializationFeatures];
+                                        newFeatures.splice(index, 1);
+                                        setSubclass({...subclass, specializationFeatures: newFeatures});
+                                    }
+                                }
+                                >Remove Feature</button>
                             </div>
                         ))
                     }
+                    <button
+                        type="button"
+                        onClick={() => setSubclass({
+                            ...subclass,
+                            specializationFeatures: [...subclass.specializationFeatures, {name: "", description: "", type: "SPECIALIZATION"}]
+                        })}
+                    >Add Specialization Feature</button>
+                    <br/>
                     <label>Mastery Features</label>
                     {
                         subclass.masteryFeatures.map((feature, index) => (
@@ -156,16 +209,34 @@ function Subclass() {
                                         setSubclass({...subclass, masteryFeatures: newFeatures});
                                     }}
                                 />
+                                <button
+                                    type={"button"}
+                                    onClick={
+                                    () => {
+                                        const newFeatures = [...subclass.masteryFeatures];
+                                        newFeatures.splice(index, 1);
+                                        setSubclass({...subclass, masteryFeatures: newFeatures});
+                                    }
+                                }
+                                >Remove Feature</button>
                             </div>
                         ))
                     }
+                    <button
+                        type="button"
+                        onClick={() => setSubclass({
+                            ...subclass,
+                            masteryFeatures: [...subclass.masteryFeatures, {name: "", description: "", type: "MASTERY"}]
+                        })}
+                    >Add Mastery Feature</button>
+                    <br/>
                     <button type="submit" disabled={loading}>Modify</button>
                 </form>
             )}
             <div>
                 <h1>{subclass.name}</h1>
                 <p>Description: {subclass.description}</p>
-                <p>Spell casting trait: {subclass.spellcastingTrait}</p>
+                <p>Spell casting trait: {subclass.spellCastingTrait}</p>
                 <h2>Foundation Features</h2>
                 <ul>
                     {subclass.foundationFeatures.map((feature, index) => (

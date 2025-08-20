@@ -198,20 +198,31 @@ public class CreatorService {
         try {
             SubClass subClass = subClassDTO.toModele();
             Creator creator = (Creator) accountRepository.getByUsernameAndPassword(username, password);
-            creator.addSubClass(subClass);
-            accountRepository.save(creator);
-            DaggerheartClass daggerheartClass = daggerheartClassRepository.findByName(className);
-            if (daggerheartClass != null) {
-                List<SubClass> subClasses = daggerheartClass.getSubClasses();
-                creator = (Creator) accountRepository.getByUsernameAndPassword(username, password);
-                List<SubClass> creatorSubClasses = creator.getSubClasses();
-                subClasses.add((creatorSubClasses.stream().filter(subClass1 -> subClass1.getName().equals(subClassDTO.getName())).findFirst().get()));
-                daggerheartClass.setSubClasses(subClasses);
-                daggerheartClassRepository.save(daggerheartClass);
-            } else {
-                throw new DatabaseError();
+            if (subClassDTO.getId() != null) {
+                SubClass managedSubClass = subclassRepository.findById(subClassDTO.getId()).orElse(null);
+                managedSubClass.setName(subClassDTO.getName());
+                managedSubClass.setDescription(subClassDTO.getDescription());
+                managedSubClass.setSpellcastingTrait(subClassDTO.getSpellCastingTrait());
+                managedSubClass.setFoundationFeatures(subClassDTO.getFoundationFeatures().stream().map(FeatureDTO::toModele).toList());
+                managedSubClass.setSpecializationFeatures(subClassDTO.getSpecializationFeatures().stream().map(FeatureDTO::toModele).toList());
+                managedSubClass.setMasteryFeatures(subClassDTO.getMasteryFeatures().stream().map(FeatureDTO::toModele).toList());
+            }else {
+                creator.addSubClass(subClass);
+                DaggerheartClass daggerheartClass = daggerheartClassRepository.findByName(className);
+                if (daggerheartClass != null) {
+                    List<SubClass> subClasses = daggerheartClass.getSubClasses();
+                    creator = (Creator) accountRepository.getByUsernameAndPassword(username, password);
+                    List<SubClass> creatorSubClasses = creator.getSubClasses();
+                    subClasses.add((creatorSubClasses.stream().filter(subClass1 -> subClass1.getName().equals(subClassDTO.getName())).findFirst().get()));
+                    daggerheartClass.setSubClasses(subClasses);
+                    daggerheartClassRepository.save(daggerheartClass);
+                } else {
+                    throw new DatabaseError();
+                }
             }
+            accountRepository.save(creator);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new DatabaseError();
         }
     }

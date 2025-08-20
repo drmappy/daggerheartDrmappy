@@ -19,6 +19,8 @@ public class SubClass {
     private String name;
     private String description;
     private CharacterSpellTrait spellcastingTrait;
+    @ManyToOne
+    private DaggerheartClass daggerheartClass;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Feature> foundationFeatures;
@@ -26,12 +28,13 @@ public class SubClass {
     private List<Feature> specializationFeatures;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Feature> masteryFeatures;
-    public SubClass(String name, String description, CharacterSpellTrait spellcastingTrait, List<Feature> foundationFeatures, List<Feature> specializationFeatures, List<Feature> masteryFeatures) {
+    public SubClass(String name, String description, CharacterSpellTrait spellcastingTrait, List<Feature> foundationFeatures, List<Feature> specializationFeatures, List<Feature> masteryFeatures, DaggerheartClass daggerheartClass) {
         this.name = name;
         this.description = description;
         this.spellcastingTrait = spellcastingTrait;
         this.foundationFeatures = foundationFeatures;
         this.specializationFeatures = specializationFeatures;
         this.masteryFeatures = masteryFeatures;
+        this.daggerheartClass = daggerheartClass;
     }
 }

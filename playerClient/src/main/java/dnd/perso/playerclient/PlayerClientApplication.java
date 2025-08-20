@@ -97,6 +97,7 @@ public class PlayerClientApplication {
                     null,
                     "SubClass",
                     "description of subclass",
+                    null,
                     CharacterSpellTrait.AGILITY,
                     List.of(),
                     List.of(),
