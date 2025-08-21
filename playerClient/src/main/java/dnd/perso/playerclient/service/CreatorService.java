@@ -254,6 +254,35 @@ public class CreatorService {
             throw new DatabaseError();
         }
     }
+    public void saveDomainCard(DomainCardDTO domainCardDTO, String username, String password) throws DatabaseError {
+        try {
+            Creator creator = (Creator) accountRepository.getByUsernameAndPassword(username, password);
+            if (domainCardDTO.getId() != null) {
+                for (DomainCard domainCard:creator.getDomainCards()) {
+                    if (domainCard.getId().equals(domainCardDTO.getId())) {
+                        domainCard.setLevel(domainCardDTO.getLevel());
+                        domainCard.setDomain(domainCardDTO.getDomain());
+                        domainCard.setRecallCost(domainCardDTO.getRecallCost());
+                        domainCard.setCardType(domainCardDTO.getCardType());
+                        domainCard.setFeature(domainCardDTO.getFeature());
+                        break;
+                    }
+                }
+            }
+            else {
+                DomainCard domainCard = domainCardDTO.toModele();
+                if (creator.getDomainCards() == null) {
+                    creator.setDomainCards(List.of(domainCard));
+                } else {
+                    creator.getDomainCards().add(domainCard);
+                }
+            }
+            accountRepository.save(creator);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DatabaseError();
+        }
+    }
     @Transactional
     public List<String> getDaggerheartClassesNames(String username, String password) throws DatabaseError {
         try{

@@ -100,6 +100,15 @@ public class CreatorController {
             return ResponseEntity.badRequest().build();
         }
     }
+    @PostMapping("/save/domainCard")
+    public ResponseEntity<Void> saveDomainCard(@RequestBody DomainCardDTO domainCardDTO, @RequestHeader String username, @RequestHeader String password) {
+        try {
+            creatorService.saveDomainCard(domainCardDTO, username, password);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
     @PostMapping("/get")
     public ResponseEntity<CreatorDTO> getProfile(@RequestBody CreatorDTO creatorDTO) {
         try {

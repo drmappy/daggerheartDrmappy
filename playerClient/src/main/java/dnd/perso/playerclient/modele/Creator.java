@@ -31,6 +31,8 @@ public class Creator extends Account{
     private List<SubClass> subClasses;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Enemy> enemies;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<DomainCard> domainCards;
     public Creator(Long id, String username, String password, List<Armor> armors, List<Ancestry> ancestries, List<Community> communities, List<DaggerheartClass> daggerheartClasses, List<Weapon> weapons, List<Feature> features, List<SubClass> subClasses, List<Enemy> enemies) {
         super(id, username, password);
         this.armors = armors;
