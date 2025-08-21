@@ -77,6 +77,11 @@ function CreatorNavigation(){
                             Create an Enemy
                         </NavLink>
                     </li>
+                    <li>
+                        <NavLink to="/creator/createDomainCard" end>
+                            Create a Domain Card
+                        </NavLink>
+                    </li>
                 </ul>
                 <ul>
                     <li>
@@ -120,7 +125,14 @@ function CreatorNavigation(){
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to="/creator/search" end>Search</NavLink>
+                        <NavLink to="/creator/myDomainCards" end>
+                            My Domain Cards
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/creator/search" end>
+                            Search
+                        </NavLink>
                     </li>
                 </ul>
             </nav>

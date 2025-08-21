@@ -23,12 +23,13 @@ public class CreatorService {
     private final ArmorRepository armorRepository;
     private final EnemyRepository enemyRepository;
     private final DamageThresholdRepository damageThresholdRepository;
+    private final DomainCardsRepository domainCardsRepository;
 
     public CreatorService(
             AccountRepository accountRepository,
             DaggerheartClassRepository daggerheartClassRepository,
             CreatorRepository creatorRepository,
-            AncestryRepository ancestryRepository, SubclassRepository subclassRepository, CommunityRepository communityRepository, FeatureRepository featureRepository, WeaponRepository weaponRepository, ArmorRepository armorRepository, EnemyRepository enemyRepository, DamageThresholdRepository damageThresholdRepository) {
+            AncestryRepository ancestryRepository, SubclassRepository subclassRepository, CommunityRepository communityRepository, FeatureRepository featureRepository, WeaponRepository weaponRepository, ArmorRepository armorRepository, EnemyRepository enemyRepository, DamageThresholdRepository damageThresholdRepository, DomainCardsRepository domainCardsRepository) {
         this.accountRepository = accountRepository;
         this.daggerheartClassRepository = daggerheartClassRepository;
         this.creatorRepository = creatorRepository;
@@ -40,6 +41,7 @@ public class CreatorService {
         this.armorRepository = armorRepository;
         this.enemyRepository = enemyRepository;
         this.damageThresholdRepository = damageThresholdRepository;
+        this.domainCardsRepository = domainCardsRepository;
     }
 
     // Methods
@@ -264,7 +266,8 @@ public class CreatorService {
                         domainCard.setDomain(domainCardDTO.getDomain());
                         domainCard.setRecallCost(domainCardDTO.getRecallCost());
                         domainCard.setCardType(domainCardDTO.getCardType());
-                        domainCard.setFeature(domainCardDTO.getFeature());
+                        domainCard.setName(domainCardDTO.getName());
+                        domainCard.setDescription(domainCardDTO.getDescription());
                         break;
                     }
                 }
@@ -280,6 +283,17 @@ public class CreatorService {
             accountRepository.save(creator);
         } catch (Exception e) {
             e.printStackTrace();
+            throw new DatabaseError();
+        }
+    }
+    @Transactional
+    public List<String> getDomainCardsNames(String username, String password) throws DatabaseError {
+        try {
+            return creatorRepository.findDomainCardsByUsernameAndPassword(username, password)
+                    .stream()
+                    .map(DomainCard::getName)
+                    .toList();
+        } catch (Exception e) {
             throw new DatabaseError();
         }
     }
@@ -367,6 +381,19 @@ public class CreatorService {
                     .stream()
                     .map(Enemy::getName)
                     .toList();
+        } catch (Exception e) {
+            throw new DatabaseError();
+        }
+    }
+    @Transactional
+    public DomainCardDTO getDomainCardDTOByName(String name) throws DatabaseError {
+        try {
+            DomainCard domainCard = domainCardsRepository.findByName(name);
+            if (domainCard != null) {
+                return new DomainCardDTO(domainCard);
+            } else {
+                throw new DatabaseError();
+            }
         } catch (Exception e) {
             throw new DatabaseError();
         }

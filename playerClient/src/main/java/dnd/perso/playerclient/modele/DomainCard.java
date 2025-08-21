@@ -19,6 +19,6 @@ public class DomainCard {
     private Domain domain;
     private int recallCost;
     private DomainCardType cardType;
-    @OneToOne(cascade = CascadeType.ALL)
-    private Feature feature;
+    private String name;
+    private String description;
 }

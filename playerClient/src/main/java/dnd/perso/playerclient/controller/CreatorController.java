@@ -207,6 +207,15 @@ public class CreatorController {
             return ResponseEntity.badRequest().build();
         }
     }
+    public ResponseEntity<List<String>> getAllDomainCards(@RequestHeader String username, @RequestHeader String password) {
+        try {
+            creatorService.getCreator(username, password);
+            List<String> domainCards = creatorService.getDomainCardsNames(username, password);
+            return ResponseEntity.ok(domainCards);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
     @GetMapping("/allDomains")
     public ResponseEntity<List<Domain>> getAllDomains() {
         try {
@@ -303,6 +312,25 @@ public class CreatorController {
             return ResponseEntity.ok(enemy);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
+        }
+    }
+    @GetMapping("/domainCard/{name}")
+    public ResponseEntity<DomainCardDTO> getDomainCardByName(@PathVariable String name) {
+        try {
+            String decodedName = URLDecoder.decode(name, StandardCharsets.UTF_8);
+            DomainCardDTO domainCard = creatorService.getDomainCardDTOByName(decodedName);
+            return ResponseEntity.ok(domainCard);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @GetMapping("domainCardTypes")
+    public ResponseEntity<List<DomainCardType>>getAllDomainCardTypes() {
+        try {
+            List<DomainCardType> domainCardTypes = List.of(DomainCardType.values());
+            return ResponseEntity.ok(domainCardTypes);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
         }
     }
     @GetMapping("/enemyTypes")

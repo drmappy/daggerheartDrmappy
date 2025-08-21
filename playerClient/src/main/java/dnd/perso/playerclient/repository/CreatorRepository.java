@@ -24,4 +24,6 @@ public interface CreatorRepository extends JpaRepository<Creator, Long> {
     List<Ancestry> findAncestriesByUsernameAndPassword(String username, String password);
     @Query("select c.enemies from Creator c where c.username = ?1 and c.password = ?2")
     List<Enemy> findEnemiesByUsernameAndPassword(String username, String password);
+    @Query("select c.domainCards from Creator c where c.username = ?1 and c.password = ?2")
+    List<DomainCard> findDomainCardsByUsernameAndPassword(String username, String password);
 }

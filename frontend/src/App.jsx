@@ -18,6 +18,7 @@ import CreateWeapon from "./components/creator/CreateWeapon.jsx";
 import CreateClass from "./components/creator/CreateClass.jsx";
 import CreateSubclass from "./components/creator/CreateSubclass.jsx";
 import CreateFeature from "./components/creator/CreateFeature.jsx";
+import CreateDomainCard from "./components/creator/CreateDomainCard.jsx";
 import CreateCharacter from "./components/player/CreateCharacter.jsx";
 import Character from "./components/player/Character.jsx";
 import MyAncestries from "./components/creator/MyAncestries.jsx";
@@ -38,6 +39,7 @@ import Search from "./components/Search.jsx";
 import MyEnemies from "./components/creator/MyEnemies.jsx";
 import CreateEnemy from "./components/creator/CreateEnemy.jsx";
 import Enemy from "./components/Enemy.jsx";
+import DomainCard from "./components/DomainCard.jsx";
 function App() {
     const router = createBrowserRouter(
         createRoutesFromElements(
@@ -57,6 +59,7 @@ function App() {
                     <Route path="mySubclasses" element={<MySubclasses/>} />
                     <Route path="myWeapons" element={<MyWeapons/>} />
                     <Route path="myEnemies" element={<MyEnemies/>} />
+                    <Route path="myDomainCards" element={<DomainCard/>} />
 
                     <Route path="createAncestry" element={<CreateAncestry/>}/>
                     <Route path="community" element={<CreateCommunity/>}/>
@@ -66,6 +69,7 @@ function App() {
                     <Route path="createSubclass" element={<CreateSubclass/>}/>
                     <Route path="createFeatureItems" element={<CreateFeature/>}/>
                     <Route path="createEnemy" element={<CreateEnemy/>}/>
+                    <Route path="createDomainCard" element={<CreateDomainCard/>}/>
 
                     <Route path="ancestry/:name" element={<Ancestry/>}/>
                     <Route path="class/:name" element={<DaggerheartClass/>}/>
@@ -75,6 +79,7 @@ function App() {
                     <Route path="community/:name" element={<Community/>}/>
                     <Route path="feature/:name" element={<Feature/>}/>
                     <Route path="enemy/:name" element={<Enemy/>}/>
+                    <Route path="domainCard/:name" element={<DomainCard/>}/>
                 </Route>
                 <Route path="player" element={<PlayerLayout/>}>
                     <Route index element={<Profile/>}/>
