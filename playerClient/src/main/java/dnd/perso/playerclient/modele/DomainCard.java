@@ -19,6 +19,7 @@ public class DomainCard {
     private Domain domain;
     private int recallCost;
     private DomainCardType cardType;
+    @Column(unique = true)
     private String name;
     private String description;
 }

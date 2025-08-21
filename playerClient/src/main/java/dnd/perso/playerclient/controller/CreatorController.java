@@ -207,6 +207,7 @@ public class CreatorController {
             return ResponseEntity.badRequest().build();
         }
     }
+    @GetMapping("/myDomainCardsNames")
     public ResponseEntity<List<String>> getAllDomainCards(@RequestHeader String username, @RequestHeader String password) {
         try {
             creatorService.getCreator(username, password);

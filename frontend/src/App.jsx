@@ -40,6 +40,7 @@ import MyEnemies from "./components/creator/MyEnemies.jsx";
 import CreateEnemy from "./components/creator/CreateEnemy.jsx";
 import Enemy from "./components/Enemy.jsx";
 import DomainCard from "./components/DomainCard.jsx";
+import MyDomainCard from "./components/creator/MyDomainCard.jsx";
 function App() {
     const router = createBrowserRouter(
         createRoutesFromElements(
@@ -59,7 +60,7 @@ function App() {
                     <Route path="mySubclasses" element={<MySubclasses/>} />
                     <Route path="myWeapons" element={<MyWeapons/>} />
                     <Route path="myEnemies" element={<MyEnemies/>} />
-                    <Route path="myDomainCards" element={<DomainCard/>} />
+                    <Route path="myDomainCards" element={<MyDomainCard/>} />
 
                     <Route path="createAncestry" element={<CreateAncestry/>}/>
                     <Route path="community" element={<CreateCommunity/>}/>
