@@ -1,6 +1,6 @@
 import {useState, useEffect} from "react";
 import {fetchDomainOptions} from "../util/FetchDomains.jsx";
-import {FetchDomainCardTypes} from "../util/FetchDomainCardTypes.jsx";
+import {fetchDomainCardTypes} from "../util/FetchDomainCardTypes.jsx";
 function CreateDomainCard() {
     const [domainCard, setDomainCard] = useState();
     const [domains, setDomains] = useState([]);
@@ -16,7 +16,7 @@ function CreateDomainCard() {
             try {
                 const allDomains = await fetchDomainOptions();
                 setDomains(allDomains);
-                const allDomainCardTypes = await FetchDomainCardTypes();
+                const allDomainCardTypes = await fetchDomainCardTypes();
                 setDomainCardTypes(allDomainCardTypes);
             } catch (err) {
                 console.error("Failed to fetch domains:", err);

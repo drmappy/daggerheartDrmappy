@@ -1,4 +1,4 @@
-export const FetchDomainCardTypes = async () => {
+export const fetchDomainCardTypes = async () => {
     const response = await fetch('http://localhost:8080/creator/domainCardTypes', {
         method: 'GET',
         headers: {
