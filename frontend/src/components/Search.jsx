@@ -11,8 +11,10 @@ function Search(){
         "CLASS",
         "SUBCLASS",
         "WEAPON",
-        "ENEMY"
+        "ENEMY",
+        "DOMAINCARD"
     ];
+    const [account, setAccount] = useState(JSON.parse(localStorage.getItem("Account")));
     const [page, setPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
     const limitPageChoice = 5;
@@ -29,6 +31,7 @@ function Search(){
         setLoading(true);
         setError("");
         try {
+            const account = JSON.parse(localStorage.getItem("Account"));
             const response = await fetch(`http://localhost:8080/player/search?name=${searchName}&page=${newPage ?? page}&objects=${objects.join(",")}`,
                 {
                     method: "GET",
@@ -94,7 +97,7 @@ function Search(){
                     <h2>Results</h2>
                     <ul>
                         {searchResults.map((result, index) => (
-                            <li key={index} onClick={() => navigate(`/player/${result.type.toLowerCase()}/${result.name}`)}>
+                            <li key={index} onClick={() => navigate(`/${account.accountType}/${result.type.toLowerCase()}/${result.name}`)}>
                                 {result.name} ({result.type})
                             </li>
                         ))}

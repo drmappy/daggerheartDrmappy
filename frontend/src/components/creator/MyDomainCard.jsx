@@ -6,7 +6,7 @@ function MyDomainCard(){
         <MyList
             title="My Domain Cards"
             endpoint="http://localhost:8080/creator/myDomainCardsNames"
-            itemPath="/creator/DomainCard"
+            itemPath="/creator/domain_card"
         />
     );
 }

@@ -80,7 +80,7 @@ function App() {
                     <Route path="community/:name" element={<Community/>}/>
                     <Route path="feature/:name" element={<Feature/>}/>
                     <Route path="enemy/:name" element={<Enemy/>}/>
-                    <Route path="domainCard/:name" element={<DomainCard/>}/>
+                    <Route path="domain_card/:name" element={<DomainCard/>}/>
                 </Route>
                 <Route path="player" element={<PlayerLayout/>}>
                     <Route index element={<Profile/>}/>
@@ -95,6 +95,7 @@ function App() {
                     <Route path="community/:name" element={<Community/>}/>
                     <Route path="feature/:name" element={<Feature/>}/>
                     <Route path="enemy/:name" element={<Enemy/>}/>
+                    <Route path="domain_card/:name" element={<DomainCard/>}/>
                 </Route>
             </Route>
         )
