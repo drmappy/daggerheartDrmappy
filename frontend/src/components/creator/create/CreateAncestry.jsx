@@ -1,17 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { fetchFeatures } from "../util/FetchFeatures.jsx";
+import { fetchFeatures } from "../../util/FetchFeatures.jsx";
 function CreateAncestry(){
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
-    const [feature1, setFeature1] = useState({
+    const [ancestry, setAncestry] = useState({
         name: "",
         description: "",
-        type: "",
-    });
-    const [feature2, setFeature2] = useState({
-        name: "",
-        description: "",
-        type: "",
+        feature1: { name: "", description: "", type: "" },
+        feature2: { name: "", description: "", type: "" }
     });
     const [features, setFeatures] = useState([]);
     const [error, setError] = useState("");
@@ -20,8 +14,9 @@ function CreateAncestry(){
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const allFeatures = await fetchFeatures("Ancestries");
+                const allFeatures = await fetchFeatures("ANCESTRY");
                 setFeatures(allFeatures);
+                setLoading(false);
             } catch (err) {
                 setError(err.message);
             }
@@ -42,27 +37,12 @@ function CreateAncestry(){
                     "username": account.username,
                     "password": account.password
                 },
-                body: JSON.stringify({
-                    name,
-                    description,
-                    feature1: {
-                        id: feature1.id,
-                        name: feature1.name,
-                        description: feature1.description,
-                        type: feature1.type,
-                    },
-                    feature2: {
-                        id: feature2.id,
-                        name: feature2.name,
-                        description: feature2.description,
-                        type: feature2.type
-                    }
-                })
+                body: JSON.stringify(ancestry)
             });
             if (!response.ok) {
                 throw new Error("Failed to create ancestry");
             }
-            setSuccess(`Ancestry "${name}" created successfully!`);
+            setSuccess(`Ancestry "${ancestry.name}" created successfully!`);
         } catch (err) {
             setError(err.message);
         } finally {
@@ -79,8 +59,8 @@ function CreateAncestry(){
                     <input
                         type="text"
                         id="name"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        value={ancestry.name}
+                        onChange={(e) => setAncestry({ ...ancestry, name: e.target.value })}
                         required
                     />
                 </div>
@@ -88,22 +68,22 @@ function CreateAncestry(){
                     <label htmlFor="description">Description:</label>
                     <textarea
                         id="description"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
+                        value={ancestry.description}
+                        onChange={(e) => setAncestry({...ancestry, description: e.target.value })}
                         required
                     />
                 </div>
                 <div>
                     <label>Feature1:</label>
                     <select
-                        value={feature1.name}
+                        value={ancestry.feature1.name}
                         onChange={(e) => {
                             const selectedFeature = features.find(f => f.name === e.target.value);
-                            setFeature1(selectedFeature || { name: "", description: "", type: "" });
+                            setAncestry({...ancestry, feature1: selectedFeature || { name: "", description: "", type: "" }});
                         }}
                     >
                         <option value="">Select Feature 1</option>
-                        {features.filter(feature => feature.name !== feature2.name).map((feature) => (
+                        {features.filter(feature => feature.name !== ancestry.feature2.name).map((feature) => (
                             <option key={feature.name} value={feature.name}>
                                 {feature.name}
                             </option>
@@ -111,14 +91,14 @@ function CreateAncestry(){
                     </select>
                     <label>Feature2:</label>
                     <select
-                        value={feature2.name}
+                        value={ancestry.feature2.name}
                         onChange={(e) => {
                             const selectedFeature = features.find(f => f.name === e.target.value);
-                            setFeature2(selectedFeature || { name: "", description: "", type: "" });
+                            setAncestry({...ancestry, feature2: selectedFeature || { name: "", description: "", type: "" }});
                         }}
                     >
                         <option value="">Select Feature 2</option>
-                        {features.filter(feature => feature.name !== feature1.name).map((feature) => (
+                        {features.filter(feature => feature.name !== ancestry.feature1.name).map((feature) => (
                             <option key={feature.name} value={feature.name}>
                                 {feature.name}
                             </option>

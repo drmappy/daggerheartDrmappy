@@ -1,6 +1,7 @@
 package dnd.perso.playerclient.repository;
 
 import dnd.perso.playerclient.modele.Feature;
+import dnd.perso.playerclient.modele.enums.FeatureType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -13,5 +14,5 @@ public interface FeatureRepository extends JpaRepository<Feature, Long> {
 
     List<Feature> findByNameContaining(String name);
     @Query("SELECT f FROM Feature f WHERE f.type = ?1")
-    List<Feature> findByType(String featureType);
+    List<Feature> findByType(FeatureType featureType);
 }

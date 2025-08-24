@@ -1,74 +1,61 @@
 import React, { useState, useEffect } from "react"
-import { fetchFeatures } from "../util/FetchFeatures.jsx"
-import { fetchTiers } from "../util/FetchTiers.jsx"
-import { fetchTraits } from "../util/FetchTraits.jsx"
-import { fetchRanges } from "../util/FetchRanges.jsx"
-import { fetchDamageTypes } from "../util/FetchDamageTypes.jsx"
-import { fetchBurdens } from "../util/FetchBurdens.jsx"
+import { fetchFeatures } from "../../util/FetchFeatures.jsx"
+import { fetchTiers } from "../../util/FetchTiers.jsx"
+import { fetchTraits } from "../../util/FetchTraits.jsx"
+import { fetchRanges } from "../../util/FetchRanges.jsx"
+import { fetchDamageTypes } from "../../util/FetchDamageTypes.jsx"
+import { fetchBurdens } from "../../util/FetchBurdens.jsx"
 function CreateWeapon(){
-    const [name, setName] = useState("");
-    const [traits, setTraits] = useState([]);
-    const [trait, setTrait] = useState("");
-    const [ranges, setRanges] = useState([]);
-    const [range, setRange] = useState("");
-    const [damage, setDamage] = useState({
-        dieSize: 0,
-        baseDamage: 0,
-        damageType: ""
+    const [weapon, setWeapon] = useState({
+        name: "",
+        trait: "",
+        range: "",
+        damage: {
+            dieSize: 0,
+            baseDamage: 0,
+            damageType: ""
+        },
+        burden: "",
+        tier: "",
+        feature: null
     });
+    const [traits, setTraits] = useState([]);
+    const [ranges, setRanges] = useState([]);
     const [damageTypes, setDamageTypes] = useState([]);
     const [tiers, setTiers] = useState([]);
-    const [tier, setTier] = useState("");
     const [burdens, setBurdens] = useState([]);
-    const [burden, setBurden] = useState("");
-    const [feature, setFeature] = useState(null);
     const [features, setFeatures] = useState([]);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState("");
     useEffect(() => {
-        fetchFeatures("Weapons").then((fetchedFeatures) => {
+        fetchFeatures("WEAPON").then((fetchedFeatures) => {
             setFeatures(fetchedFeatures);
         }).catch((err) => {
             setError(err.message);
         });
         fetchTiers().then((fetchedTiers) => {
             setTiers(fetchedTiers);
-            if (fetchedTiers.length > 0) {
-                setTier(fetchedTiers[0]);
-            }
         }).catch((err) => {
             setError(err.message);
         });
         fetchTraits().then((fetchedTraits) => {
             setTraits(fetchedTraits);
-            if (fetchedTraits.length > 0) {
-                setTrait(fetchedTraits[0]);
-            }
         }).catch((err) => {
             setError(err.message);
         });
         fetchRanges().then((fetchedRanges) => {
             setRanges(fetchedRanges);
-            if (fetchedRanges.length > 0) {
-                setRange(fetchedRanges[0]);
-            }
         }).catch((err) => {
             setError(err.message);
         });
         fetchDamageTypes().then((fetchedDamageTypes) => {
             setDamageTypes(fetchedDamageTypes);
-            if(fetchedDamageTypes.length > 0) {
-                setDamage({...damage, damageType: fetchedDamageTypes[0]});
-            }
         }).catch((err) => {
             setError(err.message);
         });
         fetchBurdens().then((fetchedBurdens) => {
             setBurdens(fetchedBurdens);
-            if (fetchedBurdens.length > 0) {
-                setBurden(fetchedBurdens[0]);
-            }
         }).catch((err) => {
             setError(err.message);
         });
@@ -88,28 +75,12 @@ function CreateWeapon(){
                     "username": account.username,
                     "password": account.password,
                 },
-                body: JSON.stringify({
-                    name,
-                    trait,
-                    range,
-                    damage: {
-                        dieSize: damage.dieSize,
-                        baseDamage: damage.baseDamage,
-                        damageType: damage.damageType
-                    },
-                    burden,
-                    tier,
-                    feature: feature ? {
-                        name: feature.name,
-                        description: feature.description,
-                        type: feature.type
-                    } : null
-                }),
+                body: JSON.stringify(weapon),
             });
             if (!response.ok) {
                 throw new Error("Failed to create weapon");
             }
-            setSuccess(`Weapon "${name}" created successfully!`);
+            setSuccess(`Weapon "${weapon.name}" created successfully!`);
             localStorage.setItem("Account", JSON.stringify(account));
         } catch (err) {
             setError(err.message);
@@ -127,12 +98,12 @@ function CreateWeapon(){
                 <label>Name</label>
                 <input
                     type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    value={weapon.name}
+                    onChange={(e) => setWeapon({...weapon, name: e.target.value})}
                     required
                 />
                 <label>Trait</label>
-                <select onChange={(e) => setTrait(e.target.value)}>
+                <select onChange={(e) => setWeapon({...weapon, trait: e.target.value})}>
                     {traits.map((t) => (
                     <option key={t} value={t}>
                         {t}
@@ -140,7 +111,7 @@ function CreateWeapon(){
                     ))}
                 </select>
                 <label>Range</label>
-                <select onChange={(e) => setRange(e.target.value)}>
+                <select onChange={(e) => setWeapon({...weapon, range: e.target.value})}>
                     {ranges.map((r) => (
                     <option key={r} value={r}>
                         {r}
@@ -151,12 +122,18 @@ function CreateWeapon(){
                 <input
                     type="number"
                     placeholder="Die Size"
-                    value={damage.dieSize}
-                    onChange={(e) => setDamage({...damage, dieSize: e.target.value})}
+                    value={weapon.damage.dieSize}
+                    onChange={(e) =>
+                        setWeapon({...weapon, damage: {...weapon.damage, dieSize: Number(e.target.value)}})
+                    }
                     required
                 />
-                <select onChange={(e) => setDamage({...damage, damageType: e.target.value})}
-                    value={damage.damageType}
+                <select
+                    onChange={(e) =>
+                        setWeapon({...weapon, damage: {...weapon.damage, damageType: e.target.value}
+                        })
+                    }
+                    value={weapon.damage.damageType}
                     required
                 >
                     {damageTypes.map((dt) => (
@@ -168,14 +145,21 @@ function CreateWeapon(){
                 <input
                     type="number"
                     placeholder="Base Damage"
-                    value={damage.baseDamage}
-                    onChange={(e) => setDamage({...damage, baseDamage: e.target.value})
+                    value={weapon.damage.baseDamage}
+                    onChange={(e) =>
+                        setWeapon({
+                            ...weapon,
+                            damage: {
+                                ...weapon.damage,
+                                baseDamage: Number(e.target.value)
+                            }
+                        })
                     }
                     required
                 />
                 <label>Burden</label>
-                <select onChange={(e) => setBurden(e.target.value)}
-                    value={burden}
+                <select onChange={(e) => setWeapon({...weapon, burden: e.target.value})}
+                    value={weapon.burden}
                     required
                 >
                     {burdens.map((b) => (
@@ -185,8 +169,8 @@ function CreateWeapon(){
                     ))}
                 </select>
                 <label>Tier</label>
-                <select onChange={(e) => setTier(e.target.value)}
-                    value={tier}
+                <select onChange={(e) => setWeapon({...weapon, tier: e.target.value})}
+                    value={weapon.tier}
                     required
                 >
                     {tiers.map((t) => (
@@ -197,10 +181,10 @@ function CreateWeapon(){
                 </select>
                 <label>Feature</label>
                 <select
-                    value={feature?.name || ""}
+                    value={weapon.feature?.name || ""}
                     onChange={(e) => {
                         const selectedFeature = features.find(f => f.name === e.target.value);
-                        setFeature(selectedFeature || null);
+                        setWeapon({...weapon,feature: selectedFeature});
                     }}
                 >
                     <option value="">Select a feature</option>

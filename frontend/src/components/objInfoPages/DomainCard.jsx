@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import {useParams} from "react-router";
-import { verifyAccount} from "./util/VerifyAccount.jsx";
+import { verifyAccount} from "../util/VerifyAccount.jsx";
 import { useNavigate } from "react-router";
-import { fetchDomainOptions } from "./util/FetchDomains.jsx";
-import { fetchDomainCardTypes } from "./util/FetchDomainCardTypes.jsx";
+import { fetchDomainOptions } from "../util/FetchDomains.jsx";
+import { fetchDomainCardTypes } from "../util/FetchDomainCardTypes.jsx";
 
 function DomainCard () {
     const [domainCard, setDomainCard] = useState({});

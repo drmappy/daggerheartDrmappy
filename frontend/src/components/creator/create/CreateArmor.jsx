@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { fetchFeatures } from "../util/FetchFeatures.jsx";
+import { fetchFeatures } from "../../util/FetchFeatures.jsx";
 
 function CreateArmor() {
     const [armorData, setArmorData] = useState({
@@ -16,7 +16,7 @@ function CreateArmor() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const allFeatures = await fetchFeatures("Armors");
+                const allFeatures = await fetchFeatures("ARMOR");
                 setFeatures(allFeatures);
             } catch (err) {
                 setError(err.message);

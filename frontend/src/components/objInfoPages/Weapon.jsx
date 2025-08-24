@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import {useParams, useNavigate} from "react-router";
-import { verifyAccount } from "./util/VerifyAccount.jsx";
-import { fetchWeapon } from "./util/FetchWeapon.jsx";
-import { fetchTiers } from "./util/FetchTiers.jsx";
-import { fetchTraits } from "./util/FetchTraits.jsx";
-import { fetchRanges } from "./util/FetchRanges.jsx";
-import { fetchDamageTypes } from "./util/FetchDamageTypes.jsx";
-import { fetchBurdens } from "./util/FetchBurdens.jsx";
+import { verifyAccount } from "../util/VerifyAccount.jsx";
+import { fetchWeapon } from "../util/FetchWeapon.jsx";
+import { fetchTiers } from "../util/FetchTiers.jsx";
+import { fetchTraits } from "../util/FetchTraits.jsx";
+import { fetchRanges } from "../util/FetchRanges.jsx";
+import { fetchDamageTypes } from "../util/FetchDamageTypes.jsx";
+import { fetchBurdens } from "../util/FetchBurdens.jsx";
 function Weapon(){
     const navigate = useNavigate();
     const [canModify, setCanModify] = useState(false);

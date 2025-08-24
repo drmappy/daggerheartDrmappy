@@ -1,21 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { fetchDomainOptions } from "../util/FetchDomains.jsx";
+import { fetchDomainOptions } from "../../util/FetchDomains.jsx";
 function CreateClass(){
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
-    const [selectedDomain1, setSelectedDomain1] = useState("");
-    const [selectedDomain2, setSelectedDomain2] = useState("");
+    const [classData, setClassData] = useState({
+        name: "",
+        description: "",
+        domains: [],
+        startingEvasion: 0,
+        startingHitPoints: 0,
+        classItem: "",
+        hopeFeatures: [
+            {name: "", description: "", type: "HOPE"}
+        ],
+        classFeatures: [
+            {name: "", description: "", type: "CLASS"}
+        ],
+        subClasses: []
+    });
     const [domainOptions, setDomainOptions] = useState([]);
-    const [startingEvasion, setStartingEvasion] = useState(0);
-    const [startingHitPoints, setStartingHitPoints] = useState(0);
-    const [classItem, setClassItem] = useState("");
-    const [hopeFeatures, setHopeFeatures] = useState([{name: "", description: "", type: "HOPE"}]);
-    const [classFeatures, setClassFeatures] = useState([{name: "", description: "", type: "CLASS"}]);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState("");
     useEffect(() => {
-        fetchDomainOptions();
+        fetchDomainOptions().then((response) => {
+            setDomainOptions(response);
+        });
     }, []);
     const handle = () => async (e) => {
         e.preventDefault();
@@ -31,30 +39,12 @@ function CreateClass(){
                     "username": account.username,
                     "password": account.password
                 },
-                body: JSON.stringify({
-                    name,
-                    description,
-                    domains:[selectedDomain1, selectedDomain2],
-                    startingEvasion,
-                    startingHitPoints,
-                    classItem,
-                    hopeFeatures: hopeFeatures.map(feature => ({
-                        name: feature.name,
-                        description: feature.description,
-                        type: "HOPE"
-                    })),
-                    classFeatures: classFeatures.map(feature => ({
-                        name: feature.name,
-                        description: feature.description,
-                        type: "CLASS"
-                    })),
-                    subClasses: []
-                }),
+                body: JSON.stringify(classData),
             });
             if (!response.ok) {
                 throw new Error("Failed to create class");
             }
-            setSuccess(`Class "${name}" created successfully!`);
+            setSuccess(`Class "${classData.name}" created successfully!`);
         } catch (err) {
             setError(err.message);
         } finally {
@@ -72,39 +62,39 @@ function CreateClass(){
                 <label>Name</label>
                 <input
                     type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    value={classData.name}
+                    onChange={(e) => setClassData({...classData, name: e.target.value})}
                     required
                 />
                 <br/>
                 <label>Description</label>
                 <textarea
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
+                    value={classData.description}
+                    onChange={(e) => setClassData({...classData, description: e.target.value})}
                     required
                 />
                 <br/>
                 <label>Domains</label>
                 <select
                     required
-                    value={selectedDomain1}
-                    onChange={(e) => setSelectedDomain1(e.target.value)
+                    value={classData.domains[0] || ""}
+                    onChange={(e) => setClassData({...classData, domains: [e.target.value, classData.domains[1]]})
                     }>
                     <option value="">Select Domain 1</option>
                     {domainOptions
-                        .filter(domain => domain !== selectedDomain2)
+                        .filter(domain => domain !== classData.domains[1])
                         .map(domain => (
                             <option key={domain} value={domain}>{domain}</option>
                         ))}
                 </select>
                 <select
                     required
-                    value={selectedDomain2}
-                    onChange={(e) => setSelectedDomain2(e.target.value)
+                    value={classData.domains[1] || ""}
+                    onChange={(e) => setClassData({...classData, domains: [classData.domains[0], e.target.value]})
                     }>
                     <option value="">Select Domain 2</option>
                     {domainOptions
-                        .filter(domain => domain !== selectedDomain1)
+                        .filter(domain => domain !== classData.domains[0])
                         .map(domain => (
                             <option key={domain} value={domain}>{domain}</option>
                         ))}
@@ -113,77 +103,81 @@ function CreateClass(){
                 <label>Starting Evasion</label>
                 <input
                     type="number"
-                    value={startingEvasion}
-                    onChange={(e) => setStartingEvasion(parseInt(e.target.value))}
+                    value={classData.startingEvasion}
+                    onChange={(e) => setClassData({...classData, startingEvasion: parseInt(e.target.value)})}
                     required
                 />
                 <br/>
                 <label>Starting Hit Points</label>
                 <input
                     type="number"
-                    value={startingHitPoints}
-                    onChange={(e) => setStartingHitPoints(parseInt(e.target.value))}
+                    value={classData.startingHitPoints}
+                    onChange={(e) => setClassData({...classData, startingHitPoints: parseInt(e.target.value)})}
                     required
                 />
                 <br/>
                 <label>Class Item</label>
                 <input
                     type="text"
-                    value={classItem}
-                    onChange={(e) => setClassItem(e.target.value)}
+                    value={classData.classItem}
+                    onChange={(e) => setClassData({...classData, classItem: e.target.value})}
                     required
                 />
                 <br/>
                 <label>Hope Features</label>
-                {hopeFeatures.map((feature, index) => (
+                {classData.hopeFeatures.map((feature, index) => (
                     <div key={index}>
                         <input
                             type="text"
                             value={feature.name}
                             onChange={(e) => {
-                                const newFeatures = [...hopeFeatures];
+                                const newFeatures = [...classData.hopeFeatures];
                                 newFeatures[index] = { ...newFeatures[index], name: e.target.value };
-                                setHopeFeatures(newFeatures);
+                                setClassData({ ...classData, hopeFeatures: newFeatures});
                             }}
                         />
                         <input
                             type="text"
                             value={feature.description}
                             onChange={(e) => {
-                                const newFeatures = [...hopeFeatures];
+                                const newFeatures = [...classData.hopeFeatures];
                                 newFeatures[index] = { ...newFeatures[index], description: e.target.value };
-                                setHopeFeatures(newFeatures);
+                                setClassData({ ...classData, hopeFeatures: newFeatures})
                             }}
                         />
                         <button type="button" onClick={() => {
-                            setHopeFeatures(hopeFeatures.filter((f) => f.name !== feature.name));
+                            const newFeatures = classData.hopeFeatures.filter((f) => f.name !== feature.name);
+                            setClassData({ ...classData, hopeFeatures: newFeatures});
                         }}>Remove</button>
                     </div>
                     ))}
                 <button
                     type="button"
-                    onClick={() => setHopeFeatures([...hopeFeatures, {name: "", description: "", type: "HOPE"}])}
+                    onClick={() => {
+                        const newFeatures = [...classData.hopeFeatures, {name: "", description: "", type: "HOPE"}];
+                        setClassData({...classData, hopeFeatures: newFeatures});
+                    }}
                 >Add another feature</button>
                 <br/>
                 <label>Class Features</label>
-                {classFeatures.map((feature, index) => (
+                {classData.classFeatures.map((feature, index) => (
                     <div key={index}>
                         <input
                             type="text"
                             value={feature.name}
                             onChange={(e) => {
-                                const newFeatures = [...classFeatures];
+                                const newFeatures = [...classData.classFeatures];
                                 newFeatures[index] = { ...newFeatures[index], name: e.target.value };
-                                setClassFeatures(newFeatures);
+                                setClassData({...classData, classFeatures: newFeatures});
                             }}
                         />
                         <input
                             type="text"
                             value={feature.description}
                             onChange={(e) => {
-                                const newFeatures = [...classFeatures];
+                                const newFeatures = [...classData.classFeatures];
                                 newFeatures[index] = { ...newFeatures[index], description: e.target.value };
-                                setClassFeatures(newFeatures);
+                                setClassData({...classData, classFeatures: newFeatures});
                             }}
                         />
                         <button type="button" onClick={() => {
@@ -193,7 +187,10 @@ function CreateClass(){
                 ))}
                 <button
                     type="button"
-                    onClick={() => setClassFeatures([...classFeatures, {name: "", description: "", type: "CLASS"}])}
+                    onClick={() => {
+                        const newFeatures = [...classData.classFeatures, {name: "", description: "", type: "CLASS"}];
+                        setClassData({...classData, classFeatures: newFeatures});
+                    }}
                 >Add another feature</button>
                 <br/>
                 <button type="submit" disabled={loading}>

@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 function CreateSubclass(){
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
-
-    const [characterSpellTrait, setCharacterSpellTrait] = useState();
-
+    const [subclass, setSubclass] = useState({
+        name: "",
+        description: "",
+        spellCastingTrait: "",
+        foundationFeatures: [{ name: "", description: "" , type: "FOUNDATION" }],
+        specializationFeatures: [{ name: "", description: "" , type: "SPECIALIZATION" }],
+        masteryFeatures: [{ name: "", description: "" , type: "MASTERY" }],
+    });
     const [characterSpellTraits, setCharacterSpellTraits] = useState([]);
-    const [foundationFeatures, setFoundationFeatures] = useState([{ name: "", description: "" }]);
-    const [specializationFeatures, setSpecializationFeatures] = useState([{ name: "", description: "" }]);
-    const [masteryFeatures, setMasteryFeatures] = useState([{ name: "", description: "" }]);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState("");
@@ -73,29 +73,13 @@ function CreateSubclass(){
                     "className": selectedClassName,
                 },
                 body: JSON.stringify(
-                    {
-                        name,
-                        description,
-                        spellCastingTrait: characterSpellTrait,
-                        foundationFeatures: foundationFeatures.map(feature => ({
-                            name: feature.name,
-                            description: feature.description,
-                        })),
-                        specializationFeatures: specializationFeatures.map(feature => ({
-                            name: feature.name,
-                            description: feature.description,
-                        })),
-                        masteryFeatures: masteryFeatures.map(feature => ({
-                            name: feature.name,
-                            description: feature.description,
-                        })),
-                    }
+                    subclass
                 ),
             });
             if (!response.ok) {
                 throw new Error("Failed to create subclass");
             }
-            setSuccess(`Subclass "${name}" created successfully!`);
+            setSuccess(`Subclass "${subclass.name}" created successfully!`);
         } catch (err) {
             setError(err.message);
         } finally {
@@ -112,20 +96,20 @@ function CreateSubclass(){
                 <label>Name</label>
                 <input
                     type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    value={subclass.name}
+                    onChange={(e) => setSubclass({...subclass, name: e.target.value})}
                     required
                 />
                 <label>Description</label>
                 <textarea
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
+                    value={subclass.description}
+                    onChange={(e) => setSubclass({...subclass, description: e.target.value})}
                     required
                 />
                 <label>Character Spell Trait</label>
                 <select
-                    value={characterSpellTrait}
-                    onChange={(e) => setCharacterSpellTrait(e.target.value)}
+                    value={subclass.spellCastingTrait}
+                    onChange={(e) => setSubclass({...subclass, spellCastingTrait: e.target.value})}
                     required
                 >
                     <option value="">Select a trait</option>
@@ -134,15 +118,15 @@ function CreateSubclass(){
                     ))}
                 </select>
                 <label>Foundation Features</label>
-                {foundationFeatures.map((feature, index) => (
+                {subclass.foundationFeatures.map((feature, index) => (
                     <div key={index}>
                         <input
                             type="text"
                             value={feature.name}
                             onChange={(e) => {
-                                const newFeatures = [...foundationFeatures];
+                                const newFeatures = [...subclass.foundationFeatures];
                                 newFeatures[index] = { ...newFeatures[index], name: e.target.value };
-                                setFoundationFeatures(newFeatures);
+                                setSubclass({...subclass, foundationFeatures: newFeatures});
                             }}
                             required
                         />
@@ -150,34 +134,34 @@ function CreateSubclass(){
                             type="text"
                             value={feature.description}
                             onChange={(e) => {
-                                const newFeatures = [...foundationFeatures];
+                                const newFeatures = [...subclass.foundationFeatures];
                                 newFeatures[index] = { ...newFeatures[index], description: e.target.value };
-                                setFoundationFeatures(newFeatures);
+                                setSubclass({...subclass, foundationFeatures: newFeatures});
                             }}
                             required
                         />
                         <button type="button" onClick={() => {
-                            const newFeatures = foundationFeatures.filter((_, i) => i !== index);
-                            setFoundationFeatures(newFeatures);
+                            const newFeatures = subclass.foundationFeatures.filter((_, i) => i !== index);
+                            setSubclass({...subclass, foundationFeatures: newFeatures});
                         }}>
                             Remove
                         </button>
                     </div>
                 ))}
-                <button type="button" onClick={() => setFoundationFeatures([...foundationFeatures, { name: "", description: "" }])}>
+                <button type="button" onClick={() => setSubclass({...subclass, foundationFeatures: [...subclass.foundationFeatures, { name: "", description: "" }]})}>
                     Add Foundation Feature
                 </button>
                 <label>Specialization Features</label>
-                {specializationFeatures.map((feature, index) => (
+                {subclass.specializationFeatures.map((feature, index) => (
                     <div key={index}>
                         <input
                             required
                             type="text"
                             value={feature.name}
                             onChange={(e) => {
-                                const newFeatures = [...specializationFeatures];
+                                const newFeatures = [...subclass.specializationFeatures];
                                 newFeatures[index] = { ...newFeatures[index], name: e.target.value };
-                                setSpecializationFeatures(newFeatures);
+                                setSubclass({...subclass, specializationFeatures: newFeatures});
                             }}
                         />
                         <input
@@ -185,33 +169,33 @@ function CreateSubclass(){
                             type="text"
                             value={feature.description}
                             onChange={(e) => {
-                                const newFeatures = [...specializationFeatures];
+                                const newFeatures = [...subclass.specializationFeatures];
                                 newFeatures[index] = { ...newFeatures[index], description: e.target.value };
-                                setSpecializationFeatures(newFeatures);
+                                setSubclass({...subclass, specializationFeatures: newFeatures});
                             }}
                         />
                         <button type="button" onClick={() => {
-                            const newFeatures = specializationFeatures.filter((_, i) => i !== index);
-                            setSpecializationFeatures(newFeatures);
+                            const newFeatures = subclass.specializationFeatures.filter((_, i) => i !== index);
+                            setSubclass({...subclass, specializationFeatures: newFeatures});
                         }}>
                             Remove
                         </button>
                     </div>
                 ))}
-                <button type="button" onClick={() => setSpecializationFeatures([...specializationFeatures, { name: "", description: "" }])}>
+                <button type="button" onClick={() => setSubclass({...subclass, specializationFeatures: [...subclass.specializationFeatures, { name: "", description: "" , type: "SPECIALIZATION" }]})}>
                     Add Specialization Feature
                 </button>
                 <label>Mastery Features</label>
-                {masteryFeatures.map((feature, index) => (
+                {subclass.masteryFeatures.map((feature, index) => (
                     <div key={index}>
                         <input
                             required
                             type="text"
                             value={feature.name}
                             onChange={(e) => {
-                                const newFeatures = [...masteryFeatures];
+                                const newFeatures = [...subclass.masteryFeatures];
                                 newFeatures[index] = { ...newFeatures[index], name: e.target.value };
-                                setMasteryFeatures(newFeatures);
+                                setSubclass({...subclass, masteryFeatures: newFeatures});
                             }}
                             placeholder={`Feature ${index + 1}`}
                         />
@@ -220,20 +204,20 @@ function CreateSubclass(){
                             type="text"
                             value={feature.description}
                             onChange={(e) => {
-                                const newFeatures = [...masteryFeatures];
+                                const newFeatures = [...subclass.masteryFeatures];
                                 newFeatures[index] = { ...newFeatures[index], description: e.target.value };
-                                setMasteryFeatures(newFeatures);
+                                setSubclass({...subclass, masteryFeatures: newFeatures});
                             }}
                         />
                         <button type="button" onClick={() => {
-                            const newFeatures = masteryFeatures.filter((_, i) => i !== index);
-                            setMasteryFeatures(newFeatures);
+                            const newFeatures = subclass.masteryFeatures.filter((_, i) => i !== index);
+                            setSubclass({...subclass, masteryFeatures: newFeatures});
                         }}>
                             Remove
                         </button>
                     </div>
                 ))}
-                <button type="button" onClick={() => setMasteryFeatures([...masteryFeatures, { name: "", description: "" }])}>
+                <button type="button" onClick={() => setSubclass({...subclass, masteryFeatures: [...subclass.masteryFeatures, { name: "", description: "" , type: "MASTERY" }]})}>
                     Add Mastery Feature
                 </button>
                 {classNames.length > 0 && (

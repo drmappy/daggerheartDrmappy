@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {useParams, useNavigate} from "react-router";
-import { verifyAccount } from "./util/VerifyAccount.jsx";
-import { fetchTraits} from "./util/FetchTraits.jsx";
+import { verifyAccount } from "../util/VerifyAccount.jsx";
+import { fetchTraits} from "../util/FetchTraits.jsx";
 
 function Subclass() {
     const navigate = useNavigate();

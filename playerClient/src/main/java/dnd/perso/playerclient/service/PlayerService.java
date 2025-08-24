@@ -3,6 +3,7 @@ package dnd.perso.playerclient.service;
 import dnd.perso.playerclient.exception.DatabaseError;
 import dnd.perso.playerclient.modele.DaggerheartCharacter;
 import dnd.perso.playerclient.modele.Player;
+import dnd.perso.playerclient.modele.enums.FeatureType;
 import dnd.perso.playerclient.repository.*;
 import dnd.perso.playerclient.service.dto.*;
 import org.springframework.stereotype.Service;
@@ -329,7 +330,7 @@ public class PlayerService {
         return new SearchData(infoToSend, results.size()/ PAGE_LIMIT + (results.size() % PAGE_LIMIT == 0 ? 0 : 1));
     }
 
-    public FeatureDTO[] getAllFeaturesByType(String featureType) throws DatabaseError{
+    public FeatureDTO[] getAllFeaturesByType(FeatureType featureType) throws DatabaseError{
         try {
             return featureRepository.findByType(featureType).stream()
                     .map(FeatureDTO::new)

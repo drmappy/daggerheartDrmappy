@@ -1,8 +1,15 @@
 import {useState, useEffect} from "react";
-import {fetchDomainOptions} from "../util/FetchDomains.jsx";
-import {fetchDomainCardTypes} from "../util/FetchDomainCardTypes.jsx";
+import {fetchDomainOptions} from "../../util/FetchDomains.jsx";
+import {fetchDomainCardTypes} from "../../util/FetchDomainCardTypes.jsx";
 function CreateDomainCard() {
-    const [domainCard, setDomainCard] = useState();
+    const [domainCard, setDomainCard] = useState({
+        level: 0,
+        domain: "",
+        recallCost: 0,
+        cardType: "",
+        name: "",
+        description: ""
+    });
     const [domains, setDomains] = useState([]);
     const [domainCardTypes, setDomainCardTypes] = useState([]);
     const [loading, setLoading] = useState(false);

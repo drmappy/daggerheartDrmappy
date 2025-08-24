@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate} from "react-router";
-import { verifyAccount } from "./util/VerifyAccount.jsx";
-import { fetchTiers } from "./util/FetchTiers.jsx";
-import { fetchEnemyTypes } from "./util/FetchEnemyTypes.jsx";
+import { verifyAccount } from "../util/VerifyAccount.jsx";
+import { fetchTiers } from "../util/FetchTiers.jsx";
+import { fetchEnemyTypes } from "../util/FetchEnemyTypes.jsx";
 function Enemy(){
     const navigate = useNavigate();
     const [canModify, setCanModify] = useState(false);

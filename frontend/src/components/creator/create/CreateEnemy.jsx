@@ -1,36 +1,38 @@
 import React, { useState, useEffect } from "react";
-import {fetchEnemyTypes} from "../util/FetchEnemyTypes.jsx";
-import {fetchTiers} from "../util/FetchTiers.jsx";
+import {fetchEnemyTypes} from "../../util/FetchEnemyTypes.jsx";
+import {fetchTiers} from "../../util/FetchTiers.jsx";
 
 function CreateEnemy(){
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
-    const [tier, setTier] = useState("");
-    const [tiers, setTiers] = useState([]);
-    const [type, setType] = useState("");
-    const [types, setTypes] = useState([]);
-    const [motivesAndTactics, setMotivesAndTactics] = useState("");
-    const [difficulty, setDifficulty] = useState(0);
-    const [hitPoints, setHitPoints] = useState(0);
-    const [stress, setStress] = useState(0);
-    const [attackModifier, setAttackModifier] = useState(0);
-    const [damageThreshold, setDamageThreshold] = useState({
-        minorToMajor: 0,
-        majorToSevere: 0
+    const [enemy, setEnemy] = useState({
+        name: "",
+        description: "",
+        tier: "",
+        type: "",
+        motivesAndTactics: "",
+        difficulty: 0,
+        hitPoints: 0,
+        stress: 0,
+        attackModifier: 0,
+        damageThreshold: {
+            minorToMajor: 0,
+            majorToSevere: 0
+        },
+        weapon: {},
+        experiences: [{
+            experience: "",
+            modifier: 0
+        }],
+        features: [
+            {
+                name: "",
+                description: "",
+                type: ""
+            }
+        ]
     });
-    const [weapon, setWeapon] = useState({});
+    const [tiers, setTiers] = useState([]);
+    const [types, setTypes] = useState([]);
     const [weapons, setWeapons] = useState([]);
-    const [experiences, setExperiences] = useState([{
-        experience: "",
-        modifier: 0
-    }]);
-    const [features, setFeatures] = useState([
-        {
-            name: "",
-            description: "",
-            type: ""
-        }
-    ]);
     const enemyFeatureTypes = ["ACTION", "REACTION", "PASSIVE"];
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
@@ -38,13 +40,13 @@ function CreateEnemy(){
     const account = JSON.parse(localStorage.getItem("Account"));
     useEffect(() => {
         fetchTiers().then((response) => {
-            setTier(response[0]);
+            setEnemy({...enemy, tier: response[0]});
             setTiers(response);
         }).catch((error) => {
             setError(error);
         })
         fetchEnemyTypes().then((response) => {
-            setType(response[0]);
+            setEnemy({...enemy, type: response[0]});
             setTypes(response);
         }).catch((error) => {
             setError(error);
@@ -81,21 +83,7 @@ function CreateEnemy(){
                     "username": account.username,
                     "password": account.password
                 },
-                body: JSON.stringify({
-                    name,
-                    description,
-                    tier,
-                    type,
-                    motivesAndTactics,
-                    difficulty,
-                    hitPoints,
-                    stress,
-                    attackModifier,
-                    damageThreshold,
-                    weapon,
-                    experiences,
-                    features
-                }),
+                body: JSON.stringify(enemy),
             });
             if (!response.ok) throw new Error("Failed to create enemy");
             setSuccess(`Enemy "${name}" created successfully!`);
@@ -114,20 +102,20 @@ function CreateEnemy(){
                 <label>Name</label>
                 <input
                     type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    value={enemy.name}
+                    onChange={(e) => setEnemy({...enemy, name: e.target.value})}
                     required
                 />
                 <label>Description</label>
                 <textarea
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
+                    value={enemy.description}
+                    onChange={(e) => setEnemy({...enemy, description: e.target.value})}
                     required
                 />
                 <label>Tier</label>
                 <select
-                    value={tier}
-                    onChange={(e) => setTier(e.target.value)}
+                    value={enemy.tier}
+                    onChange={(e) => setEnemy({...enemy, tier: e.target.value})}
                     required
                 >
                     {tiers.map((t) => (
@@ -136,8 +124,8 @@ function CreateEnemy(){
                 </select>
                 <label>Type</label>
                 <select
-                    value={type}
-                    onChange={(e) => setType(e.target.value)}
+                    value={enemy.type}
+                    onChange={(e) => setEnemy({...enemy, type: e.target.value})}
                     required
                 >
                     {types.map((t) => (
@@ -146,65 +134,71 @@ function CreateEnemy(){
                 </select>
                 <label>Motives & Tactics</label>
                 <textarea
-                    value={motivesAndTactics}
-                    onChange={(e) => setMotivesAndTactics(e.target.value)}
+                    value={enemy.motivesAndTactics}
+                    onChange={(e) => setEnemy({...enemy, motivesAndTactics: e.target.value})}
                     required
                 />
                 <label>Difficulty</label>
                 <input
                     type="number"
-                    value={difficulty}
-                    onChange={(e) => setDifficulty(Number(e.target.value))}
+                    value={enemy.difficulty}
+                    onChange={(e) => setEnemy({...enemy, difficulty: Number(e.target.value)})}
                     required
                 />
                 <label>Hit Points</label>
                 <input
                     type="number"
-                    value={hitPoints}
-                    onChange={(e) => setHitPoints(Number(e.target.value))}
+                    value={enemy.hitPoints}
+                    onChange={(e) => setEnemy({...enemy, hitPoints: Number(e.target.value)})}
                     required
                 />
                 <label>Stress</label>
                 <input
                     type="number"
-                    value={stress}
-                    onChange={(e) => setStress(Number(e.target.value))}
+                    value={enemy.stress}
+                    onChange={(e) => setEnemy({...enemy, stress: Number(e.target.value)})}
                     required
                 />
                 <label>Attack Modifier</label>
                 <input
                     type="number"
-                    value={attackModifier}
-                    onChange={(e) => setAttackModifier(Number(e.target.value))}
+                    value={enemy.attackModifier}
+                    onChange={(e) => setEnemy({...enemy, attackModifier: Number(e.target.value)})}
                     required
                 />
                 <h3>Damage Thresholds</h3>
                 <label>Minor to Major</label>
                 <input
                     type="number"
-                    value={damageThreshold.minorToMajor}
-                    onChange={(e) => setDamageThreshold({
-                        ...damageThreshold,
-                        minorToMajor: Number(e.target.value)
+                    value={enemy.damageThreshold.minorToMajor}
+                    onChange={(e) => setEnemy({
+                        ...enemy,
+                        damageThreshold: {
+                            ...enemy.damageThreshold,
+                            minorToMajor: Number(e.target.value)
+                        }
                     })}
                     required
                 />
                 <label>Major to Severe</label>
                 <input
                     type="number"
-                    value={damageThreshold.majorToSevere}
-                    onChange={(e) => setDamageThreshold({
-                        ...damageThreshold,
-                        majorToSevere: Number(e.target.value)
+                    value={enemy.damageThreshold.majorToSevere}
+                    onChange={(e) => setEnemy({
+                        ...enemy,
+                        damageThreshold: {
+                            ...enemy.damageThreshold,
+                            majorToSevere: Number(e.target.value)
+                        }
                     })}
                     required
                 />
                 <label>Weapon</label>
                 <select
-                    value={weapon.name || ""}
+                    value={enemy.weapon.name || ""}
                     onChange={(e) => {
                         const selectedWeapon = weapons.find(w => w.name === e.target.value);
-                        setWeapon(selectedWeapon || {});
+                        setEnemy({...enemy, weapon: selectedWeapon});
                     }}
                     required
                 >
@@ -214,15 +208,15 @@ function CreateEnemy(){
                     ))}
                 </select>
                 <h3>Experiences</h3>
-                {experiences.map((exp, index) => (
+                {enemy.experiences.map((exp, index) => (
                     <div key={index}>
                         <input
                             type="text"
                             value={exp.experience}
                             onChange={(e) => {
-                                const newExperiences = [...experiences];
+                                const newExperiences = [...enemy.experiences];
                                 newExperiences[index] = { ...newExperiences[index], experience: e.target.value };
-                                setExperiences(newExperiences);
+                                setEnemy({...enemy, experiences: newExperiences});
                             }}
                             required
                         />
@@ -230,33 +224,34 @@ function CreateEnemy(){
                             type="number"
                             value={exp.modifier}
                             onChange={(e) => {
-                                const newExperiences = [...experiences];
+                                const newExperiences = [...enemy.experiences];
                                 newExperiences[index] = { ...newExperiences[index], modifier: Number(e.target.value) };
-                                setExperiences(newExperiences);
+                                setEnemy({...enemy, experiences: newExperiences});
                             }}
                             required
                         />
                         <button type="button" onClick={() => {
-                            const newExperiences = experiences.filter((_, i) => i !== index);
-                            setExperiences(newExperiences);
+                            const newExperiences = enemy.experiences.filter((_, i) => i !== index);
+                            setEnemy({...enemy, experiences: newExperiences});
                         }}>
                             Remove
                         </button>
                     </div>
                 ))}
-                <button type="button" onClick={() => setExperiences([...experiences, { experience: "", modifier: 0 }])}>
+                <button type="button" onClick={() => setEnemy(
+                    {...enemy, experiences: [...enemy.experiences, { experience: "", modifier: 0 }]})}>
                     Add Experience
                 </button>
                 <h3>Features</h3>
-                {features.map((feature, index) => (
+                {enemy.features.map((feature, index) => (
                     <div key={index}>
                         <input
                             type="text"
                             value={feature.name}
                             onChange={(e) => {
-                                const newFeatures = [...features];
+                                const newFeatures = [...enemy.features];
                                 newFeatures[index] = { ...newFeatures[index], name: e.target.value };
-                                setFeatures(newFeatures);
+                                setEnemy({...enemy, features: newFeatures});
                             }}
                             required
                         />
@@ -264,18 +259,18 @@ function CreateEnemy(){
                             type="text"
                             value={feature.description}
                             onChange={(e) => {
-                                const newFeatures = [...features];
+                                const newFeatures = [...enemy.features];
                                 newFeatures[index] = { ...newFeatures[index], description: e.target.value };
-                                setFeatures(newFeatures);
+                                setEnemy({...enemy, features: newFeatures});
                             }}
                             required
                         />
                         <select
                             value={feature.type}
                             onChange={(e) => {
-                                const newFeatures = [...features];
+                                const newFeatures = [...enemy.features];
                                 newFeatures[index] = { ...newFeatures[index], type: e.target.value };
-                                setFeatures(newFeatures);
+                                setEnemy({...enemy, features: newFeatures});
                             }}
                             required
                         >
@@ -285,14 +280,14 @@ function CreateEnemy(){
                             ))}
                         </select>
                         <button type="button" onClick={() => {
-                            const newFeatures = features.filter((_, i) => i !== index);
-                            setFeatures(newFeatures);
+                            const newFeatures = enemy.features.filter((_, i) => i !== index);
+                            setEnemy({...enemy, features: newFeatures});
                         }}>
                             Remove
                         </button>
                     </div>
                 ))}
-                <button type="button" onClick={() => setFeatures([...features, { name: "", description: "" }])}>
+                <button type="button" onClick={() => setEnemy({...enemy, features: [...enemy.features, { name: "", description: "", type: "" }]})}>
                     Add Feature
                 </button>
 

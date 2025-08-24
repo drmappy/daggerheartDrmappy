@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {useParams, useNavigate} from "react-router";
-import { verifyAccount } from "./util/VerifyAccount.jsx";
+import { verifyAccount } from "../util/VerifyAccount.jsx";
 function Ancestry() {
     const [ancestry, setAncestry] = useState(null);
     const [loading, setLoading] = useState(true);

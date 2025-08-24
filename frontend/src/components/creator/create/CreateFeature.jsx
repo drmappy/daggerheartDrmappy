@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 function CreateFeature(){
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
-    const [type, setType] = useState("WEAPON");
+    const [feature, setFeature] = useState({
+        name: "",
+        description: "",
+        type: "WEAPON"
+    });
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState("");
@@ -21,16 +23,12 @@ function CreateFeature(){
                     "username": account.username,
                     "password": account.password
                 },
-                body: JSON.stringify({
-                    name,
-                    description,
-                    type
-                }),
+                body: JSON.stringify(feature),
             });
             if (!response.ok) {
                 throw new Error("Failed to create feature");
             }
-            setSuccess(`Feature "${name}" created successfully!`);
+            setSuccess(`Feature "${feature.name}" created successfully!`);
         } catch (err) {
             setError(err.message);
         } finally {
@@ -47,20 +45,20 @@ function CreateFeature(){
                 <label>Name</label>
                 <input
                     type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    value={feature.name}
+                    onChange={(e) => setFeature({...feature, name: e.target.value})}
                     required
                 />
                 <label>Description</label>
                 <textarea
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
+                    value={feature.description}
+                    onChange={(e) => setFeature({...feature, description: e.target.value})}
                     required
                 />
                 <label>Type</label>
                 <select
-                    value={type}
-                    onChange={(e) => setType(e.target.value)}
+                    value={feature.type}
+                    onChange={(e) => setFeature({...feature, type: e.target.value})}
                     required
                 >
                     <option value="WEAPON">Weapon</option>

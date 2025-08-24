@@ -1,6 +1,6 @@
 export const fetchFeatures = async (featureType) => {
     try {
-        const response = await fetch(`http://localhost:8080/player/all${featureType}`, {
+        const response = await fetch(`http://localhost:8080/player/all?featureType=${encodeURIComponent(featureType)}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

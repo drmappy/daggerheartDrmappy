@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from "react-router";
-import { verifyAccount } from "./util/VerifyAccount.jsx";
-import { fetchDomainOptions } from "./util/FetchDomains.jsx";
+import { verifyAccount } from "../util/VerifyAccount.jsx";
+import { fetchDomainOptions } from "../util/FetchDomains.jsx";
 function DaggerheartClass() {
     const navigate = useNavigate();
     const [daggerheartClass, setDaggerheartClass] = useState(null);

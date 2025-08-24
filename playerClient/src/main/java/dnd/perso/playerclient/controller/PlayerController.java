@@ -1,5 +1,6 @@
 package dnd.perso.playerclient.controller;
 
+import dnd.perso.playerclient.modele.enums.FeatureType;
 import dnd.perso.playerclient.service.PlayerService;
 import dnd.perso.playerclient.service.dto.*;
 import org.springframework.http.ResponseEntity;
@@ -233,7 +234,7 @@ public class PlayerController {
         }
     }
     @GetMapping("all{featureType}")
-    public ResponseEntity<FeatureDTO[]> getAllFeaturesByType(@RequestParam String featureType) {
+    public ResponseEntity<FeatureDTO[]> getAllFeaturesByType(@RequestParam FeatureType featureType) {
         try {
             FeatureDTO[] features = playerService.getAllFeaturesByType(featureType);
             return ResponseEntity.ok(features);
