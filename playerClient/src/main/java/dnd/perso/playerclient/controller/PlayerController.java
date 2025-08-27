@@ -6,7 +6,6 @@ import dnd.perso.playerclient.service.dto.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 
 
 @RestController

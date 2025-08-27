@@ -15,7 +15,7 @@ public class SubClassDTO {
     private Long id;
     private String name;
     private String description;
-    private DaggerheartClassDTO daggerheartClass;
+    private String daggerheartClass;
     private CharacterSpellTrait spellCastingTrait;
     private List<FeatureDTO> foundationFeatures;
     private List<FeatureDTO> specializationFeatures;
@@ -27,7 +27,7 @@ public class SubClassDTO {
                 name,
                 description,
                 spellCastingTrait,
-                daggerheartClass != null ? daggerheartClass.toModele() : null,
+                daggerheartClass,
                 foundationFeatures.stream().map(FeatureDTO::toModele).toList(),
                 specializationFeatures.stream().map(FeatureDTO::toModele).toList(),
                 masteryFeatures.stream().map(FeatureDTO::toModele).toList()
@@ -41,10 +41,6 @@ public class SubClassDTO {
         this.foundationFeatures = subClass.getFoundationFeatures().stream().map(FeatureDTO::new).toList();
         this.specializationFeatures = subClass.getSpecializationFeatures().stream().map(FeatureDTO::new).toList();
         this.masteryFeatures = subClass.getMasteryFeatures().stream().map(FeatureDTO::new).toList();
-        if (subClass.getDaggerheartClass() != null) {
-            this.daggerheartClass = new DaggerheartClassDTO(subClass.getDaggerheartClass());
-        } else {
-            this.daggerheartClass = null;
-        }
+        this.daggerheartClass = subClass.getDaggerheartClass();
     }
 }

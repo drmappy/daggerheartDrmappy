@@ -65,24 +65,17 @@ public class CreatorService {
     public void saveAncestry(AncestryDTO ancestryDTO, String username, String password) throws DatabaseError {
         try {
             Creator creator = (Creator) accountRepository.getByUsernameAndPassword(username, password);
-
-            Ancestry ancestry;
-            if (ancestryDTO.getId() != null) {
-                ancestry = ancestryRepository.findById(ancestryDTO.getId())
-                        .orElseGet(() -> ancestryDTO.toModele());
+            if (ancestryDTO.getId() == null) {
+                creator.addAncestry(ancestryDTO.toModele());
             } else {
-                ancestry = ancestryDTO.toModele();
+                Ancestry managedAncestry = ancestryRepository.findById(ancestryDTO.getId()).orElse(null);
+                managedAncestry.setName(ancestryDTO.getName());
+                managedAncestry.setDescription(ancestryDTO.getDescription());
+                managedAncestry.setFeature1(ancestryDTO.getFeature1().toModele());
+                managedAncestry.setFeature2(ancestryDTO.getFeature2().toModele());
             }
-
-            ancestry.setName(ancestryDTO.getName());
-            ancestry.setDescription(ancestryDTO.getDescription());
-            // ... update other fields as needed
-            if (creator.getAncestries().stream().noneMatch(a -> a.getId().equals(ancestry.getId()))) {
-                creator.addAncestry(ancestry);
-                accountRepository.save(creator);
-            }
+            accountRepository.save(creator);
         } catch (Exception e) {
-            e.printStackTrace();
             throw new DatabaseError();
         }
     }
@@ -90,7 +83,16 @@ public class CreatorService {
     public void saveArmor(ArmorDTO armorDTO, String username, String password) throws DatabaseError {
         try {
             Creator creator = (Creator) accountRepository.getByUsernameAndPassword(username, password);
-            creator.addArmor(armorDTO.toModele());
+            if (armorDTO.getId() == null) {
+                creator.addArmor(armorDTO.toModele());
+            } else{
+                Armor managedArmor = armorRepository.findById(armorDTO.getId()).orElse(null);
+                managedArmor.setName(armorDTO.getName());
+                managedArmor.setBaseArmorScore(armorDTO.getBaseArmorScore());
+                managedArmor.setMinorToMajor(armorDTO.getMinorToMajor());
+                managedArmor.setMajorToSevere(armorDTO.getMajorToSevere());
+                managedArmor.setFeature(armorDTO.getFeature() != null ? armorDTO.getFeature().toModele() : null);
+            }
             accountRepository.save(creator);
         } catch (Exception e) {
             throw new DatabaseError();
@@ -115,7 +117,6 @@ public class CreatorService {
             }
             accountRepository.save(creator);
         } catch (Exception e) {
-            e.printStackTrace();
             throw new DatabaseError();
         }
     }
@@ -123,20 +124,16 @@ public class CreatorService {
     public void saveCommunity(CommunityDTO communityDTO, String username, String password) throws DatabaseError {
         try {
             Creator creator = (Creator) accountRepository.getByUsernameAndPassword(username, password);
-
-            Community community;
-            if (communityDTO.getId() != null) {
-                community = communityRepository.findById(communityDTO.getId())
-                        .orElseThrow(DatabaseError::new);
-                community.setName(communityDTO.getName());
-                community.setDescription(communityDTO.getDescription());
+            if(communityDTO.getId() == null) {
+                creator.addCommunity(communityDTO.toModele());
             } else {
-                community = communityDTO.toModele();
-                creator.addCommunity(community);
+                Community managedCommunity = communityRepository.findById(communityDTO.getId()).orElse(null);
+                managedCommunity.setName(communityDTO.getName());
+                managedCommunity.setDescription(communityDTO.getDescription());
+                managedCommunity.setFeature(communityDTO.getFeature().toModele());
             }
             accountRepository.save(creator);
         } catch (Exception e) {
-            e.printStackTrace();
             throw new DatabaseError();
         }
     }
@@ -144,27 +141,16 @@ public class CreatorService {
     public void saveFeature(FeatureDTO featureDTO, String username, String password) throws DatabaseError {
         try {
             Creator creator = (Creator) accountRepository.getByUsernameAndPassword(username, password);
-
-            Feature feature;
-            if (featureDTO.getId() != null) {
-                // Fetch managed entity and update fields
-                feature = featureRepository.findById(featureDTO.getId())
-                        .orElseThrow(DatabaseError::new);
-                feature.setName(featureDTO.getName());
-                feature.setDescription(featureDTO.getDescription());
-                feature.setType(featureDTO.getType());
+            if (featureDTO.getId() == null) {
+                creator.addFeature(featureDTO.toModele());
             } else {
-                // Create new entity
-                feature = featureDTO.toModele();
+                Feature managedFeature = featureRepository.findById(featureDTO.getId()).orElse(null);
+                managedFeature.setName(featureDTO.getName());
+                managedFeature.setDescription(featureDTO.getDescription());
+                managedFeature.setType(featureDTO.getType());
             }
-
-            // Avoid duplicates
-            if (creator.getFeatures() == null || creator.getFeatures().stream().noneMatch(f -> f.getId() != null && f.getId().equals(feature.getId()))) {
-                creator.addFeature(feature);
-                accountRepository.save(creator);
-            }
+            accountRepository.save(creator);
         } catch (Exception e) {
-            e.printStackTrace();
             throw new DatabaseError();
         }
     }
@@ -172,59 +158,53 @@ public class CreatorService {
     public void saveWeapon(WeaponDTO weaponDTO, String username, String password) throws DatabaseError {
         try {
             Creator creator = (Creator) accountRepository.getByUsernameAndPassword(username, password);
-
-            Weapon weapon;
-            if (weaponDTO.getId() != null) {
-                weapon = weaponRepository.findById(weaponDTO.getId())
-                        .orElseThrow(DatabaseError::new);
-                weapon.setName(weaponDTO.getName());
-                weapon.setTier(weaponDTO.getTier());
-                weapon.setTrait(weaponDTO.getTrait());
-                weapon.setRange(weaponDTO.getRange());
-                weapon.setDamage(weaponDTO.getDamage().toModele());
-                weapon.setBurden(weaponDTO.getBurden());
-                weapon.setFeature(weaponDTO.getFeature() != null ? weaponDTO.getFeature().toModele() : null);
+            if(weaponDTO.getId() == null) {
+                creator.addWeapon(weaponDTO.toModele());
             } else {
-                weapon = weaponDTO.toModele();
-                creator.addWeapon(weapon);
+                Weapon managedWeapon = weaponRepository.findById(weaponDTO.getId()).orElse(null);
+                managedWeapon.setName(weaponDTO.getName());
+                managedWeapon.setBurden(weaponDTO.getBurden());
+                managedWeapon.setTier(weaponDTO.getTier());
+                managedWeapon.setTrait(weaponDTO.getTrait());
+                managedWeapon.setRange(weaponDTO.getRange());
+                managedWeapon.setDamage(weaponDTO.getDamage().toModele());
+                managedWeapon.setFeature(weaponDTO.getFeature() != null ? weaponDTO.getFeature().toModele() : null);
             }
-
             accountRepository.save(creator);
         } catch (Exception e) {
-            e.printStackTrace();
             throw new DatabaseError();
         }
     }
     @Transactional
     public void saveSubClass(SubClassDTO subClassDTO, String username, String password, String className) throws DatabaseError {
         try {
-            SubClass subClass = subClassDTO.toModele();
             Creator creator = (Creator) accountRepository.getByUsernameAndPassword(username, password);
-            if (subClassDTO.getId() != null) {
+            DaggerheartClass daggerheartClass = daggerheartClassRepository.findByName(className);
+            if (subClassDTO.getId() == null) {
+                SubClass subClass = subClassDTO.toModele();
+                subClass.setDaggerheartClass(daggerheartClass.getName());
+                subClass = subclassRepository.save(subClass);
+                creator.addSubClass(subClass);
+                daggerheartClass.getSubClasses().add(subClass);
+            } else {
                 SubClass managedSubClass = subclassRepository.findById(subClassDTO.getId()).orElse(null);
+                if(managedSubClass.getClass() != subClassDTO.toModele().getClass()){
+                    DaggerheartClass oldClass = daggerheartClassRepository.findByName(managedSubClass.getDaggerheartClass());
+                    oldClass.getSubClasses().remove(managedSubClass);
+                    daggerheartClass.getSubClasses().add(managedSubClass);
+                    daggerheartClassRepository.save(oldClass);
+                }
                 managedSubClass.setName(subClassDTO.getName());
                 managedSubClass.setDescription(subClassDTO.getDescription());
                 managedSubClass.setSpellcastingTrait(subClassDTO.getSpellCastingTrait());
                 managedSubClass.setFoundationFeatures(subClassDTO.getFoundationFeatures().stream().map(FeatureDTO::toModele).toList());
                 managedSubClass.setSpecializationFeatures(subClassDTO.getSpecializationFeatures().stream().map(FeatureDTO::toModele).toList());
                 managedSubClass.setMasteryFeatures(subClassDTO.getMasteryFeatures().stream().map(FeatureDTO::toModele).toList());
-            }else {
-                creator.addSubClass(subClass);
-                DaggerheartClass daggerheartClass = daggerheartClassRepository.findByName(className);
-                if (daggerheartClass != null) {
-                    List<SubClass> subClasses = daggerheartClass.getSubClasses();
-                    creator = (Creator) accountRepository.getByUsernameAndPassword(username, password);
-                    List<SubClass> creatorSubClasses = creator.getSubClasses();
-                    subClasses.add((creatorSubClasses.stream().filter(subClass1 -> subClass1.getName().equals(subClassDTO.getName())).findFirst().get()));
-                    daggerheartClass.setSubClasses(subClasses);
-                    daggerheartClassRepository.save(daggerheartClass);
-                } else {
-                    throw new DatabaseError();
-                }
+                managedSubClass.setDaggerheartClass(daggerheartClass.getName());
             }
+            daggerheartClassRepository.save(daggerheartClass);
             accountRepository.save(creator);
         } catch (Exception e) {
-            e.printStackTrace();
             throw new DatabaseError();
         }
     }
@@ -232,7 +212,9 @@ public class CreatorService {
     public void saveEnemy(EnemyDTO enemyDTO, String username, String password) throws DatabaseError {
         try {
             Creator creator = (Creator) accountRepository.getByUsernameAndPassword(username, password);
-            if(enemyDTO.getId() != null) {
+            if(enemyDTO.getId() == null) {
+                creator.addEnemy(enemyDTO.toModele());
+            } else {
                 Enemy enemyToMod = enemyRepository.findById(enemyDTO.getId()).orElse(null);
                 enemyToMod.setName(enemyDTO.getName());
                 enemyToMod.setDescription(enemyDTO.getDescription());
@@ -247,42 +229,27 @@ public class CreatorService {
                 damageThreshold.setMajorToSevere(damageThreshold.getMajorToSevere());
                 enemyToMod.setExperience(enemyDTO.getExperience());
                 enemyToMod.setFeatures(enemyDTO.getFeatures());
-            } else {
-                creator.addEnemy(enemyDTO.toModele());
             }
             accountRepository.save(creator);
         } catch (Exception e) {
-            e.printStackTrace();
             throw new DatabaseError();
         }
     }
     public void saveDomainCard(DomainCardDTO domainCardDTO, String username, String password) throws DatabaseError {
         try {
             Creator creator = (Creator) accountRepository.getByUsernameAndPassword(username, password);
-            if (domainCardDTO.getId() != null) {
-                for (DomainCard domainCard:creator.getDomainCards()) {
-                    if (domainCard.getId().equals(domainCardDTO.getId())) {
-                        domainCard.setLevel(domainCardDTO.getLevel());
-                        domainCard.setDomain(domainCardDTO.getDomain());
-                        domainCard.setRecallCost(domainCardDTO.getRecallCost());
-                        domainCard.setCardType(domainCardDTO.getCardType());
-                        domainCard.setName(domainCardDTO.getName());
-                        domainCard.setDescription(domainCardDTO.getDescription());
-                        break;
-                    }
-                }
-            }
-            else {
-                DomainCard domainCard = domainCardDTO.toModele();
-                if (creator.getDomainCards() == null) {
-                    creator.setDomainCards(List.of(domainCard));
-                } else {
-                    creator.getDomainCards().add(domainCard);
-                }
+            if (domainCardDTO.getId() == null) {
+                creator.getDomainCards().add(domainCardDTO.toModele());
+            }else{
+                DomainCard managedDomainCard = domainCardsRepository.findById(domainCardDTO.getId()).orElse(null);
+                managedDomainCard.setName(domainCardDTO.getName());
+                managedDomainCard.setDescription(domainCardDTO.getDescription());
+                managedDomainCard.setDomain(domainCardDTO.getDomain());
+                managedDomainCard.setCardType(domainCardDTO.getCardType());
+                managedDomainCard.setLevel(domainCardDTO.getLevel());
             }
             accountRepository.save(creator);
         } catch (Exception e) {
-            e.printStackTrace();
             throw new DatabaseError();
         }
     }

@@ -8,16 +8,8 @@ function Login(){
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
-    useEffect(() => {
-        localStorage.removeItem('Account');
-        localStorage.removeItem('CurrentData');
-    }, []);
     const handleSubmit = async (w) => {
         w.preventDefault();
-        const requestBody = {
-            username,
-            password
-        };
         try {
             setLoading(true);
             const response = await fetch('http://localhost:8080/' + accountType + '/get', {
@@ -25,15 +17,10 @@ function Login(){
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(requestBody)
+                body: JSON.stringify({ username, password })
             });
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            const saveData = {
-                username: username,
-                password: password,
-                accountType: accountType
             }
             localStorage.setItem('Account', JSON.stringify({
                 username: username,

@@ -21,6 +21,9 @@ public class CreatorDTO extends AccountDTO {
     private List<WeaponDTO> weapons;
     private List<FeatureDTO> features;
     private List<EnemyDTO> enemyDTOS;
+    public CreatorDTO(String username, String password) {
+        super(null, username, password);
+    }
     public CreatorDTO(Long id, String username, String password) {
         super(id, username, password);
     }

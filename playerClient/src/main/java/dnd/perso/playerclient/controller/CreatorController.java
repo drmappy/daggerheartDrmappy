@@ -96,7 +96,6 @@ public class CreatorController {
             creatorService.saveEnemy(enemyDTO, username, password);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
-            e.printStackTrace();
             return ResponseEntity.badRequest().build();
         }
     }
@@ -130,7 +129,6 @@ public class CreatorController {
     @GetMapping("/myClassesNames")
     public ResponseEntity<List<String>> getMyClasses(@RequestHeader String username, @RequestHeader String password) {
         try {
-            creatorService.getCreator(username, password);
             List<String> classes = creatorService.getDaggerheartClassesNames(username, password);
             return ResponseEntity.ok(classes);
         } catch (Exception e) {
@@ -140,7 +138,6 @@ public class CreatorController {
     @GetMapping("/mySubClassesNames")
     public ResponseEntity<List<String>> getMySubClasses(@RequestHeader String username, @RequestHeader String password) {
         try {
-            creatorService.getCreator(username, password);
             List<String> subClasses = creatorService.getSubclassesNames(username, password);
             return ResponseEntity.ok(subClasses);
         } catch (Exception e) {
@@ -150,7 +147,6 @@ public class CreatorController {
     @GetMapping("/myAncestriesNames")
     public ResponseEntity<List<String>> getMyAncestries(@RequestHeader String username, @RequestHeader String password) {
         try {
-            creatorService.getCreator(username, password);
             List<String> ancestries = creatorService.getAncestriesNames(username, password);
             return ResponseEntity.ok(ancestries);
         } catch (Exception e) {
@@ -160,7 +156,6 @@ public class CreatorController {
     @GetMapping("/myCommunitiesNames")
     public ResponseEntity<List<String>> getMyCommunities(@RequestHeader String username, @RequestHeader String password) {
           try {
-                creatorService.getCreator(username, password);
                 List<String> communities = creatorService.getCommunitiesNames(username, password);
                 return ResponseEntity.ok(communities);
           } catch (Exception e) {
@@ -170,7 +165,6 @@ public class CreatorController {
     @GetMapping("/myFeaturesNames")
     public ResponseEntity<List<String>> getMyFeatures(@RequestHeader String username, @RequestHeader String password) {
         try {
-            creatorService.getCreator(username, password);
             List<String> features = creatorService.getFeaturesNames(username, password);
             return ResponseEntity.ok(features);
         } catch (Exception e) {
@@ -180,7 +174,6 @@ public class CreatorController {
     @GetMapping("/myWeaponsNames")
     public ResponseEntity<List<String>> getMyWeapons(@RequestHeader String username, @RequestHeader String password) {
         try {
-            creatorService.getCreator(username, password);
             List<String> weapons = creatorService.getWeaponsNames(username, password);
             return ResponseEntity.ok(weapons);
         } catch (Exception e) {
@@ -190,7 +183,6 @@ public class CreatorController {
     @GetMapping("/myArmorsNames")
     public ResponseEntity<List<String>> getMyArmors(@RequestHeader String username, @RequestHeader String password) {
         try {
-            creatorService.getCreator(username, password);
             List<String> armors = creatorService.getArmorsNames(username, password);
             return ResponseEntity.ok(armors);
         } catch (Exception e) {
@@ -200,7 +192,6 @@ public class CreatorController {
     @GetMapping("/myEnemiesNames")
     public ResponseEntity<List<String>> getAllEnemies(@RequestHeader String username, @RequestHeader String password) {
         try {
-            creatorService.getCreator(username, password);
             List<String> enemies = creatorService.getEnemyNames(username, password);
             return ResponseEntity.ok(enemies);
         } catch (Exception e) {
@@ -210,27 +201,8 @@ public class CreatorController {
     @GetMapping("/myDomainCardsNames")
     public ResponseEntity<List<String>> getAllDomainCards(@RequestHeader String username, @RequestHeader String password) {
         try {
-            creatorService.getCreator(username, password);
             List<String> domainCards = creatorService.getDomainCardsNames(username, password);
             return ResponseEntity.ok(domainCards);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
-    }
-    @GetMapping("/allDomains")
-    public ResponseEntity<List<Domain>> getAllDomains() {
-        try {
-            List<Domain> domains = List.of(Domain.values());
-            return ResponseEntity.ok(domains);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
-    }
-    @GetMapping("/getAllCharacterSpellTraits")
-    public ResponseEntity<List<CharacterSpellTrait>> getAllCharacterSpellTraits() {
-        try {
-            List<CharacterSpellTrait> spellTraits = List.of(CharacterSpellTrait.values());
-            return ResponseEntity.ok(spellTraits);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
@@ -328,8 +300,7 @@ public class CreatorController {
     @GetMapping("domainCardTypes")
     public ResponseEntity<List<DomainCardType>>getAllDomainCardTypes() {
         try {
-            List<DomainCardType> domainCardTypes = List.of(DomainCardType.values());
-            return ResponseEntity.ok(domainCardTypes);
+            return ResponseEntity.ok(List.of(DomainCardType.values()));
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
@@ -337,8 +308,7 @@ public class CreatorController {
     @GetMapping("/enemyTypes")
     public ResponseEntity<List<EnemyType>> getAllTypes() {
         try {
-            List<EnemyType> enemyTypes = List.of(EnemyType.values());
-            return ResponseEntity.ok(enemyTypes);
+            return ResponseEntity.ok(List.of(EnemyType.values()));
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
@@ -346,22 +316,19 @@ public class CreatorController {
     @GetMapping("/tiers")
     public ResponseEntity<List<Tier>> getAllTiers() {
         try {
-            List<Tier> tiers = List.of(Tier.values());
-            return ResponseEntity.ok(tiers);
+            return ResponseEntity.ok(List.of(Tier.values()));
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }
     @GetMapping("/burdens")
     public ResponseEntity<List<Burden>> getAllBurdens() {
-        List<Burden> burdens = List.of(Burden.values());
-        return ResponseEntity.ok(burdens);
+        return ResponseEntity.ok(List.of(Burden.values()));
     }
     @GetMapping("/ranges")
     public ResponseEntity<List<Range>> getAllRanges() {
         try {
-            List<Range> ranges = List.of(Range.values());
-            return ResponseEntity.ok(ranges);
+            return ResponseEntity.ok(List.of(Range.values()));
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
@@ -369,8 +336,7 @@ public class CreatorController {
     @GetMapping("/traits")
     public ResponseEntity<List<CharacterSpellTrait>> getAllWeaponTraits() {
         try {
-            List<CharacterSpellTrait> weaponTraits = List.of(CharacterSpellTrait.values());
-            return ResponseEntity.ok(weaponTraits);
+            return ResponseEntity.ok(List.of(CharacterSpellTrait.values()));
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
@@ -378,8 +344,23 @@ public class CreatorController {
     @GetMapping("/damageTypes")
     public ResponseEntity<List<DamageType>> getAllDamageTypes() {
         try {
-            List<DamageType> damageTypes = List.of(DamageType.values());
-            return ResponseEntity.ok(damageTypes);
+            return ResponseEntity.ok(List.of(DamageType.values()));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    @GetMapping("/allDomains")
+    public ResponseEntity<List<Domain>> getAllDomains() {
+        try {
+            return ResponseEntity.ok(List.of(Domain.values()));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    @GetMapping("/getAllCharacterSpellTraits")
+    public ResponseEntity<List<CharacterSpellTrait>> getAllCharacterSpellTraits() {
+        try {
+            return ResponseEntity.ok(List.of(CharacterSpellTrait.values()));
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
